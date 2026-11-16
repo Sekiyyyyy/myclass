@@ -1,271 +1,201 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
   :root {
-    --background: #F0F4FA;
-    --foreground: #1E293B;
+    --background: #F8FAFC;
+    --foreground: #0F172A;
+  }
+  .dark {
+    --background: #07090E;
+    --foreground: #F8FAFC;
   }
 }
 
 .font-heading {
-  font-family: var(--font-nunito), ui-rounded, "Nunito", -apple-system, sans-serif;
+  font-family: var(--font-space), var(--font-sans), system-ui, sans-serif;
+}
+
+.font-mono {
+  font-family: var(--font-mono), monospace;
 }
 
 .font-sans {
-  font-family: var(--font-sans), var(--font-nunito), -apple-system, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
 }
 
 /* ========================================================
-   AUTHENTIC 3D CLAYMORPHISM TOKENS (INFLATED VOLUMETRIC CLAY)
+   ARCADE MODERN & ESPORTS TECH TOKENS (LIGHT & DARK ADAPTIVE)
    ======================================================== */
 
-/* 1. Main White Clay Surface */
-.clay-card {
-  background: #FFFFFF;
-  border-radius: 28px;
-  border: 2px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 
-    inset 4px 4px 8px rgba(255, 255, 255, 0.95),
-    inset -4px -4px 10px rgba(160, 175, 200, 0.22),
-    0 16px 32px -8px rgba(100, 116, 139, 0.16),
-    0 6px 12px -2px rgba(100, 116, 139, 0.08);
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
-}
-
-.clay-card-interactive {
-  cursor: pointer;
-  user-select: none;
-}
-
-.clay-card-interactive:hover {
-  transform: translateY(-6px) scale(1.015);
-  box-shadow: 
-    inset 4px 4px 8px rgba(255, 255, 255, 1),
-    inset -4px -4px 10px rgba(140, 160, 190, 0.25),
-    0 24px 40px -10px rgba(99, 102, 241, 0.18),
-    0 10px 18px -4px rgba(100, 116, 139, 0.1);
-}
-
-.clay-card-interactive:active {
-  transform: translateY(2px) scale(0.98);
-  box-shadow: 
-    inset 2px 2px 4px rgba(0, 0, 0, 0.06),
-    0 6px 14px -4px rgba(100, 116, 139, 0.12);
-}
-
-/* 2. Clay Photo Frame (Sunken Inset Pill) */
-.clay-frame-sunken {
+/* 1. Sleek High-Tech Glass Cards */
+.arcade-card {
+  background-color: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
   border-radius: 20px;
-  box-shadow: 
-    inset 3px 3px 6px rgba(0, 0, 0, 0.08),
-    inset -3px -3px 6px rgba(255, 255, 255, 0.9);
-  background: #EAF0F8;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+  transition: all 0.25s cubic-bezier(0.2, 0, 0, 1);
 }
 
-/* 3. Colored Clay Surfaces (Pillows & Stat Blocks) */
-.clay-block-green {
-  background: linear-gradient(145deg, #62dc04, #48aa02);
-  color: #FFFFFF;
-  border-radius: 24px;
-  box-shadow: 
-    inset 3px 3px 6px rgba(255, 255, 255, 0.5),
-    inset -3px -3px 6px rgba(40, 100, 2, 0.4),
-    0 12px 24px rgba(88, 204, 2, 0.35);
+.dark .arcade-card {
+  background-color: rgba(13, 18, 30, 0.75);
+  border-color: rgba(30, 41, 59, 0.85);
+  box-shadow: 0 8px 30px -4px rgba(0, 0, 0, 0.4);
 }
 
-.clay-block-blue {
-  background: linear-gradient(145deg, #25b8ff, #1198da);
-  color: #FFFFFF;
-  border-radius: 24px;
-  box-shadow: 
-    inset 3px 3px 6px rgba(255, 255, 255, 0.5),
-    inset -3px -3px 6px rgba(10, 100, 160, 0.4),
-    0 12px 24px rgba(28, 176, 246, 0.35);
-}
-
-.clay-block-amber {
-  background: linear-gradient(145deg, #ffa826, #eb8300);
-  color: #FFFFFF;
-  border-radius: 24px;
-  box-shadow: 
-    inset 3px 3px 6px rgba(255, 255, 255, 0.5),
-    inset -3px -3px 6px rgba(160, 80, 0, 0.4),
-    0 12px 24px rgba(255, 150, 0, 0.35);
-}
-
-.clay-block-purple {
-  background: linear-gradient(145deg, #a075fa, #7d49f5);
-  color: #FFFFFF;
-  border-radius: 24px;
-  box-shadow: 
-    inset 3px 3px 6px rgba(255, 255, 255, 0.5),
-    inset -3px -3px 6px rgba(80, 30, 180, 0.4),
-    0 12px 24px rgba(139, 92, 246, 0.35);
-}
-
-/* 4. Duolingo Signature Tactile 3D Buttons */
-.clay-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-nunito), sans-serif;
-  font-weight: 800;
-  border-radius: 9999px;
-  transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.12s ease, border-bottom-width 0.12s ease;
-  user-select: none;
+.arcade-card-interactive {
   cursor: pointer;
+  user-select: none;
+}
+
+.arcade-card-interactive:hover {
+  transform: translateY(-5px);
+  border-color: rgba(6, 182, 212, 0.6);
+  box-shadow: 0 16px 36px -6px rgba(6, 182, 212, 0.18);
+}
+
+.dark .arcade-card-interactive:hover {
+  border-color: rgba(6, 182, 212, 0.7);
+  box-shadow: 0 16px 40px -6px rgba(6, 182, 212, 0.25), 0 0 15px rgba(6, 182, 212, 0.15);
+}
+
+.arcade-card-interactive:active {
+  transform: translateY(1px);
+}
+
+/* 2. Cyber HUD Corner Brackets */
+.hud-corner {
   position: relative;
 }
 
-.clay-btn:active {
-  transform: translateY(4px) !important;
-  border-bottom-width: 0px !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12) !important;
+.hud-corner::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 10px;
+  height: 10px;
+  border-top: 2px solid #06B6D4;
+  border-left: 2px solid #06B6D4;
+  border-top-left-radius: 4px;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.2s ease, width 0.2s ease, height 0.2s ease;
 }
 
-/* Green (Duolingo Primary) */
-.clay-btn-green {
-  background: #58CC02;
-  color: #FFFFFF;
-  border-bottom: 5px solid #46A302;
-  box-shadow: 
-    inset 0 2px 2px rgba(255, 255, 255, 0.5),
-    0 8px 18px rgba(88, 204, 2, 0.35);
-}
-.clay-btn-green:hover {
-  background: #52bf02;
-  transform: translateY(-2px);
-  box-shadow: 
-    inset 0 2px 2px rgba(255, 255, 255, 0.6),
-    0 12px 24px rgba(88, 204, 2, 0.45);
+.hud-corner::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 10px;
+  height: 10px;
+  border-bottom: 2px solid #06B6D4;
+  border-right: 2px solid #06B6D4;
+  border-bottom-right-radius: 4px;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.2s ease, width 0.2s ease, height 0.2s ease;
 }
 
-/* Blue (Duolingo Sky) */
-.clay-btn-blue {
-  background: #1CB0F6;
-  color: #FFFFFF;
-  border-bottom: 5px solid #1899D6;
-  box-shadow: 
-    inset 0 2px 2px rgba(255, 255, 255, 0.5),
-    0 8px 18px rgba(28, 176, 246, 0.35);
-}
-.clay-btn-blue:hover {
-  background: #19a2e3;
-  transform: translateY(-2px);
-  box-shadow: 
-    inset 0 2px 2px rgba(255, 255, 255, 0.6),
-    0 12px 24px rgba(28, 176, 246, 0.45);
+.hud-corner:hover::before,
+.hud-corner:hover::after {
+  opacity: 1;
+  width: 14px;
+  height: 14px;
 }
 
-/* Amber (Duolingo Streak) */
-.clay-btn-amber {
-  background: #FF9600;
-  color: #FFFFFF;
-  border-bottom: 5px solid #CC7A00;
-  box-shadow: 
-    inset 0 2px 2px rgba(255, 255, 255, 0.5),
-    0 8px 18px rgba(255, 150, 0, 0.35);
-}
-.clay-btn-amber:hover {
-  background: #e68700;
-  transform: translateY(-2px);
-  box-shadow: 
-    inset 0 2px 2px rgba(255, 255, 255, 0.6),
-    0 12px 24px rgba(255, 150, 0, 0.45);
-}
-
-/* Purple (Creative Studio) */
-.clay-btn-purple {
-  background: #8B5CF6;
-  color: #FFFFFF;
-  border-bottom: 5px solid #7C3AED;
-  box-shadow: 
-    inset 0 2px 2px rgba(255, 255, 255, 0.5),
-    0 8px 18px rgba(139, 92, 246, 0.35);
-}
-.clay-btn-purple:hover {
-  background: #7c4af0;
-  transform: translateY(-2px);
-  box-shadow: 
-    inset 0 2px 2px rgba(255, 255, 255, 0.6),
-    0 12px 24px rgba(139, 92, 246, 0.45);
-}
-
-/* White / Neutral Tactile Button */
-.clay-btn-white {
-  background: #FFFFFF;
-  color: #334155;
-  border: 2px solid #E2E8F0;
-  border-bottom: 5px solid #CBD5E1;
-  box-shadow: 
-    inset 0 2px 2px rgba(255, 255, 255, 0.9),
-    0 6px 14px rgba(15, 23, 42, 0.08);
-}
-.clay-btn-white:hover {
-  background: #F8FAFC;
-  color: #0F172A;
-  transform: translateY(-2px);
-  box-shadow: 
-    inset 0 2px 2px rgba(255, 255, 255, 1),
-    0 10px 20px rgba(15, 23, 42, 0.12);
-}
-
-/* 5. 3D Clay Badges & Coins */
-.clay-coin {
+/* 3. High-Tech Action Buttons */
+.arcade-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  font-family: var(--font-space), sans-serif;
+  font-weight: 800;
   border-radius: 9999px;
-  background: #FFFFFF;
-  border: 2px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 
-    inset 2px 2px 4px rgba(255, 255, 255, 0.9),
-    inset -2px -2px 4px rgba(160, 175, 200, 0.25),
-    0 4px 8px rgba(0, 0, 0, 0.08);
-  font-family: var(--font-nunito), sans-serif;
-  font-weight: 900;
+  user-select: none;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
 }
 
-.clay-pill-tag {
+.arcade-btn:active {
+  transform: scale(0.96);
+}
+
+.arcade-btn-primary {
+  background: linear-gradient(135deg, #00F0FF 0%, #0284C7 100%);
+  color: #03132B;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.35);
+}
+
+.arcade-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.55);
+  filter: brightness(1.08);
+}
+
+.arcade-btn-secondary {
+  background: rgba(255, 255, 255, 0.9);
+  color: #0F172A;
+  border: 1px solid rgba(203, 213, 225, 0.9);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.dark .arcade-btn-secondary {
+  background: rgba(15, 23, 42, 0.8);
+  color: #F8FAFC;
+  border-color: rgba(51, 65, 85, 0.85);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.arcade-btn-secondary:hover {
+  transform: translateY(-2px);
+  border-color: #06B6D4;
+  color: #06B6D4;
+}
+
+.dark .arcade-btn-secondary:hover {
+  border-color: #00F0FF;
+  color: #00F0FF;
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+}
+
+.arcade-btn-purple {
+  background: linear-gradient(135deg, #A855F7 0%, #6366F1 100%);
+  color: #FFFFFF;
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.35);
+}
+
+.arcade-btn-purple:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.55);
+}
+
+/* 4. Cyber Status Pills */
+.arcade-pill {
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
-  padding: 0.35rem 0.85rem;
+  padding: 0.3rem 0.85rem;
   border-radius: 9999px;
+  font-family: var(--font-mono), monospace;
   font-size: 0.75rem;
-  font-weight: 800;
-  font-family: var(--font-nunito), sans-serif;
-  box-shadow: 
-    inset 1px 1px 2px rgba(255, 255, 255, 0.9),
-    inset -1px -1px 2px rgba(0, 0, 0, 0.04),
-    0 2px 6px rgba(0, 0, 0, 0.04);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
-/* Floating Blob Keyframes */
-@keyframes float-gentle-1 {
-  0%, 100% {
-    transform: translate(0px, 0px) scale(1);
-  }
-  50% {
-    transform: translate(15px, -20px) scale(1.04);
-  }
-}
-
-@keyframes float-gentle-2 {
-  0%, 100% {
-    transform: translate(0px, 0px) scale(1);
-  }
-  50% {
-    transform: translate(-20px, 15px) scale(0.97);
-  }
-}
-
-.animate-blob-1 {
-  animation: float-gentle-1 8s ease-in-out infinite;
-}
-
-.animate-blob-2 {
-  animation: float-gentle-2 10s ease-in-out infinite;
+/* 5. Scanlines Effect */
+.scanline-effect {
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.25) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
 }
 
 /* Marquee */
@@ -286,23 +216,25 @@
   animation-direction: reverse;
 }
 
-/* Custom Scrollbar */
+/* Custom modern scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #EAF0F8;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   background: #94A3B8;
   border-radius: 9999px;
-  border: 2px solid #EAF0F8;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #64748B;
+  background: #06B6D4;
 }
 
 ::selection {
-  background-color: #BAE6FD;
-  color: #0369A1;
+  background-color: #06B6D4;
+  color: #000000;
 }

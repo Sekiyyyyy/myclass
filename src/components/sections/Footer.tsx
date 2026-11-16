@@ -1,7 +1,7 @@
 "use client";
 
-import { ArrowUp, Heart, Code2 } from "lucide-react";
-import { playPop, playClick } from "@/lib/sound";
+import { ArrowUp, Terminal, Shield, Zap } from "lucide-react";
+import { playBlip, playClick } from "@/lib/sound";
 
 export function Footer() {
   const scrollToTop = () => {
@@ -13,70 +13,65 @@ export function Footer() {
   };
 
   return (
-    <footer className="border-t-2 border-slate-200/80 bg-white/80 backdrop-blur-md py-12 px-4 sm:px-6">
-      <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6 text-xs text-slate-500 font-heading">
+    <footer className="border-t border-slate-200 dark:border-slate-800/80 bg-white/70 dark:bg-slate-950/70 backdrop-blur-md py-12 px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6 text-xs text-slate-500 font-mono">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-[#58CC02] text-white flex items-center justify-center font-black text-xs border-b-2 border-[#46A302] shadow-xs">
-            3
+          <div className="w-8 h-8 rounded-lg bg-cyan-500/10 text-cyan-500 flex items-center justify-center font-bold text-xs border border-cyan-500/30">
+            P3
           </div>
           <div>
-            <span className="font-black text-slate-800 block text-xs sm:text-sm">
-              XII PPLG 3 • SMK Negeri 1 Beringin
+            <span className="font-bold text-slate-800 dark:text-slate-200 block text-xs sm:text-sm">
+              XII PPLG 3 // SMK NEGERI 1 BERINGIN
             </span>
-            <span className="text-[11px] text-slate-400 font-bold flex items-center gap-1.5 mt-0.5">
-              <span>Arsip Kenangan</span>
-              <span>•</span>
-              <span className="flex items-center gap-1">
-                Dibuat untuk Angkatan 2026
-                <Heart className="w-3 h-3 text-[#FF4B4B] fill-current" />
-              </span>
+            <span className="text-[11px] text-slate-400 font-medium">
+              SYSTEM BUILD: v2026.3.0 • CLASS YEARBOOK &amp; ROSTER ARCHIVE
             </span>
           </div>
         </div>
 
-        <div className="flex items-center flex-wrap justify-center gap-4 sm:gap-6 font-extrabold text-slate-600">
+        <div className="flex items-center flex-wrap justify-center gap-4 sm:gap-6 font-bold text-slate-600 dark:text-slate-300">
           <a
             href="#hero"
-            onClick={() => playPop(500)}
-            className="hover:text-slate-900 transition-colors"
+            onClick={() => playBlip(700)}
+            className="hover:text-cyan-500 transition-colors"
           >
             Beranda
           </a>
           <a
             href="#tentang"
-            onClick={() => playPop(540)}
-            className="hover:text-slate-900 transition-colors"
+            onClick={() => playBlip(750)}
+            className="hover:text-cyan-500 transition-colors"
           >
             Tentang
           </a>
           <a
             href="#siswa"
-            onClick={() => playPop(580)}
-            className="hover:text-slate-900 transition-colors"
+            onClick={() => playBlip(800)}
+            className="hover:text-cyan-500 transition-colors"
           >
             Siswa
           </a>
           <a
             href="#galeri"
-            onClick={() => playPop(620)}
-            className="hover:text-slate-900 transition-colors"
+            onClick={() => playBlip(850)}
+            className="hover:text-cyan-500 transition-colors"
           >
             Galeri
           </a>
           <a
             href="#pesan"
-            onClick={() => playPop(660)}
-            className="hover:text-slate-900 transition-colors"
+            onClick={() => playBlip(900)}
+            className="hover:text-cyan-500 transition-colors"
           >
-            Kenangan
+            Transmisi
           </a>
 
           <button
             onClick={scrollToTop}
-            onMouseEnter={() => playPop(700)}
-            className="clay-btn clay-btn-white px-3.5 py-1.5 text-xs flex items-center gap-1"
+            onMouseEnter={() => playBlip(950)}
+            className="arcade-btn arcade-btn-secondary px-3.5 py-1.5 text-xs flex items-center gap-1.5 cursor-pointer"
           >
-            <span>Ke Atas</span>
+            <span>Top</span>
             <ArrowUp className="w-3.5 h-3.5" />
           </button>
         </div>
