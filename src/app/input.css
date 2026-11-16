@@ -7,20 +7,10 @@
   :root {
     --background: #F8FAFC;
     --foreground: #0F172A;
-    --pixel-border: #0F172A;
-    --pixel-shadow: #0F172A;
-    --pixel-accent: #4F46E5;
-    --pixel-yellow: #F59E0B;
-    --pixel-green: #10B981;
   }
   .dark {
     --background: #0B0F19;
     --foreground: #F8FAFC;
-    --pixel-border: #334155;
-    --pixel-shadow: #020617;
-    --pixel-accent: #6366F1;
-    --pixel-yellow: #FBBF24;
-    --pixel-green: #34D399;
   }
 }
 
@@ -32,31 +22,27 @@
   font-family: 'Silkscreen', monospace;
 }
 
-.font-mono {
-  font-family: var(--font-mono), monospace;
-}
-
 .font-sans {
   font-family: var(--font-sans), system-ui, sans-serif;
 }
 
 /* ========================================================
-   AUTHENTIC PIXEL ARCADE DESIGN SYSTEM (LIGHT & DARK ADAPTIVE)
+   AUTHENTIC PIXEL SHAPE & ARCADE TOKENS (NO ROUNDED EDGES)
    ======================================================== */
 
-/* 1. Stepped Pixel Box & Retro Arcade Panels */
+/* 1. Sharp Stepped Pixel Box */
 .pixel-box {
-  background-color: #FFFFFF;
-  border: 2px solid #0F172A;
+  border: 3px solid #0F172A;
   box-shadow: 4px 4px 0px 0px #0F172A;
-  border-radius: 4px;
-  transition: all 0.15s cubic-bezier(0.2, 0, 0, 1);
+  background-color: #FFFFFF;
+  border-radius: 0px !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
 }
 
 .dark .pixel-box {
-  background-color: #111827;
   border-color: #334155;
   box-shadow: 4px 4px 0px 0px #020617;
+  background-color: #111827;
 }
 
 .pixel-box-interactive {
@@ -66,102 +52,107 @@
 
 .pixel-box-interactive:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0px 0px #4F46E5;
-  border-color: #4F46E5;
+  box-shadow: 6px 6px 0px 0px #F59E0B;
+  border-color: #F59E0B;
 }
 
 .dark .pixel-box-interactive:hover {
-  border-color: #818CF8;
-  box-shadow: 6px 6px 0px 0px #6366F1;
+  border-color: #FBBF24;
+  box-shadow: 6px 6px 0px 0px #FBBF24;
 }
 
 .pixel-box-interactive:active {
   transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0px 0px #4F46E5;
+  box-shadow: 2px 2px 0px 0px #F59E0B;
 }
 
 .dark .pixel-box-interactive:active {
-  box-shadow: 2px 2px 0px 0px #6366F1;
+  box-shadow: 2px 2px 0px 0px #FBBF24;
 }
 
-/* 2. Pixel Arcade Push Buttons */
+/* 2. Authentic Stepped Pixel Cutout (8-Bit Corner Silhouette) */
+.pixel-corners {
+  clip-path: polygon(
+    0 4px, 4px 4px, 4px 0,
+    calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px,
+    100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%,
+    4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px)
+  );
+}
+
+.pixel-corners-lg {
+  clip-path: polygon(
+    0 6px, 6px 6px, 6px 0,
+    calc(100% - 6px) 0, calc(100% - 6px) 6px, 100% 6px,
+    100% calc(100% - 6px), calc(100% - 6px) calc(100% - 6px), calc(100% - 6px) 100%,
+    6px 100%, 6px calc(100% - 6px), 0 calc(100% - 6px)
+  );
+}
+
+/* 3. Pixel Push Buttons */
 .pixel-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-family: 'Press Start 2P', monospace;
   font-size: 0.65rem;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   padding: 0.75rem 1.25rem;
-  border-radius: 4px;
+  border-radius: 0px !important;
   cursor: pointer;
   user-select: none;
-  border: 2px solid #0F172A;
-  box-shadow: 3px 3px 0px 0px #0F172A;
-  transition: all 0.1s ease;
+  border: 3px solid #0F172A;
+  box-shadow: 4px 4px 0px 0px #0F172A;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
 .pixel-btn:hover {
   transform: translate(-1px, -1px);
-  box-shadow: 4px 4px 0px 0px #0F172A;
+  box-shadow: 5px 5px 0px 0px #0F172A;
 }
 
 .pixel-btn:active {
-  transform: translate(2px, 2px);
+  transform: translate(3px, 3px);
   box-shadow: 1px 1px 0px 0px #0F172A;
 }
 
 .pixel-btn-primary {
   background-color: #FBBF24;
   color: #0F172A;
+  border-color: #0F172A;
 }
 
 .pixel-btn-primary:hover {
   background-color: #F59E0B;
 }
 
-.pixel-btn-cyan {
-  background-color: #38BDF8;
+.dark .pixel-btn-primary {
+  background-color: #FBBF24;
   color: #0F172A;
-}
-
-.pixel-btn-cyan:hover {
-  background-color: #0284C7;
-  color: #FFFFFF;
-}
-
-.pixel-btn-green {
-  background-color: #34D399;
-  color: #0F172A;
-}
-
-.pixel-btn-green:hover {
-  background-color: #10B981;
-  color: #FFFFFF;
+  border-color: #F59E0B;
+  box-shadow: 4px 4px 0px 0px #020617;
 }
 
 .pixel-btn-secondary {
   background-color: #FFFFFF;
   color: #0F172A;
+  border-color: #0F172A;
 }
 
 .dark .pixel-btn-secondary {
   background-color: #1E293B;
   color: #F8FAFC;
   border-color: #475569;
-  box-shadow: 3px 3px 0px 0px #020617;
+  box-shadow: 4px 4px 0px 0px #020617;
 }
 
 .dark .pixel-btn-secondary:hover {
-  border-color: #818CF8;
-  box-shadow: 4px 4px 0px 0px #818CF8;
+  border-color: #FBBF24;
+  color: #FBBF24;
+  box-shadow: 5px 5px 0px 0px #020617;
 }
 
-.dark .pixel-btn-secondary:active {
-  box-shadow: 1px 1px 0px 0px #818CF8;
-}
-
-/* 3. Pixel Badges */
+/* 4. Pixel Badges */
 .pixel-badge {
   display: inline-flex;
   align-items: center;
@@ -169,57 +160,12 @@
   font-family: 'Silkscreen', monospace;
   font-size: 0.75rem;
   font-weight: 700;
-  padding: 0.25rem 0.6rem;
-  border-radius: 2px;
-  border: 1px solid currentColor;
-  text-transform: uppercase;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0px !important;
+  border: 2px solid currentColor;
 }
 
-/* 4. Blinking Arcade Cursor */
-@keyframes pixel-blink {
-  0%, 49% {
-    opacity: 1;
-  }
-  50%, 100% {
-    opacity: 0;
-  }
-}
-
-.pixel-cursor {
-  display: inline-block;
-  width: 0.6em;
-  height: 1em;
-  background-color: currentColor;
-  vertical-align: -0.1em;
-  margin-left: 0.2em;
-  animation: pixel-blink 1s steps(2, start) infinite;
-}
-
-/* 5. Subtle CRT Scanline Overlay */
-.crt-overlay {
-  background: linear-gradient(
-    rgba(18, 16, 16, 0) 50%,
-    rgba(0, 0, 0, 0.15) 50%
-  );
-  background-size: 100% 4px;
-  pointer-events: none;
-}
-
-/* 6. Marquee Animation */
-@keyframes pixel-marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-100%);
-  }
-}
-
-.animate-pixel-marquee {
-  animation: pixel-marquee 28s linear infinite;
-}
-
-/* Custom Pixel Scrollbar */
+/* 5. Custom Pixel Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -229,6 +175,7 @@
 ::-webkit-scrollbar-thumb {
   background: #FBBF24;
   border: 2px solid #0F172A;
+  border-radius: 0px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #F59E0B;

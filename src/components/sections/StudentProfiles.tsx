@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useRef, useEffect } from "react";
 import Image from "next/image";
-import { Search, Instagram, X, Heart, ExternalLink, Gamepad2 } from "lucide-react";
+import { Search, Instagram, X, Heart, ExternalLink, Users } from "lucide-react";
 import { students, Student } from "@/data/students";
 import { useGSAP, gsap } from "@/lib/gsap-config";
 import { PixelCard } from "@/components/ui/PixelCard";
@@ -11,7 +11,7 @@ import confetti from "canvas-confetti";
 export function StudentProfiles() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
-  const [coins, setCoins] = useState<{ [id: string]: number }>({});
+  const [likes, setLikes] = useState<{ [id: string]: number }>({});
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const filteredStudents = useMemo(() => {
@@ -25,9 +25,9 @@ export function StudentProfiles() {
     });
   }, [searchQuery]);
 
-  const handleCoin = (e: React.MouseEvent, id: string) => {
+  const handleLike = (e: React.MouseEvent, id: string) => {
     e.stopPropagation();
-    setCoins((prev) => ({ ...prev, [id]: (prev[id] || 0) + 1 }));
+    setLikes((prev) => ({ ...prev, [id]: (prev[id] || 0) + 1 }));
 
     confetti({
       particleCount: 20,
@@ -43,12 +43,12 @@ export function StudentProfiles() {
 
   useGSAP(
     () => {
-      const cards = sectionRef.current?.querySelectorAll(".pixel-player-card");
+      const cards = sectionRef.current?.querySelectorAll(".student-card-item");
       if (!cards || cards.length === 0) return;
 
       gsap.fromTo(
         cards,
-        { opacity: 0, y: 20 },
+        { opacity: 0, y: 15 },
         {
           opacity: 1,
           y: 0,
@@ -82,17 +82,17 @@ export function StudentProfiles() {
 
   return (
     <section id="siswa" ref={sectionRef} className="py-20 px-3 sm:px-6 max-w-7xl mx-auto relative select-none">
-      {/* Arcade Header */}
+      {/* Section Header */}
       <div className="text-center max-w-xl mx-auto mb-10">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded pixel-box bg-slate-900 text-[#FBBF24] font-pixel text-[10px] mb-3">
-          <Gamepad2 className="w-3.5 h-3.5" />
-          <span>[ CHARACTER SELECT ]</span>
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 pixel-box bg-slate-900 text-[#FBBF24] font-pixel text-[10px] mb-3">
+          <Users className="w-3.5 h-3.5" />
+          <span>DAFTAR KELAS</span>
         </div>
         <h2 className="font-pixel text-xl sm:text-3xl text-slate-900 dark:text-white mb-3">
-          31 PLAYERS ROSTER
+          31 Siswa XII PPLG 3
         </h2>
         <p className="font-silk text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-bold uppercase">
-          Klik kartu pemain untuk melihat profil lengkap angkatan 2026
+          Klik kartu untuk melihat informasi profil lengkap siswa
         </p>
       </div>
 
@@ -104,8 +104,8 @@ export function StudentProfiles() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Cari nama atau username..."
-            className="w-full pl-10 pr-9 py-2.5 rounded pixel-box bg-white dark:bg-[#111827] text-slate-900 dark:text-white placeholder:text-slate-400 font-silk text-xs focus:outline-none focus:border-amber-500"
+            placeholder="Cari nama atau username Instagram..."
+            className="w-full pl-10 pr-9 py-2.5 pixel-box bg-white dark:bg-[#111827] text-slate-900 dark:text-white placeholder:text-slate-400 font-silk text-xs focus:outline-none focus:border-amber-500"
           />
           {searchQuery && (
             <button
@@ -118,17 +118,17 @@ export function StudentProfiles() {
         </div>
       </div>
 
-      {/* Pixel Grid Showcase */}
+      {/* Grid of Student Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5 sm:gap-4">
         {filteredStudents.map((s) => (
-          <div key={s.id} className="pixel-player-card">
+          <div key={s.id} className="student-card-item">
             <PixelCard
               onClick={() => setSelectedStudent(s)}
-              className="p-2.5 sm:p-3 flex flex-col justify-between h-full"
+              className="p-3 flex flex-col justify-between h-full"
             >
               <div>
-                {/* Photo Frame with 8-bit Border */}
-                <div className="relative aspect-[3/4] w-full rounded overflow-hidden mb-2.5 bg-slate-950 border-2 border-slate-900 dark:border-slate-700">
+                {/* Photo Frame with Sharp Pixel Border */}
+                <div className="relative aspect-[3/4] w-full overflow-hidden mb-2.5 bg-slate-950 border-2 border-slate-900 dark:border-slate-700">
                   <Image
                     src={s.avatar}
                     alt={s.name}
@@ -137,24 +137,24 @@ export function StudentProfiles() {
                     className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
                   />
 
-                  {/* Player Number Tag */}
-                  <div className="absolute top-1.5 left-1.5 z-10 px-1.5 py-0.5 rounded bg-slate-950/90 text-[#FBBF24] font-pixel text-[9px] border border-amber-500/50">
+                  {/* Absen Tag */}
+                  <div className="absolute top-1.5 left-1.5 z-10 px-1.5 py-0.5 bg-slate-950/90 text-[#FBBF24] font-pixel text-[9px] border border-amber-500/50">
                     #{s.id}
                   </div>
 
-                  {/* Coin / Like Button */}
+                  {/* Like Button */}
                   <button
                     type="button"
-                    onClick={(e) => handleCoin(e, s.id)}
-                    title="Beri Koin"
-                    className="absolute top-1.5 right-1.5 z-10 w-6 h-6 rounded bg-slate-950/90 text-amber-400 hover:text-amber-300 flex items-center justify-center border border-amber-500/50 transition-transform active:scale-90"
+                    onClick={(e) => handleLike(e, s.id)}
+                    title="Beri Suka"
+                    className="absolute top-1.5 right-1.5 z-10 w-6 h-6 bg-slate-950/90 text-amber-400 hover:text-amber-300 flex items-center justify-center border border-amber-500/50 transition-transform active:scale-90"
                   >
-                    <Heart className={`w-3.5 h-3.5 ${coins[s.id] ? "fill-amber-400 text-amber-400" : ""}`} />
+                    <Heart className={`w-3.5 h-3.5 ${likes[s.id] ? "fill-amber-400 text-amber-400" : ""}`} />
                   </button>
 
-                  {coins[s.id] ? (
-                    <div className="absolute bottom-1.5 right-1.5 z-10 px-1.5 py-0.5 rounded bg-amber-500 text-slate-950 font-pixel text-[8px] font-bold">
-                      +{coins[s.id]}
+                  {likes[s.id] ? (
+                    <div className="absolute bottom-1.5 right-1.5 z-10 px-1.5 py-0.5 bg-amber-500 text-slate-950 font-pixel text-[8px] font-bold">
+                      +{likes[s.id]}
                     </div>
                   ) : null}
                 </div>
@@ -168,7 +168,7 @@ export function StudentProfiles() {
                 </p>
               </div>
 
-              {/* Instagram & Choose Trigger */}
+              {/* Instagram & View */}
               <div className="pt-2 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-[10px] font-silk">
                 <a
                   href={`https://instagram.com/${s.ig}`}
@@ -191,23 +191,23 @@ export function StudentProfiles() {
 
       {filteredStudents.length === 0 && (
         <div className="text-center py-16 pixel-box max-w-md mx-auto p-8">
-          <Gamepad2 className="w-8 h-8 text-amber-500 mx-auto mb-3" />
+          <Users className="w-8 h-8 text-amber-500 mx-auto mb-3" />
           <h3 className="font-pixel text-xs text-slate-800 dark:text-white mb-2">
-            PLAYER NOT FOUND
+            SISWA TIDAK DITEMUKAN
           </h3>
           <p className="font-silk text-xs text-slate-500 mb-4">
-            Tidak ada pemain dengan kata kunci &ldquo;{searchQuery}&rdquo;.
+            Tidak ada siswa dengan nama &ldquo;{searchQuery}&rdquo;.
           </p>
           <button
             onClick={() => setSearchQuery("")}
             className="pixel-btn pixel-btn-primary text-[10px] py-2 px-3"
           >
-            [ RESET SEARCH ]
+            Reset Pencarian
           </button>
         </div>
       )}
 
-      {/* Arcade Character Dossier Modal */}
+      {/* Student Detail Modal */}
       {selectedStudent && (
         <div
           role="dialog"
@@ -217,19 +217,19 @@ export function StudentProfiles() {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="pixel-box p-5 sm:p-7 max-w-sm w-full relative z-10 bg-white dark:bg-[#111827] border-4 border-slate-900 dark:border-amber-500/80 shadow-2xl"
+            className="pixel-box p-5 sm:p-7 max-w-sm w-full relative z-10 bg-white dark:bg-[#111827] border-4 border-slate-900 dark:border-amber-500 shadow-2xl"
           >
             {/* Close Button */}
             <button
               onClick={() => setSelectedStudent(null)}
-              className="absolute top-3 right-3 w-7 h-7 rounded bg-slate-200 dark:bg-slate-800 hover:bg-rose-500 hover:text-white text-slate-700 dark:text-slate-300 flex items-center justify-center cursor-pointer border border-slate-900 transition-colors"
+              className="absolute top-3 right-3 w-7 h-7 bg-slate-200 dark:bg-slate-800 hover:bg-rose-500 hover:text-white text-slate-700 dark:text-slate-300 flex items-center justify-center cursor-pointer border-2 border-slate-900 transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
 
-            {/* Content */}
+            {/* Profile Info */}
             <div className="flex flex-col items-center text-center">
-              <div className="relative w-40 h-52 sm:w-44 sm:h-56 rounded overflow-hidden mb-3.5 border-4 border-slate-900 dark:border-slate-700 bg-slate-950">
+              <div className="relative w-40 h-52 sm:w-44 sm:h-56 overflow-hidden mb-3.5 border-4 border-slate-900 dark:border-slate-700 bg-slate-950">
                 <Image
                   src={selectedStudent.avatar}
                   alt={selectedStudent.name}
@@ -237,8 +237,8 @@ export function StudentProfiles() {
                   priority
                   className="object-cover object-center"
                 />
-                <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-slate-950 text-[#FBBF24] font-pixel text-[9px] border border-amber-500">
-                  PLAYER #{selectedStudent.id}
+                <div className="absolute top-2 left-2 px-2 py-0.5 bg-slate-950 text-[#FBBF24] font-pixel text-[9px] border border-amber-500">
+                  ABSEN #{selectedStudent.id}
                 </div>
               </div>
 
@@ -246,19 +246,19 @@ export function StudentProfiles() {
                 {selectedStudent.name}
               </h3>
               <p className="font-silk text-xs text-amber-500 font-bold mb-4 uppercase">
-                &lt; {selectedStudent.nickname} &gt;
+                Panggilan: {selectedStudent.nickname}
               </p>
 
-              {/* Badges */}
+              {/* Class Info */}
               <div className="flex flex-wrap items-center justify-center gap-1.5 mb-5 font-silk text-[10px]">
-                <span className="px-2 py-0.5 rounded pixel-box bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">
+                <span className="px-2 py-0.5 pixel-box bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">
                   XII PPLG 3
                 </span>
-                <span className="px-2 py-0.5 rounded pixel-box bg-amber-500/20 text-amber-500">
+                <span className="px-2 py-0.5 pixel-box bg-amber-500/20 text-amber-500">
                   SMKN 1 BERINGIN
                 </span>
-                <span className="px-2 py-0.5 rounded pixel-box bg-sky-500/20 text-sky-500">
-                  STAGE 2026
+                <span className="px-2 py-0.5 pixel-box bg-sky-500/20 text-sky-500">
+                  ANGKATAN 2026
                 </span>
               </div>
 
@@ -271,17 +271,17 @@ export function StudentProfiles() {
                   className="pixel-btn pixel-btn-primary flex-1 py-2 text-[9px] flex items-center justify-center gap-1.5"
                 >
                   <Instagram className="w-3.5 h-3.5" />
-                  <span>INSTAGRAM</span>
+                  <span>Instagram</span>
                   <ExternalLink className="w-3 h-3" />
                 </a>
 
                 <button
                   type="button"
-                  onClick={(e) => handleCoin(e, selectedStudent.id)}
+                  onClick={(e) => handleLike(e, selectedStudent.id)}
                   className="pixel-btn pixel-btn-secondary py-2 px-3 text-[9px] flex items-center justify-center gap-1"
                 >
-                  <Heart className={`w-3.5 h-3.5 text-amber-500 ${coins[selectedStudent.id] ? "fill-amber-500" : ""}`} />
-                  <span>+{coins[selectedStudent.id] || 1}</span>
+                  <Heart className={`w-3.5 h-3.5 text-amber-500 ${likes[selectedStudent.id] ? "fill-amber-500" : ""}`} />
+                  <span>+{likes[selectedStudent.id] || 1}</span>
                 </button>
               </div>
             </div>

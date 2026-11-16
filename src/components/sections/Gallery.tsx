@@ -3,16 +3,16 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { galleryData, GalleryItem } from "@/data/gallery";
-import { X, Camera, Eye, Gamepad2 } from "lucide-react";
+import { X, Camera, Eye } from "lucide-react";
 import { useGSAP, gsap } from "@/lib/gsap-config";
 import { PixelCard } from "@/components/ui/PixelCard";
 
 const categories = [
-  { id: "all", label: "ALL PHOTOS" },
-  { id: "lab", label: "LAB 2 PPLG" },
-  { id: "kegiatan", label: "EVENTS" },
-  { id: "candid", label: "CANDID" },
-  { id: "lapangan", label: "OUTDOOR" },
+  { id: "all", label: "Semua Foto" },
+  { id: "lab", label: "Lab Komputer" },
+  { id: "kegiatan", label: "Kegiatan" },
+  { id: "candid", label: "Candid" },
+  { id: "lapangan", label: "Luar Sekolah" },
 ];
 
 export function Gallery() {
@@ -40,15 +40,15 @@ export function Gallery() {
 
   useGSAP(
     () => {
-      const cards = galleryRef.current?.querySelectorAll(".pixel-gallery-card");
+      const cards = galleryRef.current?.querySelectorAll(".gallery-card-item");
       if (!cards || cards.length === 0) return;
 
       gsap.fromTo(
         cards,
-        { opacity: 0, scale: 0.96 },
+        { opacity: 0, y: 15 },
         {
           opacity: 1,
-          scale: 1,
+          y: 0,
           duration: 0.35,
           stagger: 0.03,
           ease: "steps(4)",
@@ -60,21 +60,21 @@ export function Gallery() {
 
   return (
     <section id="galeri" ref={galleryRef} className="py-20 px-3 sm:px-6 max-w-7xl mx-auto relative select-none">
-      {/* Arcade Header */}
+      {/* Header */}
       <div className="text-center max-w-xl mx-auto mb-10">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded pixel-box bg-slate-900 text-[#FBBF24] font-pixel text-[10px] mb-3">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 pixel-box bg-slate-900 text-[#FBBF24] font-pixel text-[10px] mb-3">
           <Camera className="w-3.5 h-3.5" />
-          <span>[ SNAPSHOT ARCHIVE ]</span>
+          <span>DOKUMENTASI</span>
         </div>
         <h2 className="font-pixel text-xl sm:text-3xl text-slate-900 dark:text-white mb-3">
-          GALLERY &amp; MEMORIES
+          Galeri Kenangan
         </h2>
         <p className="font-silk text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-bold uppercase">
-          Dokumentasi momen kegiatan siswa XII PPLG 3 di SMKN 1 Beringin
+          Dokumentasi momen kegiatan siswa XII PPLG 3 di SMK Negeri 1 Beringin
         </p>
       </div>
 
-      {/* Retro Pixel Category Tabs */}
+      {/* Category Tabs */}
       <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
         {categories.map((cat) => {
           const isActive = activeCategory === cat.id;
@@ -82,13 +82,13 @@ export function Gallery() {
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`font-pixel text-[9px] px-3 py-2 rounded transition-all cursor-pointer ${
+              className={`font-silk text-xs px-3.5 py-2 pixel-box transition-all cursor-pointer font-bold ${
                 isActive
-                  ? "bg-[#FBBF24] text-slate-950 border-2 border-slate-950 shadow-[2px_2px_0px_0px_#0F172A]"
-                  : "bg-white dark:bg-[#111827] text-slate-700 dark:text-slate-300 border-2 border-slate-300 dark:border-slate-700 hover:border-amber-400"
+                  ? "bg-[#FBBF24] text-slate-950 border-amber-500 shadow-[4px_4px_0px_0px_#F59E0B]"
+                  : "bg-white dark:bg-[#111827] text-slate-700 dark:text-slate-300 hover:border-amber-400"
               }`}
             >
-              [ {cat.label} ]
+              {cat.label}
             </button>
           );
         })}
@@ -97,12 +97,12 @@ export function Gallery() {
       {/* Grid of Photo Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
         {filteredPhotos.map((item) => (
-          <div key={item.id} className="pixel-gallery-card">
+          <div key={item.id} className="gallery-card-item">
             <PixelCard
               onClick={() => setSelectedPhoto(item)}
               className="p-3 flex flex-col justify-between h-full"
             >
-              <div className="relative aspect-[4/3] w-full rounded overflow-hidden bg-slate-950 border-2 border-slate-900 dark:border-slate-700 mb-3">
+              <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-950 border-2 border-slate-900 dark:border-slate-700 mb-3">
                 <Image
                   src={item.imageUrl}
                   alt={item.title}
@@ -111,9 +111,9 @@ export function Gallery() {
                   className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
-                  <span className="font-pixel text-[9px] text-[#FBBF24] flex items-center gap-1.5">
+                  <span className="font-silk text-xs text-[#FBBF24] font-bold flex items-center gap-1.5">
                     <Eye className="w-3.5 h-3.5" />
-                    <span>VIEW FULL</span>
+                    <span>Lihat Ukuran Penuh</span>
                   </span>
                 </div>
               </div>
@@ -131,7 +131,7 @@ export function Gallery() {
         ))}
       </div>
 
-      {/* Pixel Lightbox Modal */}
+      {/* Lightbox Modal */}
       {selectedPhoto && (
         <div
           role="dialog"
@@ -141,16 +141,16 @@ export function Gallery() {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="pixel-box p-4 sm:p-6 max-w-xl w-full relative z-10 bg-white dark:bg-[#111827] border-4 border-slate-900 dark:border-amber-500/80 shadow-2xl"
+            className="pixel-box p-4 sm:p-6 max-w-xl w-full relative z-10 bg-white dark:bg-[#111827] border-4 border-slate-900 dark:border-amber-500 shadow-2xl"
           >
             <button
               onClick={() => setSelectedPhoto(null)}
-              className="absolute top-3 right-3 z-10 w-7 h-7 rounded bg-slate-200 dark:bg-slate-800 hover:bg-rose-500 hover:text-white text-slate-700 dark:text-slate-300 flex items-center justify-center cursor-pointer border border-slate-900 transition-colors"
+              className="absolute top-3 right-3 z-10 w-7 h-7 bg-slate-200 dark:bg-slate-800 hover:bg-rose-500 hover:text-white text-slate-700 dark:text-slate-300 flex items-center justify-center cursor-pointer border-2 border-slate-900 transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
 
-            <div className="relative aspect-[16/10] w-full rounded overflow-hidden bg-slate-950 mb-3.5 border-2 border-slate-900 dark:border-slate-700 shadow-md">
+            <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950 mb-3.5 border-2 border-slate-900 dark:border-slate-700 shadow-md">
               <Image
                 src={selectedPhoto.imageUrl}
                 alt={selectedPhoto.title}
