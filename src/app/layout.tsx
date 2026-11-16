@@ -1,25 +1,27 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
+import { Nunito, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
-import { GrainOverlay } from "@/components/layout/GrainOverlay";
+import { AmbientBubbles } from "@/components/layout/AmbientBubbles";
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const nunito = Nunito({
+  variable: "--font-nunito",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
   display: "swap",
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "XII PPLG 3 — SMK Negeri 1 Beringin | Class Yearbook & Portal",
   description:
-    "Portal resmi dan album kenangan digital kelas XII PPLG 3 SMK Negeri 1 Beringin (Angkatan 2026). Merangkum kisah, karya, karya game & software, dan persahabatan abadi.",
+    "Portal resmi dan album kenangan digital kelas XII PPLG 3 SMK Negeri 1 Beringin (Angkatan 2026). Merangkum kisah, karya game & software, dan persahabatan abadi.",
   keywords: [
     "XII PPLG 3",
     "SMK Negeri 1 Beringin",
@@ -32,7 +34,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Keluarga Besar XII PPLG 3" }],
   openGraph: {
     title: "XII PPLG 3 — SMK Negeri 1 Beringin",
-    description: "A warm, film-grain scrapbook that breathes. Album kenangan digital kami.",
+    description: "Ruang kebersamaan 31 siswa XII PPLG 3 SMK Negeri 1 Beringin.",
     type: "website",
     locale: "id_ID",
   },
@@ -44,9 +46,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id" className={`${playfair.variable} ${inter.variable} scroll-smooth`}>
-      <body className="min-h-screen bg-[#FFFDF7] text-[#1C1917] font-sans antialiased selection:bg-amber-200 selection:text-amber-900 relative overflow-x-hidden">
-        <GrainOverlay />
+    <html lang="id" className={`${nunito.variable} ${jakarta.variable} scroll-smooth`}>
+      <body className="min-h-screen bg-[#F4F7FC] text-slate-800 font-sans antialiased selection:bg-[#BAE6FD] selection:text-[#0369A1] relative overflow-x-hidden">
+        <AmbientBubbles />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

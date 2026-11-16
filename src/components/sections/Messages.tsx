@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Plus, Quote } from "lucide-react";
+import { Plus, Quote, Sparkles, X } from "lucide-react";
 import { MessageItem } from "@/types";
+import confetti from "canvas-confetti";
 
 const initialMessages: MessageItem[] = [
   {
@@ -80,49 +81,56 @@ export function Messages() {
     setName("");
     setText("");
     setModalOpen(false);
+
+    confetti({
+      particleCount: 70,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ["#58CC02", "#1CB0F6", "#FFC800", "#FF4B4B"],
+    });
   };
 
   return (
     <section id="pesan" className="py-20 px-4 sm:px-6 max-w-6xl mx-auto relative">
       {/* Header */}
       <div className="text-center max-w-xl mx-auto mb-10">
-        <span className="text-xs font-semibold text-stone-500 uppercase tracking-widest block mb-2">
-          Kenangan
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-800 font-heading font-extrabold text-xs border border-amber-200 border-b-2 border-b-amber-300 shadow-xs mb-3">
+          💌 Catatan Kenangan
         </span>
-        <h2 className="text-3xl sm:text-5xl font-black text-stone-900 tracking-tight mb-2">
-          Catatan &amp; Kesan
+        <h2 className="text-3xl sm:text-5xl font-heading font-black text-slate-900 tracking-tight mb-2">
+          Kesan &amp; Pesan
         </h2>
-        <p className="text-sm text-stone-600 mb-6">
-          Untaian pesan dari guru dan siswa kelas XII PPLG 3.
+        <p className="text-sm sm:text-base text-slate-600 mb-6">
+          Untaian pesan dari guru dan siswa kelas XII PPLG 3 SMK Negeri 1 Beringin.
         </p>
 
         <button
           onClick={() => setModalOpen(true)}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-stone-900 text-white text-xs font-medium hover:bg-stone-800 transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5 cursor-pointer"
+          className="clay-btn clay-btn-green px-6 py-3 text-xs sm:text-sm flex items-center gap-2 mx-auto"
         >
           <Plus className="w-4 h-4" />
           <span>Tulis Pesan Singkat</span>
         </button>
       </div>
 
-      {/* Grid of Message Cards */}
+      {/* Grid of Clay Message Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {messages.map((msg) => (
           <div
             key={msg.id}
-            className="glass-card rounded-3xl p-6 flex flex-col justify-between border border-stone-200/90 shadow-xs hover:shadow-md transition-all duration-300 hover:-translate-y-1"
+            className="clay-card p-6 flex flex-col justify-between group hover:-translate-y-1 transition-transform"
           >
             <div>
-              <div className="w-8 h-8 rounded-full bg-amber-50 text-amber-700 flex items-center justify-center mb-4">
-                <Quote className="w-4 h-4" />
+              <div className="w-10 h-10 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center mb-4 border-b-2 border-amber-200">
+                <Quote className="w-5 h-5 fill-current" />
               </div>
-              <p className="text-xs sm:text-sm text-stone-700 italic leading-relaxed mb-6">
+              <p className="text-xs sm:text-sm text-slate-700 italic leading-relaxed mb-6 font-medium">
                 &ldquo;{msg.text}&rdquo;
               </p>
             </div>
 
-            <div className="flex items-center gap-3 pt-4 border-t border-stone-100">
-              <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0 border border-stone-200 shadow-xs">
+            <div className="flex items-center gap-3 pt-4 border-t-2 border-slate-100">
+              <div className="relative w-11 h-11 rounded-2xl overflow-hidden shrink-0 border-2 border-slate-100 border-b-[3px] border-b-slate-200 shadow-xs bg-slate-100">
                 <Image
                   src={msg.avatar}
                   alt={msg.author}
@@ -131,11 +139,11 @@ export function Messages() {
                 />
               </div>
               <div>
-                <h4 className="font-bold text-xs text-stone-900 leading-tight">
+                <h4 className="font-heading font-black text-xs sm:text-sm text-slate-900 leading-tight">
                   {msg.author}
                 </h4>
-                <div className="flex items-center gap-2 text-[10px] text-stone-500 mt-0.5">
-                  <span className="font-medium text-amber-800">{msg.role}</span>
+                <div className="flex items-center gap-2 text-[11px] font-heading font-bold text-slate-400 mt-0.5">
+                  <span className="text-[#58CC02]">{msg.role}</span>
                   <span>•</span>
                   <span>{msg.date}</span>
                 </div>
@@ -145,27 +153,35 @@ export function Messages() {
         ))}
       </div>
 
-      {/* Simple Write Message Modal */}
+      {/* Clay Write Message Modal */}
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full relative shadow-2xl border border-stone-200 animate-in zoom-in-95 duration-200">
+        <div
+          role="dialog"
+          aria-modal="true"
+          onClick={() => setModalOpen(false)}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="clay-card p-6 sm:p-8 max-w-md w-full relative border-b-[8px] border-b-slate-300 animate-in zoom-in-95 duration-200"
+          >
             <button
               onClick={() => setModalOpen(false)}
-              className="absolute top-4 right-4 w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 flex items-center justify-center text-xs transition-colors"
+              className="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 active:translate-y-0.5 border-b-2 border-slate-300 font-heading font-black text-slate-600 flex items-center justify-center text-xs transition-all cursor-pointer"
             >
-              ✕
+              <X className="w-4 h-4" />
             </button>
 
-            <h3 className="font-bold text-lg text-stone-900 mb-1">
-              Tulis Catatan / Kesan
+            <h3 className="font-heading font-black text-xl text-slate-900 mb-1">
+              Tulis Pesan &amp; Kenangan
             </h3>
-            <p className="text-xs text-stone-500 mb-5">
-              Pesan singkat untuk teman-teman dan kelas XII PPLG 3.
+            <p className="text-xs text-slate-500 mb-5">
+              Tuliskan pesan penyemangat untuk teman-teman XII PPLG 3.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-stone-700 mb-1.5">
+                <label className="block text-xs font-heading font-extrabold text-slate-700 mb-1.5">
                   Nama Kamu
                 </label>
                 <input
@@ -173,13 +189,13 @@ export function Messages() {
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="Contoh: Arrosid / Bima"
-                  className="w-full px-4 py-2.5 rounded-xl border border-stone-200 text-xs text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-stone-400"
+                  placeholder="Contoh: Arrosid / Clara / Rizky"
+                  className="w-full px-4 py-3 rounded-2xl border-2 border-slate-200 border-b-[3px] border-b-slate-300 text-xs font-heading font-bold text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#58CC02] focus:border-b-[#46A302]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-stone-700 mb-1.5">
+                <label className="block text-xs font-heading font-extrabold text-slate-700 mb-1.5">
                   Peran / Keterangan
                 </label>
                 <input
@@ -187,12 +203,12 @@ export function Messages() {
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
                   placeholder="Contoh: Siswa / Frontend Dev"
-                  className="w-full px-4 py-2.5 rounded-xl border border-stone-200 text-xs text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-stone-400"
+                  className="w-full px-4 py-3 rounded-2xl border-2 border-slate-200 border-b-[3px] border-b-slate-300 text-xs font-heading font-bold text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#58CC02] focus:border-b-[#46A302]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-stone-700 mb-1.5">
+                <label className="block text-xs font-heading font-extrabold text-slate-700 mb-1.5">
                   Pesan / Kesan
                 </label>
                 <textarea
@@ -201,15 +217,16 @@ export function Messages() {
                   value={text}
                   onChange={(e) => setText(e.target.value)}
                   placeholder="Tuliskan pengalaman atau pesan terbaikmu selama di kelas..."
-                  className="w-full px-4 py-2.5 rounded-xl border border-stone-200 text-xs text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-stone-400 resize-none"
+                  className="w-full px-4 py-3 rounded-2xl border-2 border-slate-200 border-b-[3px] border-b-slate-300 text-xs font-heading font-bold text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#58CC02] focus:border-b-[#46A302] resize-none"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full py-2.5 rounded-xl bg-stone-900 text-white font-medium text-xs hover:bg-stone-800 transition-colors shadow-sm"
+                className="clay-btn clay-btn-green w-full py-3.5 text-xs sm:text-sm flex items-center justify-center gap-2"
               >
-                Kirim Pesan
+                <Sparkles className="w-4 h-4" />
+                <span>Kirim Pesan</span>
               </button>
             </form>
           </div>

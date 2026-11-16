@@ -2,85 +2,216 @@
 
 @layer base {
   :root {
-    --background: #FAFAF9;
-    --foreground: #1C1917;
+    --background: #F4F7FB;
+    --foreground: #1E293B;
   }
 }
 
-.font-serif {
-  font-family: var(--font-playfair), Georgia, serif;
+.font-heading {
+  font-family: var(--font-nunito), ui-rounded, "Nunito", -apple-system, sans-serif;
 }
 
 .font-sans {
-  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans), var(--font-nunito), -apple-system, sans-serif;
 }
 
-/* Glassmorphism & Modern Soft Card Styles */
-.glass-card {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(229, 231, 235, 0.8);
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+/* Claymorphic 3D Card Tokens */
+.clay-card {
+  background: #FFFFFF;
+  border-radius: 28px;
+  border: 2px solid #F1F5F9;
+  border-bottom: 5px solid #E2E8F0;
+  box-shadow: 
+    0 12px 24px -6px rgba(15, 23, 42, 0.06),
+    0 4px 8px -2px rgba(15, 23, 42, 0.03),
+    inset 0 2px 4px rgba(255, 255, 255, 0.95);
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.glass-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.08);
-  border-color: rgba(214, 211, 209, 1);
+.clay-card:hover {
+  transform: translateY(-5px);
+  border-bottom-width: 7px;
+  border-bottom-color: #CBD5E1;
+  box-shadow: 
+    0 20px 32px -8px rgba(99, 102, 241, 0.12),
+    0 8px 16px -4px rgba(15, 23, 42, 0.06),
+    inset 0 2px 4px rgba(255, 255, 255, 1);
 }
 
-.modern-pill {
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(229, 231, 235, 0.9);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+.clay-card-flat {
+  background: #FFFFFF;
+  border-radius: 24px;
+  border: 2px solid #F1F5F9;
+  border-bottom: 4px solid #E2E8F0;
+  box-shadow: 
+    0 8px 16px -4px rgba(15, 23, 42, 0.04),
+    inset 0 2px 4px rgba(255, 255, 255, 0.9);
 }
 
-/* Floating Animations */
-@keyframes float-slow {
+/* Duolingo Signature 3D Tactile Buttons */
+.clay-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-nunito), sans-serif;
+  font-weight: 800;
+  border-radius: 9999px;
+  transition: transform 0.12s ease, border-bottom-width 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+  cursor: pointer;
+}
+
+.clay-btn:active {
+  transform: translateY(3px) !important;
+  border-bottom-width: 1px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Green (Duolingo Primary) */
+.clay-btn-green {
+  background-color: #58CC02;
+  color: #FFFFFF;
+  border-bottom: 4px solid #46A302;
+  box-shadow: 0 4px 14px rgba(88, 204, 2, 0.35);
+}
+.clay-btn-green:hover {
+  background-color: #52be02;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(88, 204, 2, 0.45);
+}
+
+/* Blue (Duolingo Sky) */
+.clay-btn-blue {
+  background-color: #1CB0F6;
+  color: #FFFFFF;
+  border-bottom: 4px solid #1899D6;
+  box-shadow: 0 4px 14px rgba(28, 176, 246, 0.35);
+}
+.clay-btn-blue:hover {
+  background-color: #19a4e6;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(28, 176, 246, 0.45);
+}
+
+/* Amber / Gold (Duolingo Streak) */
+.clay-btn-amber {
+  background-color: #FF9600;
+  color: #FFFFFF;
+  border-bottom: 4px solid #CC7A00;
+  box-shadow: 0 4px 14px rgba(255, 150, 0, 0.35);
+}
+.clay-btn-amber:hover {
+  background-color: #e68700;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 150, 0, 0.45);
+}
+
+/* Purple (Creative / PPLG) */
+.clay-btn-purple {
+  background-color: #8B5CF6;
+  color: #FFFFFF;
+  border-bottom: 4px solid #7C3AED;
+  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35);
+}
+.clay-btn-purple:hover {
+  background-color: #7c4af0;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(139, 92, 246, 0.45);
+}
+
+/* White / Neutral Tactile Button */
+.clay-btn-white {
+  background-color: #FFFFFF;
+  color: #334155;
+  border: 2px solid #E2E8F0;
+  border-bottom: 4px solid #CBD5E1;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.05);
+}
+.clay-btn-white:hover {
+  background-color: #F8FAFC;
+  color: #0F172A;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(15, 23, 42, 0.08);
+}
+
+/* Clay Pills & Streaks */
+.clay-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-family: var(--font-nunito), sans-serif;
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.8);
+}
+
+.clay-pill-amber {
+  background-color: #FEF3C7;
+  color: #B45309;
+  border-bottom: 2px solid #FCD34D;
+}
+
+.clay-pill-green {
+  background-color: #DCFCE7;
+  color: #15803D;
+  border-bottom: 2px solid #86EFAC;
+}
+
+.clay-pill-blue {
+  background-color: #E0F2FE;
+  color: #0369A1;
+  border-bottom: 2px solid #7DD3FC;
+}
+
+.clay-pill-purple {
+  background-color: #F3E8FF;
+  color: #7E22CE;
+  border-bottom: 2px solid #D8B4FE;
+}
+
+/* Soft Floating Animations */
+@keyframes float-soft {
   0%, 100% {
     transform: translateY(0px) rotate(0deg);
   }
   50% {
-    transform: translateY(-10px) rotate(1deg);
+    transform: translateY(-10px) rotate(2deg);
   }
 }
 
-@keyframes float-reverse {
+@keyframes float-reverse-soft {
   0%, 100% {
     transform: translateY(0px) rotate(0deg);
   }
   50% {
-    transform: translateY(10px) rotate(-1deg);
+    transform: translateY(8px) rotate(-2deg);
   }
 }
 
-@keyframes pulse-glow {
+@keyframes pulse-gentle {
   0%, 100% {
-    opacity: 0.4;
     transform: scale(1);
+    opacity: 0.9;
   }
   50% {
-    opacity: 0.7;
-    transform: scale(1.08);
+    transform: scale(1.06);
+    opacity: 1;
   }
 }
 
-.animate-float {
-  animation: float-slow 6s ease-in-out infinite;
+.animate-float-soft {
+  animation: float-soft 5s ease-in-out infinite;
 }
 
-.animate-float-reverse {
-  animation: float-reverse 7s ease-in-out infinite;
+.animate-float-reverse-soft {
+  animation: float-reverse-soft 6s ease-in-out infinite;
 }
 
-.animate-glow {
-  animation: pulse-glow 8s ease-in-out infinite;
+.animate-pulse-gentle {
+  animation: pulse-gentle 2.5s ease-in-out infinite;
 }
 
-/* Marquee ticker animation */
+/* Marquee */
 @keyframes marquee {
   from {
     transform: translateX(0);
@@ -98,25 +229,26 @@
   animation-direction: reverse;
 }
 
-/* Custom scrollbar */
+/* Custom friendly scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #FAFAF9;
+  background: #F1F5F9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #D6D3D1;
+  background: #CBD5E1;
   border-radius: 9999px;
+  border: 2px solid #F1F5F9;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #A8A29E;
+  background: #94A3B8;
 }
 
 ::selection {
-  background-color: #FDE68A;
-  color: #1C1917;
+  background-color: #BAE6FD;
+  color: #0369A1;
 }
