@@ -3,7 +3,7 @@ import { Hero } from "@/components/sections/Hero";
 import { AboutClass } from "@/components/sections/AboutClass";
 import { StudentProfiles } from "@/components/sections/StudentProfiles";
 import { Gallery } from "@/components/sections/Gallery";
-import { Messages } from "@/components/sections/Messages";
+import { ClassStructure } from "@/components/sections/ClassStructure";
 import { Footer } from "@/components/sections/Footer";
 import { Marquee } from "@/components/animated/Marquee";
 import { students } from "@/data/students";
@@ -14,7 +14,7 @@ export default function Home() {
       {/* 1. Pixel Navbar */}
       <Navbar />
 
-      {/* 2. Hero Section */}
+      {/* 2. Hero Section with Cyber Arcade Animation */}
       <Hero />
 
       {/* 3. Section: Tentang Kelas & Wali Kelas */}
@@ -69,8 +69,8 @@ export default function Home() {
       {/* 6. Galeri Foto */}
       <Gallery />
 
-      {/* 7. Pesan & Kesan */}
-      <Messages />
+      {/* 7. Struktur Organisasi & Kepengurusan Kelas (Static Authentic Data) */}
+      <ClassStructure />
 
       {/* 8. Footer */}
       <Footer />

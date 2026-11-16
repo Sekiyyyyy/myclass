@@ -52,8 +52,8 @@ export function Footer() {
           <a href="#galeri" className="text-slate-700 dark:text-slate-200 hover:text-amber-500 dark:hover:text-amber-400 transition-colors">
             Galeri
           </a>
-          <a href="#pesan" className="text-slate-700 dark:text-slate-200 hover:text-amber-500 dark:hover:text-amber-400 transition-colors">
-            Pesan
+          <a href="#struktur" className="text-slate-700 dark:text-slate-200 hover:text-amber-500 dark:hover:text-amber-400 transition-colors">
+            Struktur
           </a>
 
           <button

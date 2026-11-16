@@ -102,10 +102,10 @@ export function Navbar() {
             Galeri
           </a>
           <a
-            href="#pesan"
+            href="#struktur"
             className="px-2 py-1 text-slate-700 dark:text-slate-300 hover:text-amber-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
           >
-            Pesan
+            Struktur
           </a>
         </div>
 
