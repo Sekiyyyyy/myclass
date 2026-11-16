@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { galleryData, GalleryItem } from "@/data/gallery";
-import { ArrowUpRight, X, Sparkles } from "lucide-react";
+import { ArrowUpRight, X, Camera, Sparkles, Maximize2 } from "lucide-react";
 import { useGSAP, gsap } from "@/lib/gsap-config";
+import { playPop, playClick, playChime } from "@/lib/sound";
 
 const categories = [
   { id: "all", label: "Semua" },
@@ -31,6 +32,16 @@ export function Gallery() {
   const col1 = filteredPhotos.filter((_, i) => i % 3 === 0);
   const col2 = filteredPhotos.filter((_, i) => i % 3 === 1);
   const col3 = filteredPhotos.filter((_, i) => i % 3 === 2);
+
+  // Close lightbox on Escape
+  useEffect(() => {
+    if (!selectedPhoto) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelectedPhoto(null);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedPhoto]);
 
   useGSAP(
     () => {
@@ -82,29 +93,32 @@ export function Gallery() {
     <section id="galeri" ref={galleryRef} className="py-24 px-4 sm:px-6 max-w-7xl mx-auto relative overflow-hidden">
       {/* Header */}
       <div className="text-center max-w-xl mx-auto mb-10">
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-50 text-sky-800 font-heading font-extrabold text-xs border border-sky-200 border-b-2 border-b-sky-300 shadow-xs mb-3">
-          📸 Momen Seru
+        <span className="clay-pill-tag bg-sky-50 text-sky-800 border-2 border-sky-200 mb-3">
+          <Camera className="w-3.5 h-3.5 text-[#1CB0F6]" />
+          <span>Arsip Dokumentasi</span>
         </span>
         <h2 className="text-3xl sm:text-5xl font-heading font-black text-slate-900 tracking-tight mb-2">
           Galeri Kenangan
         </h2>
-        <p className="text-sm sm:text-base text-slate-600">
+        <p className="text-sm sm:text-base text-slate-600 font-medium">
           Momen nyata kebersamaan di Lab Komputer dan lingkungan SMK Negeri 1 Beringin.
         </p>
       </div>
 
-      {/* Filter Tabs (3D Clay Pills) */}
+      {/* Filter Tabs (3D Clay Tactile Buttons) */}
       <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
         {categories.map((cat) => {
           const isActive = activeCategory === cat.id;
           return (
             <button
               key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
-              className={`clay-btn px-4 py-2 text-xs font-heading font-extrabold transition-all ${
-                isActive
-                  ? "clay-btn-green"
-                  : "clay-btn-white"
+              onClick={() => {
+                playClick();
+                setActiveCategory(cat.id);
+              }}
+              onMouseEnter={() => playPop(540)}
+              className={`clay-btn px-4 py-2 text-xs font-heading font-black transition-all ${
+                isActive ? "clay-btn-green" : "clay-btn-white"
               }`}
             >
               {cat.label}
@@ -117,19 +131,40 @@ export function Gallery() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2 pb-12 items-start">
         <div ref={col1Ref} className="flex flex-col gap-6">
           {col1.map((item) => (
-            <PhotoCard key={item.id} item={item} onSelect={() => setSelectedPhoto(item)} />
+            <PhotoCard
+              key={item.id}
+              item={item}
+              onSelect={() => {
+                playChime();
+                setSelectedPhoto(item);
+              }}
+            />
           ))}
         </div>
 
         <div ref={col2Ref} className="flex flex-col gap-6">
           {col2.map((item) => (
-            <PhotoCard key={item.id} item={item} onSelect={() => setSelectedPhoto(item)} />
+            <PhotoCard
+              key={item.id}
+              item={item}
+              onSelect={() => {
+                playChime();
+                setSelectedPhoto(item);
+              }}
+            />
           ))}
         </div>
 
         <div ref={col3Ref} className="flex flex-col gap-6">
           {col3.map((item) => (
-            <PhotoCard key={item.id} item={item} onSelect={() => setSelectedPhoto(item)} />
+            <PhotoCard
+              key={item.id}
+              item={item}
+              onSelect={() => {
+                playChime();
+                setSelectedPhoto(item);
+              }}
+            />
           ))}
         </div>
       </div>
@@ -139,7 +174,10 @@ export function Gallery() {
         <div
           role="dialog"
           aria-modal="true"
-          onClick={() => setSelectedPhoto(null)}
+          onClick={() => {
+            playPop(420);
+            setSelectedPhoto(null);
+          }}
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200"
         >
           <div
@@ -147,13 +185,16 @@ export function Gallery() {
             className="clay-card p-5 sm:p-7 max-w-2xl w-full relative border-b-[8px] border-b-slate-300 animate-in zoom-in-95 duration-200"
           >
             <button
-              onClick={() => setSelectedPhoto(null)}
+              onClick={() => {
+                playPop(420);
+                setSelectedPhoto(null);
+              }}
               className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 active:translate-y-0.5 border-b-2 border-slate-300 font-heading font-black text-slate-700 flex items-center justify-center text-xs transition-all cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
 
-            <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-slate-100 mb-4 border-2 border-slate-100 shadow-md">
+            <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-slate-100 mb-4 border-2 border-slate-100 shadow-inner">
               <Image
                 src={selectedPhoto.imageUrl}
                 alt={selectedPhoto.title}
@@ -167,7 +208,7 @@ export function Gallery() {
               <h3 className="font-heading font-black text-xl text-slate-900">
                 {selectedPhoto.title}
               </h3>
-              <span className="text-xs font-heading font-extrabold px-3 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200 border-b-2 border-b-amber-300">
+              <span className="clay-pill-tag bg-amber-50 text-amber-800 border border-amber-200">
                 {selectedPhoto.date}
               </span>
             </div>
@@ -186,7 +227,8 @@ function PhotoCard({ item, onSelect }: { item: GalleryItem; onSelect: () => void
   return (
     <div
       onClick={onSelect}
-      className="clay-card p-3 sm:p-4 rounded-3xl overflow-hidden cursor-pointer flex flex-col group transition-all"
+      onMouseEnter={() => playPop(580)}
+      className="clay-card clay-card-interactive p-3.5 sm:p-4 rounded-3xl overflow-hidden cursor-pointer flex flex-col group transition-all"
     >
       <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden bg-slate-100 border border-slate-100 shadow-inner mb-3">
         <Image
@@ -197,11 +239,11 @@ function PhotoCard({ item, onSelect }: { item: GalleryItem; onSelect: () => void
           className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
         />
 
-        <span className="absolute bottom-2.5 right-2.5 text-[10px] font-heading font-extrabold px-2.5 py-0.5 rounded-full bg-white/95 text-slate-800 border border-slate-200 shadow-xs">
+        <span className="absolute bottom-2.5 right-2.5 text-[10px] font-heading font-black px-2.5 py-0.5 rounded-full bg-white/95 text-slate-800 border border-slate-200 shadow-xs">
           {item.date}
         </span>
 
-        <div className="absolute bottom-2.5 left-2.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1 text-white text-xs font-heading font-black px-2.5 py-0.5 rounded-full bg-[#58CC02] border-b-2 border-[#46A302]">
+        <div className="absolute bottom-2.5 left-2.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1 text-white text-xs font-heading font-black px-2.5 py-1 rounded-full bg-[#58CC02] border-b-2 border-[#46A302]">
           <span>Perbesar</span>
           <ArrowUpRight className="w-3.5 h-3.5" />
         </div>

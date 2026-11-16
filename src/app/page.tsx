@@ -10,11 +10,11 @@ import { students } from "@/data/students";
 
 export default function Home() {
   return (
-    <main className="min-h-screen relative overflow-hidden bg-[#F4F7FC] text-slate-800">
-      {/* 1. Sleek Floating Clay Dock Navbar */}
+    <main className="min-h-screen relative overflow-hidden bg-[#F0F4FA] text-slate-800">
+      {/* 1. Sleek Floating Clay Dock Navbar with Audio SFX Toggle */}
       <Navbar />
 
-      {/* 2. Hero with Duolingo-inspired Clay Badges & Tactile 3D Buttons */}
+      {/* 2. Hero with Authentic Claymorphism & Level 12 Progress */}
       <Hero />
 
       {/* 3. Section 2: Tentang XII PPLG 3 (Kisah & Kebersamaan) */}
@@ -26,13 +26,13 @@ export default function Home() {
           {students.slice(0, 16).map((s) => (
             <div
               key={s.id}
-              className="flex items-center gap-2 px-4 py-2 rounded-full bg-white border-2 border-slate-100 border-b-[3px] border-b-slate-200 shadow-sm text-xs font-heading font-extrabold text-slate-800 whitespace-nowrap mx-1.5 hover:border-[#58CC02] hover:border-b-[#46A302] transition-colors"
+              className="flex items-center gap-2 px-4 py-2 rounded-full bg-white border-2 border-slate-100 border-b-[3px] border-b-slate-200 shadow-sm text-xs font-heading font-black text-slate-800 whitespace-nowrap mx-1.5 hover:border-[#58CC02] hover:border-b-[#46A302] transition-colors"
             >
               <span className="w-5 h-5 rounded-full bg-emerald-100 text-[#58CC02] flex items-center justify-center text-[10px] font-black">
-                {s.id.replace("std-", "")}
+                {s.id}
               </span>
               <span className="text-slate-900">{s.name}</span>
-              <span className="text-sky-600 font-bold text-[11px]">@{s.ig}</span>
+              <span className="text-sky-600 font-black text-[11px]">@{s.ig}</span>
             </div>
           ))}
         </Marquee>
@@ -41,19 +41,19 @@ export default function Home() {
           {students.slice(16, 31).map((s) => (
             <div
               key={s.id}
-              className="flex items-center gap-2 px-4 py-2 rounded-full bg-white border-2 border-slate-100 border-b-[3px] border-b-slate-200 shadow-sm text-xs font-heading font-extrabold text-slate-800 whitespace-nowrap mx-1.5 hover:border-[#1CB0F6] hover:border-b-[#1899D6] transition-colors"
+              className="flex items-center gap-2 px-4 py-2 rounded-full bg-white border-2 border-slate-100 border-b-[3px] border-b-slate-200 shadow-sm text-xs font-heading font-black text-slate-800 whitespace-nowrap mx-1.5 hover:border-[#1CB0F6] hover:border-b-[#1899D6] transition-colors"
             >
               <span className="w-5 h-5 rounded-full bg-sky-100 text-[#1CB0F6] flex items-center justify-center text-[10px] font-black">
-                {s.id.replace("std-", "")}
+                {s.id}
               </span>
               <span className="text-slate-900">{s.name}</span>
-              <span className="text-sky-600 font-bold text-[11px]">@{s.ig}</span>
+              <span className="text-sky-600 font-black text-[11px]">@{s.ig}</span>
             </div>
           ))}
         </Marquee>
       </div>
 
-      {/* 5. 31 Siswa with Soft Claymorphism Cards */}
+      {/* 5. 31 Siswa with Authentic Claymorphic Cards & Like Interactions */}
       <StudentProfiles />
 
       {/* 6. Multi-Column Parallax Photo Gallery */}
