@@ -8,6 +8,7 @@ import { useTheme } from "@/lib/theme-provider";
 export function Navbar() {
   const [visible, setVisible] = useState(true);
   const [scrolled, setScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
@@ -16,6 +17,12 @@ export function Navbar() {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       setScrolled(currentScrollY > 20);
+
+      // Scroll Progress Calculation
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        setScrollProgress(Math.min(1, Math.max(0, currentScrollY / totalHeight)));
+      }
 
       if (currentScrollY > 60) {
         if (currentScrollY > lastScrollY && currentScrollY - lastScrollY > 10) {
@@ -41,18 +48,18 @@ export function Navbar() {
       }`}
     >
       <nav
-        className={`flex items-center gap-2 sm:gap-4 px-3 sm:px-5 py-2 pixel-box ${
+        className={`relative flex items-center gap-2 sm:gap-4 px-3 sm:px-5 py-2.5 pixel-box ${
           scrolled ? "bg-white/95 dark:bg-[#111827]/95 shadow-md" : "bg-white dark:bg-[#111827]"
         }`}
       >
         {/* Brand */}
         <a href="#hero" className="flex items-center gap-2.5 select-none group pr-1">
-          <div className="relative w-8 h-8 rounded-full overflow-hidden bg-white/95 dark:bg-slate-900 border-2 border-slate-900 dark:border-amber-400 shadow-[1px_1px_0px_#000] shrink-0">
+          <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden bg-[#080C16] border border-slate-700 dark:border-indigo-400/60 shadow-[0_0_10px_rgba(168,85,247,0.35)] shrink-0 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
             <Image
               src="/logo.png"
               alt="Logo XII PPLG 3"
               fill
-              className="object-contain p-0.5"
+              className="object-contain p-1"
             />
           </div>
           <div className="flex flex-col">
@@ -102,21 +109,26 @@ export function Navbar() {
           </a>
         </div>
 
-        {/* Divider */}
-        <div className="w-0.5 h-6 bg-slate-300 dark:bg-slate-700" />
-
-        {/* Theme Switcher Button */}
+        {/* Theme Toggle Button - Stepped Pixel Icon */}
         <button
           onClick={toggleTheme}
           title={theme === "dark" ? "Mode Terang" : "Mode Gelap"}
-          className="p-1.5 text-slate-700 dark:text-slate-200 hover:text-amber-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+          className="ml-auto w-8 h-8 flex items-center justify-center pixel-btn !p-0 !m-0 !shadow-none text-slate-800 dark:text-amber-400 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
         >
           {theme === "dark" ? (
-            <Sun className="w-4 h-4 text-amber-400" />
+            <Sun className="w-4 h-4 transition-transform hover:rotate-45" />
           ) : (
-            <Moon className="w-4 h-4 text-slate-700" />
+            <Moon className="w-4 h-4 transition-transform hover:-rotate-12" />
           )}
         </button>
+
+        {/* Dynamic 8-Bit Scroll Reading Progress Bar */}
+        <div className="absolute bottom-0 left-2 right-2 h-[2.5px] bg-slate-200/50 dark:bg-slate-800/80 overflow-hidden">
+          <div
+            className="h-full bg-gradient-to-r from-purple-500 via-pink-500 to-amber-400 origin-left transition-transform duration-75"
+            style={{ transform: `scaleX(${scrollProgress})` }}
+          />
+        </div>
       </nav>
     </header>
   );
