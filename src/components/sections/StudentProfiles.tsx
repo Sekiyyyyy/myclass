@@ -145,7 +145,7 @@ export function StudentProfiles() {
                   {/* Like Button */}
                   <button
                     type="button"
-                    onClick={(e) => handleCoin(e, s.id)}
+                    onClick={(e) => handleLike(e, s.id)}
                     title="Beri Suka"
                     className="absolute top-1.5 right-1.5 z-10 w-6 h-6 bg-slate-950/90 text-amber-400 hover:text-amber-300 flex items-center justify-center border border-amber-500/60 transition-transform active:scale-90 pixel-corners-sm cursor-pointer"
                   >
@@ -278,7 +278,7 @@ export function StudentProfiles() {
 
                   <button
                     type="button"
-                    onClick={(e) => handleCoin(e, selectedStudent.id)}
+                    onClick={(e) => handleLike(e, selectedStudent.id)}
                     className="pixel-btn pixel-btn-secondary py-2.5 px-3 text-[9px] flex items-center justify-center gap-1"
                   >
                     <Heart className={`w-3.5 h-3.5 text-amber-500 ${likes[selectedStudent.id] ? "fill-amber-500" : ""}`} />
