@@ -82,10 +82,8 @@ export function Gallery() {
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`font-silk text-xs px-3.5 py-2 pixel-box transition-all cursor-pointer font-bold ${
-                isActive
-                  ? "bg-[#FBBF24] text-slate-950 border-amber-500 shadow-[4px_4px_0px_0px_#F59E0B]"
-                  : "bg-white dark:bg-[#111827] text-slate-800 dark:text-slate-200 hover:border-amber-400"
+              className={`pixel-btn text-[11px] py-2 px-3 ${
+                isActive ? "pixel-btn-primary" : "pixel-btn-secondary"
               }`}
             >
               {cat.label}
@@ -102,7 +100,7 @@ export function Gallery() {
               onClick={() => setSelectedPhoto(item)}
               className="flex flex-col justify-between h-full"
             >
-              <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-950 border-2 border-slate-900 dark:border-slate-700 mb-3 pixel-corners-sm">
+              <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-950 pixel-frame mb-3 shadow-[3px_3px_0px_#000]">
                 <Image
                   src={item.imageUrl}
                   alt={item.title}
@@ -141,7 +139,7 @@ export function Gallery() {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="pixel-box p-4 sm:p-6 max-w-xl w-full relative z-10 border-4 border-slate-950"
+            className="pixel-box p-4 sm:p-6 max-w-xl w-full relative z-10"
           >
             {/* 4 Corner 8-Bit Pixel Blocks */}
             <span className="absolute top-1 left-1 w-2 h-2 bg-amber-400 pointer-events-none z-20" />
@@ -151,12 +149,12 @@ export function Gallery() {
 
             <button
               onClick={() => setSelectedPhoto(null)}
-              className="absolute top-3 right-3 z-10 w-7 h-7 bg-slate-200 dark:bg-slate-800 hover:bg-rose-500 hover:text-white text-slate-800 dark:text-slate-200 flex items-center justify-center cursor-pointer border-2 border-slate-900 transition-colors"
+              className="absolute top-3 right-3 z-10 w-7 h-7 bg-slate-200 dark:bg-slate-800 hover:bg-rose-500 hover:text-white text-slate-800 dark:text-slate-200 flex items-center justify-center cursor-pointer border border-slate-900 transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
 
-            <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950 mb-3.5 border-3 border-slate-900 dark:border-slate-700 shadow-md">
+            <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950 mb-3.5 pixel-frame shadow-md">
               <span className="absolute top-0 left-0 w-1.5 h-1.5 bg-[#FBBF24] z-20 pointer-events-none" />
               <span className="absolute top-0 right-0 w-1.5 h-1.5 bg-[#FBBF24] z-20 pointer-events-none" />
               <span className="absolute bottom-0 left-0 w-1.5 h-1.5 bg-[#FBBF24] z-20 pointer-events-none" />

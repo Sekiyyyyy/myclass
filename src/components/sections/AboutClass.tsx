@@ -107,7 +107,7 @@ export function AboutClass() {
                   </div>
                 </div>
 
-                <div className="p-3.5 pixel-box bg-slate-50 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 pixel-corners-sm">
+                <div className="p-3.5 pixel-box bg-slate-50 dark:bg-slate-900/90">
                   <p className="font-sans text-xs text-slate-800 dark:text-slate-200 italic leading-relaxed">
                     &ldquo;Bukan cuma tentang apa yang sudah kalian capai di kelas, tapi tentang bagaimana 31 anak ini saling menjaga kekompakan dan persaudaraan. Tetaplah rendah hati dan saling menyapa di mana pun kalian berada nanti.&rdquo;
                   </p>

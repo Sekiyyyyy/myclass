@@ -127,8 +127,8 @@ export function StudentProfiles() {
               className="flex flex-col justify-between h-full p-2.5 sm:p-3"
             >
               <div>
-                {/* Photo Frame with 8-Bit Pixel Corners and Bevel */}
-                <div className="relative aspect-[3/4] w-full overflow-hidden mb-3 bg-slate-950 border-3 border-slate-950 shadow-[inset_2px_2px_0px_#475569,inset_-2px_-2px_0px_#000]">
+                {/* Photo Frame with Stepped 8-Bit Pixel Borders */}
+                <div className="relative aspect-[3/4] w-full overflow-hidden mb-3 bg-slate-950 pixel-frame shadow-[3px_3px_0px_#000]">
                   <span className="absolute top-0 left-0 w-1.5 h-1.5 bg-[#FBBF24] z-20 pointer-events-none" />
                   <span className="absolute top-0 right-0 w-1.5 h-1.5 bg-[#FBBF24] z-20 pointer-events-none" />
                   <span className="absolute bottom-0 left-0 w-1.5 h-1.5 bg-[#FBBF24] z-20 pointer-events-none" />
@@ -143,7 +143,7 @@ export function StudentProfiles() {
                   />
 
                   {/* Absen Tag */}
-                  <div className="absolute top-1.5 left-1.5 z-10 px-1.5 py-0.5 bg-[#FBBF24] text-slate-950 font-pixel text-[9px] font-bold border-2 border-slate-950 shadow-[2px_2px_0px_#000]">
+                  <div className="absolute top-1.5 left-1.5 z-10 px-1.5 py-0.5 bg-[#FBBF24] text-slate-950 font-pixel text-[9px] font-bold border border-slate-950 shadow-[1px_1px_0px_#000]">
                     #{s.id}
                   </div>
 
@@ -152,7 +152,7 @@ export function StudentProfiles() {
                     type="button"
                     onClick={(e) => handleLike(e, s.id)}
                     title="Beri Suka"
-                    className="absolute top-1.5 right-1.5 z-10 w-6 h-6 bg-white dark:bg-slate-900 text-amber-500 hover:text-amber-400 flex items-center justify-center border-2 border-slate-950 shadow-[2px_2px_0px_#000] transition-transform active:scale-90 cursor-pointer"
+                    className="absolute top-1.5 right-1.5 z-10 w-6 h-6 bg-white dark:bg-slate-900 text-amber-500 hover:text-amber-400 flex items-center justify-center border border-slate-950 shadow-[1px_1px_0px_#000] transition-transform active:scale-90 cursor-pointer"
                   >
                     <Heart className={`w-3.5 h-3.5 ${likes[s.id] ? "fill-amber-400 text-amber-400" : ""}`} />
                   </button>
@@ -222,7 +222,7 @@ export function StudentProfiles() {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="pixel-box p-5 sm:p-7 max-w-sm w-full relative z-10 border-4 border-slate-950"
+            className="pixel-box p-5 sm:p-7 max-w-sm w-full relative z-10"
           >
             {/* 4 Corner 8-Bit Pixel Blocks */}
             <span className="absolute top-1 left-1 w-2 h-2 bg-amber-400 pointer-events-none z-20" />
@@ -233,14 +233,14 @@ export function StudentProfiles() {
             {/* Close Button */}
             <button
               onClick={() => setSelectedStudent(null)}
-              className="absolute top-3 right-3 w-7 h-7 bg-slate-200 dark:bg-slate-800 hover:bg-rose-500 hover:text-white text-slate-800 dark:text-slate-200 flex items-center justify-center cursor-pointer border-2 border-slate-950 shadow-[2px_2px_0px_#000] transition-colors"
+              className="absolute top-3 right-3 w-7 h-7 bg-slate-200 dark:bg-slate-800 hover:bg-rose-500 hover:text-white text-slate-800 dark:text-slate-200 flex items-center justify-center cursor-pointer border border-slate-950 shadow-[2px_2px_0px_#000] transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
 
             {/* Profile Info */}
             <div className="flex flex-col items-center text-center">
-              <div className="relative w-40 h-52 sm:w-44 sm:h-56 overflow-hidden mb-3.5 border-4 border-slate-950 bg-slate-950 shadow-[inset_2px_2px_0px_#475569,inset_-2px_-2px_0px_#000]">
+              <div className="relative w-40 h-52 sm:w-44 sm:h-56 overflow-hidden mb-3.5 pixel-frame bg-slate-950 shadow-[3px_3px_0px_#000]">
                 <span className="absolute top-0 left-0 w-1.5 h-1.5 bg-[#FBBF24] z-20 pointer-events-none" />
                 <span className="absolute top-0 right-0 w-1.5 h-1.5 bg-[#FBBF24] z-20 pointer-events-none" />
                 <span className="absolute bottom-0 left-0 w-1.5 h-1.5 bg-[#FBBF24] z-20 pointer-events-none" />
@@ -252,7 +252,7 @@ export function StudentProfiles() {
                   priority
                   className="object-cover object-center"
                 />
-                <div className="absolute top-2 left-2 px-2 py-0.5 bg-[#FBBF24] text-slate-950 font-pixel text-[9px] font-bold border-2 border-slate-950 shadow-[2px_2px_0px_#000]">
+                <div className="absolute top-2 left-2 px-2 py-0.5 bg-[#FBBF24] text-slate-950 font-pixel text-[9px] font-bold border border-slate-950 shadow-[1px_1px_0px_#000]">
                   ABSEN #{selectedStudent.id}
                 </div>
               </div>

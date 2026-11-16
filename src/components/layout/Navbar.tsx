@@ -46,7 +46,7 @@ export function Navbar() {
       >
         {/* Brand */}
         <a href="#hero" className="flex items-center gap-2 select-none group pr-1">
-          <div className="w-7 h-7 bg-[#FBBF24] text-slate-950 flex items-center justify-center border-2 border-slate-950 font-pixel text-[10px] font-bold">
+          <div className="w-7 h-7 bg-[#FBBF24] text-slate-950 flex items-center justify-center pixel-frame font-pixel text-[10px] font-bold">
             P3
           </div>
           <div className="flex flex-col">

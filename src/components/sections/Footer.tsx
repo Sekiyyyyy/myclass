@@ -14,7 +14,7 @@ export function Footer() {
     <footer className="border-t-2 border-slate-300 dark:border-slate-800 bg-white dark:bg-[#111827] py-10 px-4 sm:px-6 select-none">
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 pixel-box bg-[#FBBF24] text-slate-950 flex items-center justify-center font-pixel text-xs font-bold pixel-corners-sm">
+          <div className="w-8 h-8 pixel-box bg-[#FBBF24] text-slate-950 flex items-center justify-center font-pixel text-xs font-bold">
             P3
           </div>
           <div>

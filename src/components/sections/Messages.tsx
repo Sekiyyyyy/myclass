@@ -163,7 +163,7 @@ export function Messages() {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="pixel-box p-5 sm:p-7 max-w-sm w-full relative z-10 border-4 border-slate-950"
+            className="pixel-box p-5 sm:p-7 max-w-sm w-full relative z-10"
           >
             {/* 4 Corner 8-Bit Pixel Blocks */}
             <span className="absolute top-1 left-1 w-2 h-2 bg-amber-400 pointer-events-none z-20" />
@@ -173,7 +173,7 @@ export function Messages() {
 
             <button
               onClick={() => setModalOpen(false)}
-              className="absolute top-3 right-3 w-7 h-7 bg-slate-200 dark:bg-slate-800 hover:bg-rose-500 hover:text-white text-slate-800 dark:text-slate-200 flex items-center justify-center cursor-pointer border-2 border-slate-900 transition-colors"
+              className="absolute top-3 right-3 w-7 h-7 bg-slate-200 dark:bg-slate-800 hover:bg-rose-500 hover:text-white text-slate-800 dark:text-slate-200 flex items-center justify-center cursor-pointer border border-slate-900 transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
