@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { useGSAP, gsap } from "@/lib/gsap-config";
 import { ArrowDown, Camera, Users } from "lucide-react";
 
@@ -39,7 +40,7 @@ export function Hero() {
       className="relative min-h-[75vh] flex flex-col justify-center items-center px-4 sm:px-6 pt-32 pb-16 text-center select-none"
     >
       {/* 8-Bit Stepped Pixel Badge */}
-      <div className="inline-flex items-center gap-2 px-3.5 py-1.5 mb-6 pixel-pill bg-white dark:bg-[#111827]">
+      <div className="inline-flex items-center gap-2 px-3.5 py-1.5 mb-5 pixel-pill bg-white dark:bg-[#111827]">
         <span className="w-2 h-2 bg-amber-500 border border-slate-950 inline-block animate-pulse" />
         <span className="font-pixel text-[9px] sm:text-[10px] text-slate-900 dark:text-white uppercase tracking-wider">
           SMK NEGERI 1 BERINGIN
@@ -47,6 +48,17 @@ export function Hero() {
         <span className="font-pixel text-[9px] text-amber-500 font-bold">
           [ 2026 ]
         </span>
+      </div>
+
+      {/* 3D Planet Logo Emblem */}
+      <div className="relative w-28 h-28 sm:w-36 sm:h-36 mb-4 mx-auto">
+        <Image
+          src="/logo.png"
+          alt="Logo XII PPLG 3"
+          fill
+          priority
+          className="object-contain drop-shadow-[0_8px_20px_rgba(251,191,36,0.35)]"
+        />
       </div>
 
       {/* Main Headline */}

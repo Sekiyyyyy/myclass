@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { Sun, Moon, Sparkles } from "lucide-react";
 import { useTheme } from "@/lib/theme-provider";
 
@@ -45,9 +46,14 @@ export function Navbar() {
         }`}
       >
         {/* Brand */}
-        <a href="#hero" className="flex items-center gap-2 select-none group pr-1">
-          <div className="w-7 h-7 bg-[#FBBF24] text-slate-950 flex items-center justify-center pixel-frame font-pixel text-[10px] font-bold">
-            P3
+        <a href="#hero" className="flex items-center gap-2.5 select-none group pr-1">
+          <div className="relative w-8 h-8 rounded-full overflow-hidden bg-white/95 dark:bg-slate-900 border-2 border-slate-900 dark:border-amber-400 shadow-[1px_1px_0px_#000] shrink-0">
+            <Image
+              src="/logo.png"
+              alt="Logo XII PPLG 3"
+              fill
+              className="object-contain p-0.5"
+            />
           </div>
           <div className="flex flex-col">
             <span className="font-pixel text-[10px] sm:text-xs text-slate-900 dark:text-white leading-none">

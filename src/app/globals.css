@@ -465,6 +465,9 @@
   .h-12 {
     height: calc(var(--spacing) * 12);
   }
+  .h-28 {
+    height: calc(var(--spacing) * 28);
+  }
   .h-52 {
     height: calc(var(--spacing) * 52);
   }
@@ -527,6 +530,9 @@
   }
   .w-12 {
     width: calc(var(--spacing) * 12);
+  }
+  .w-28 {
+    width: calc(var(--spacing) * 28);
   }
   .w-40 {
     width: calc(var(--spacing) * 40);
@@ -947,6 +953,9 @@
   .fill-current {
     fill: currentcolor;
   }
+  .object-contain {
+    object-fit: contain;
+  }
   .object-cover {
     object-fit: cover;
   }
@@ -955,6 +964,9 @@
   }
   .object-top {
     object-position: top;
+  }
+  .p-0\.5 {
+    padding: calc(var(--spacing) * 0.5);
   }
   .p-1 {
     padding: var(--spacing);
@@ -1241,6 +1253,11 @@
     --tw-blur: blur(120px);
     filter: var(--tw-blur, ) var(--tw-brightness, ) var(--tw-contrast, ) var(--tw-grayscale, ) var(--tw-hue-rotate, ) var(--tw-invert, ) var(--tw-saturate, ) var(--tw-sepia, ) var(--tw-drop-shadow, );
   }
+  .drop-shadow-\[0_8px_20px_rgba\(251\,191\,36\,0\.35\)\] {
+    --tw-drop-shadow-size: drop-shadow(0 8px 20px var(--tw-drop-shadow-color, rgba(251,191,36,0.35)));
+    --tw-drop-shadow: var(--tw-drop-shadow-size);
+    filter: var(--tw-blur, ) var(--tw-brightness, ) var(--tw-contrast, ) var(--tw-grayscale, ) var(--tw-hue-rotate, ) var(--tw-invert, ) var(--tw-saturate, ) var(--tw-sepia, ) var(--tw-drop-shadow, );
+  }
   .backdrop-blur-xs {
     --tw-backdrop-blur: blur(var(--blur-xs));
     -webkit-backdrop-filter: var(--tw-backdrop-blur, ) var(--tw-backdrop-brightness, ) var(--tw-backdrop-contrast, ) var(--tw-backdrop-grayscale, ) var(--tw-backdrop-hue-rotate, ) var(--tw-backdrop-invert, ) var(--tw-backdrop-opacity, ) var(--tw-backdrop-saturate, ) var(--tw-backdrop-sepia, );
@@ -1346,6 +1363,9 @@
     .hover\:text-white:hover {
       color: var(--color-white);
     }
+    .hover\:underline:hover {
+      text-decoration-line: underline;
+    }
   }
   .focus\:border-amber-500:focus {
     border-color: var(--color-amber-500);
@@ -1367,8 +1387,14 @@
     .sm\:inline-block {
       display: inline-block;
     }
+    .sm\:h-36 {
+      height: calc(var(--spacing) * 36);
+    }
     .sm\:h-56 {
       height: calc(var(--spacing) * 56);
+    }
+    .sm\:w-36 {
+      width: calc(var(--spacing) * 36);
     }
     .sm\:w-44 {
       width: calc(var(--spacing) * 44);
