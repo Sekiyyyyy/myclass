@@ -27,10 +27,61 @@
 }
 
 /* ========================================================
-   AUTHENTIC PIXEL SHAPE & ARCADE TOKENS (NO ROUNDED EDGES)
+   AUTHENTIC STEPPED PIXEL ART SHAPE SYSTEM (8-BIT & 16-BIT)
    ======================================================== */
 
-/* 1. Sharp Stepped Pixel Box */
+/* 1. Stepped Pixel Corners Cutout */
+.pixel-corners {
+  clip-path: polygon(
+    0 6px, 6px 6px, 6px 0,
+    calc(100% - 6px) 0, calc(100% - 6px) 6px, 100% 6px,
+    100% calc(100% - 6px), calc(100% - 6px) calc(100% - 6px), calc(100% - 6px) 100%,
+    6px 100%, 6px calc(100% - 6px), 0 calc(100% - 6px)
+  );
+}
+
+.pixel-corners-sm {
+  clip-path: polygon(
+    0 4px, 4px 4px, 4px 0,
+    calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px,
+    100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%,
+    4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px)
+  );
+}
+
+/* 2. Pixel Drop Shadow Following Pixel Steps */
+.pixel-drop-shadow {
+  filter: drop-shadow(4px 4px 0px #0F172A);
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.dark .pixel-drop-shadow {
+  filter: drop-shadow(4px 4px 0px #020617);
+}
+
+.pixel-card-interactive {
+  user-select: none;
+}
+
+.pixel-card-interactive:hover {
+  transform: translate(-2px, -2px);
+  filter: drop-shadow(6px 6px 0px #F59E0B);
+}
+
+.dark .pixel-card-interactive:hover {
+  filter: drop-shadow(6px 6px 0px #FBBF24);
+}
+
+.pixel-card-interactive:active {
+  transform: translate(2px, 2px);
+  filter: drop-shadow(2px 2px 0px #F59E0B);
+}
+
+.dark .pixel-card-interactive:active {
+  filter: drop-shadow(2px 2px 0px #FBBF24);
+}
+
+/* 3. Pixel Box (Navbar, Panels, Dialogs) */
 .pixel-box {
   border: 3px solid #0F172A;
   box-shadow: 4px 4px 0px 0px #0F172A;
@@ -45,51 +96,7 @@
   background-color: #111827;
 }
 
-.pixel-box-interactive {
-  cursor: pointer;
-  user-select: none;
-}
-
-.pixel-box-interactive:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0px 0px #F59E0B;
-  border-color: #F59E0B;
-}
-
-.dark .pixel-box-interactive:hover {
-  border-color: #FBBF24;
-  box-shadow: 6px 6px 0px 0px #FBBF24;
-}
-
-.pixel-box-interactive:active {
-  transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0px 0px #F59E0B;
-}
-
-.dark .pixel-box-interactive:active {
-  box-shadow: 2px 2px 0px 0px #FBBF24;
-}
-
-/* 2. Authentic Stepped Pixel Cutout (8-Bit Corner Silhouette) */
-.pixel-corners {
-  clip-path: polygon(
-    0 4px, 4px 4px, 4px 0,
-    calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px,
-    100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%,
-    4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px)
-  );
-}
-
-.pixel-corners-lg {
-  clip-path: polygon(
-    0 6px, 6px 6px, 6px 0,
-    calc(100% - 6px) 0, calc(100% - 6px) 6px, 100% 6px,
-    100% calc(100% - 6px), calc(100% - 6px) calc(100% - 6px), calc(100% - 6px) 100%,
-    6px 100%, 6px calc(100% - 6px), 0 calc(100% - 6px)
-  );
-}
-
-/* 3. Pixel Push Buttons */
+/* 4. Stepped Pixel Push Buttons */
 .pixel-btn {
   display: inline-flex;
   align-items: center;
@@ -102,18 +109,36 @@
   cursor: pointer;
   user-select: none;
   border: 3px solid #0F172A;
-  box-shadow: 4px 4px 0px 0px #0F172A;
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  clip-path: polygon(
+    0 4px, 4px 4px, 4px 0,
+    calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px,
+    100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%,
+    4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px)
+  );
+  filter: drop-shadow(4px 4px 0px #0F172A);
+  transition: transform 0.1s ease, filter 0.1s ease;
+}
+
+.dark .pixel-btn {
+  filter: drop-shadow(4px 4px 0px #020617);
 }
 
 .pixel-btn:hover {
   transform: translate(-1px, -1px);
-  box-shadow: 5px 5px 0px 0px #0F172A;
+  filter: drop-shadow(5px 5px 0px #0F172A);
+}
+
+.dark .pixel-btn:hover {
+  filter: drop-shadow(5px 5px 0px #020617);
 }
 
 .pixel-btn:active {
   transform: translate(3px, 3px);
-  box-shadow: 1px 1px 0px 0px #0F172A;
+  filter: drop-shadow(1px 1px 0px #0F172A);
+}
+
+.dark .pixel-btn:active {
+  filter: drop-shadow(1px 1px 0px #020617);
 }
 
 .pixel-btn-primary {
@@ -130,7 +155,6 @@
   background-color: #FBBF24;
   color: #0F172A;
   border-color: #F59E0B;
-  box-shadow: 4px 4px 0px 0px #020617;
 }
 
 .pixel-btn-secondary {
@@ -142,27 +166,12 @@
 .dark .pixel-btn-secondary {
   background-color: #1E293B;
   color: #F8FAFC;
-  border-color: #475569;
-  box-shadow: 4px 4px 0px 0px #020617;
+  border-color: #64748B;
 }
 
 .dark .pixel-btn-secondary:hover {
   border-color: #FBBF24;
   color: #FBBF24;
-  box-shadow: 5px 5px 0px 0px #020617;
-}
-
-/* 4. Pixel Badges */
-.pixel-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  font-family: 'Silkscreen', monospace;
-  font-size: 0.75rem;
-  font-weight: 700;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0px !important;
-  border: 2px solid currentColor;
 }
 
 /* 5. Custom Pixel Scrollbar */

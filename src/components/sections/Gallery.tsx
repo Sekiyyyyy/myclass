@@ -69,7 +69,7 @@ export function Gallery() {
         <h2 className="font-pixel text-xl sm:text-3xl text-slate-900 dark:text-white mb-3">
           Galeri Kenangan
         </h2>
-        <p className="font-silk text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-bold uppercase">
+        <p className="font-silk text-xs sm:text-sm text-slate-700 dark:text-slate-200 font-bold uppercase">
           Dokumentasi momen kegiatan siswa XII PPLG 3 di SMK Negeri 1 Beringin
         </p>
       </div>
@@ -85,7 +85,7 @@ export function Gallery() {
               className={`font-silk text-xs px-3.5 py-2 pixel-box transition-all cursor-pointer font-bold ${
                 isActive
                   ? "bg-[#FBBF24] text-slate-950 border-amber-500 shadow-[4px_4px_0px_0px_#F59E0B]"
-                  : "bg-white dark:bg-[#111827] text-slate-700 dark:text-slate-300 hover:border-amber-400"
+                  : "bg-white dark:bg-[#111827] text-slate-800 dark:text-slate-200 hover:border-amber-400"
               }`}
             >
               {cat.label}
@@ -100,9 +100,9 @@ export function Gallery() {
           <div key={item.id} className="gallery-card-item">
             <PixelCard
               onClick={() => setSelectedPhoto(item)}
-              className="p-3 flex flex-col justify-between h-full"
+              className="flex flex-col justify-between h-full"
             >
-              <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-950 border-2 border-slate-900 dark:border-slate-700 mb-3">
+              <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-950 border-2 border-slate-900 dark:border-slate-700 mb-3 pixel-corners-sm">
                 <Image
                   src={item.imageUrl}
                   alt={item.title}
@@ -122,7 +122,7 @@ export function Gallery() {
                 <h3 className="font-silk font-bold text-xs sm:text-sm text-slate-900 dark:text-white mb-1 truncate">
                   {item.title}
                 </h3>
-                <p className="font-sans text-xs text-slate-500 dark:text-slate-400 line-clamp-1">
+                <p className="font-sans text-xs text-slate-700 dark:text-slate-200 line-clamp-1 font-medium">
                   {item.caption}
                 </p>
               </div>
@@ -141,32 +141,34 @@ export function Gallery() {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="pixel-box p-4 sm:p-6 max-w-xl w-full relative z-10 bg-white dark:bg-[#111827] border-4 border-slate-900 dark:border-amber-500 shadow-2xl"
+            className="pixel-drop-shadow max-w-xl w-full relative z-10"
           >
-            <button
-              onClick={() => setSelectedPhoto(null)}
-              className="absolute top-3 right-3 z-10 w-7 h-7 bg-slate-200 dark:bg-slate-800 hover:bg-rose-500 hover:text-white text-slate-700 dark:text-slate-300 flex items-center justify-center cursor-pointer border-2 border-slate-900 transition-colors"
-            >
-              <X className="w-4 h-4" />
-            </button>
+            <div className="pixel-corners p-4 sm:p-6 bg-white dark:bg-[#111827] border-[3px] border-slate-900 dark:border-amber-400">
+              <button
+                onClick={() => setSelectedPhoto(null)}
+                className="absolute top-3 right-3 z-10 w-7 h-7 bg-slate-200 dark:bg-slate-800 hover:bg-rose-500 hover:text-white text-slate-800 dark:text-slate-200 flex items-center justify-center cursor-pointer border-2 border-slate-900 pixel-corners-sm transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
 
-            <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950 mb-3.5 border-2 border-slate-900 dark:border-slate-700 shadow-md">
-              <Image
-                src={selectedPhoto.imageUrl}
-                alt={selectedPhoto.title}
-                fill
-                priority
-                className="object-cover object-center"
-              />
-            </div>
+              <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950 mb-3.5 border-2 border-slate-900 dark:border-slate-700 shadow-md pixel-corners-sm">
+                <Image
+                  src={selectedPhoto.imageUrl}
+                  alt={selectedPhoto.title}
+                  fill
+                  priority
+                  className="object-cover object-center"
+                />
+              </div>
 
-            <div>
-              <h3 className="font-pixel text-xs sm:text-sm text-slate-900 dark:text-white mb-1.5 leading-snug">
-                {selectedPhoto.title}
-              </h3>
-              <p className="font-sans text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                {selectedPhoto.caption}
-              </p>
+              <div>
+                <h3 className="font-pixel text-xs sm:text-sm text-slate-900 dark:text-white mb-1.5 leading-snug">
+                  {selectedPhoto.title}
+                </h3>
+                <p className="font-sans text-xs sm:text-sm text-slate-800 dark:text-slate-200 leading-relaxed font-medium">
+                  {selectedPhoto.caption}
+                </p>
+              </div>
             </div>
           </div>
         </div>

@@ -14,33 +14,33 @@ export function Footer() {
     <footer className="border-t-2 border-slate-300 dark:border-slate-800 bg-white dark:bg-[#111827] py-10 px-4 sm:px-6 select-none">
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 pixel-box bg-[#FBBF24] text-slate-950 flex items-center justify-center font-pixel text-xs font-bold">
+          <div className="w-8 h-8 pixel-box bg-[#FBBF24] text-slate-950 flex items-center justify-center font-pixel text-xs font-bold pixel-corners-sm">
             P3
           </div>
           <div>
             <span className="font-pixel text-[10px] sm:text-xs text-slate-900 dark:text-white block">
               XII PPLG 3 • SMKN 1 BERINGIN
             </span>
-            <span className="font-silk text-[10px] text-amber-500 font-bold uppercase">
+            <span className="font-silk text-[10px] text-amber-600 dark:text-amber-400 font-bold uppercase">
               Buku Kenangan Digital Angkatan 2026
             </span>
           </div>
         </div>
 
         <div className="flex items-center flex-wrap justify-center gap-3 sm:gap-5 font-silk text-xs font-bold">
-          <a href="#hero" className="text-slate-600 dark:text-slate-400 hover:text-amber-500 transition-colors">
+          <a href="#hero" className="text-slate-700 dark:text-slate-200 hover:text-amber-500 dark:hover:text-amber-400 transition-colors">
             Beranda
           </a>
-          <a href="#tentang" className="text-slate-600 dark:text-slate-400 hover:text-amber-500 transition-colors">
+          <a href="#tentang" className="text-slate-700 dark:text-slate-200 hover:text-amber-500 dark:hover:text-amber-400 transition-colors">
             Tentang
           </a>
-          <a href="#siswa" className="text-slate-600 dark:text-slate-400 hover:text-amber-500 transition-colors">
+          <a href="#siswa" className="text-slate-700 dark:text-slate-200 hover:text-amber-500 dark:hover:text-amber-400 transition-colors">
             Siswa
           </a>
-          <a href="#galeri" className="text-slate-600 dark:text-slate-400 hover:text-amber-500 transition-colors">
+          <a href="#galeri" className="text-slate-700 dark:text-slate-200 hover:text-amber-500 dark:hover:text-amber-400 transition-colors">
             Galeri
           </a>
-          <a href="#pesan" className="text-slate-600 dark:text-slate-400 hover:text-amber-500 transition-colors">
+          <a href="#pesan" className="text-slate-700 dark:text-slate-200 hover:text-amber-500 dark:hover:text-amber-400 transition-colors">
             Pesan
           </a>
 

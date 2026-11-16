@@ -23,20 +23,22 @@ export function PixelCard({
   return (
     <div
       onClick={onClick}
-      className={`relative group overflow-hidden pixel-box ${
-        interactive ? "pixel-box-interactive cursor-pointer" : ""
-      } ${className}`}
+      className={`relative group ${
+        interactive ? "pixel-card-interactive cursor-pointer" : ""
+      } pixel-drop-shadow ${className}`}
     >
-      {pixelCanvas && (
-        <PixelCanvas
-          className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          pixelSize={8}
-          gap={2}
-          colors={colors}
-          fadeSpeed={0.05}
-        />
-      )}
-      <div className="relative z-10 w-full h-full">{children}</div>
+      <div className="relative w-full h-full pixel-corners border-[3px] border-slate-900 dark:border-slate-700 bg-white dark:bg-[#111827] overflow-hidden p-3 transition-colors">
+        {pixelCanvas && (
+          <PixelCanvas
+            className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            pixelSize={8}
+            gap={2}
+            colors={colors}
+            fadeSpeed={0.05}
+          />
+        )}
+        <div className="relative z-10 w-full h-full">{children}</div>
+      </div>
     </div>
   );
 }

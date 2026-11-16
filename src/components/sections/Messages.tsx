@@ -103,7 +103,7 @@ export function Messages() {
         <h2 className="font-pixel text-xl sm:text-3xl text-slate-900 dark:text-white mb-3">
           Kesan &amp; Pesan
         </h2>
-        <p className="font-silk text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-bold uppercase mb-6">
+        <p className="font-silk text-xs sm:text-sm text-slate-700 dark:text-slate-200 font-bold uppercase mb-6">
           Untaian kata dan doa kenangan dari guru serta teman-teman XII PPLG 3
         </p>
 
@@ -119,18 +119,18 @@ export function Messages() {
       {/* Grid of Messages */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
         {messages.map((msg) => (
-          <PixelCard key={msg.id} className="p-5 flex flex-col justify-between">
+          <PixelCard key={msg.id} className="flex flex-col justify-between">
             <div>
-              <div className="w-7 h-7 pixel-box bg-amber-500/10 text-amber-500 flex items-center justify-center mb-3">
+              <div className="w-7 h-7 pixel-box bg-amber-500/15 text-amber-600 dark:text-amber-300 flex items-center justify-center mb-3 pixel-corners-sm">
                 <Quote className="w-3.5 h-3.5 fill-current" />
               </div>
-              <p className="font-sans text-xs sm:text-sm text-slate-700 dark:text-slate-300 italic leading-relaxed mb-5">
+              <p className="font-sans text-xs sm:text-sm text-slate-800 dark:text-slate-200 italic leading-relaxed mb-5 font-medium">
                 &ldquo;{msg.text}&rdquo;
               </p>
             </div>
 
             <div className="flex items-center gap-3 pt-3.5 border-t border-slate-200 dark:border-slate-800">
-              <div className="relative w-9 h-9 overflow-hidden shrink-0 border-2 border-slate-900 dark:border-slate-700 bg-slate-950">
+              <div className="relative w-9 h-9 overflow-hidden shrink-0 border-2 border-slate-900 dark:border-slate-700 bg-slate-950 pixel-corners-sm">
                 <Image
                   src={msg.avatar}
                   alt={msg.author}
@@ -142,10 +142,10 @@ export function Messages() {
                 <h4 className="font-silk font-bold text-xs text-slate-900 dark:text-white leading-tight">
                   {msg.author}
                 </h4>
-                <div className="flex items-center gap-1.5 font-pixel text-[8px] text-slate-500 mt-0.5">
-                  <span className="text-amber-500">{msg.role}</span>
-                  <span>•</span>
-                  <span>{msg.date}</span>
+                <div className="flex items-center gap-1.5 font-pixel text-[8px] mt-0.5">
+                  <span className="text-amber-600 dark:text-amber-400 font-bold">{msg.role}</span>
+                  <span className="text-slate-400">•</span>
+                  <span className="text-slate-700 dark:text-slate-300 font-bold">{msg.date}</span>
                 </div>
               </div>
             </div>
@@ -159,80 +159,82 @@ export function Messages() {
           role="dialog"
           aria-modal="true"
           onClick={() => setModalOpen(false)}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-xs animate-in fade-in duration-150"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xs animate-in fade-in duration-150"
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="pixel-box p-5 sm:p-7 max-w-sm w-full relative z-10 bg-white dark:bg-[#111827] border-4 border-slate-900 dark:border-amber-500 shadow-2xl"
+            className="pixel-drop-shadow max-w-sm w-full relative z-10"
           >
-            <button
-              onClick={() => setModalOpen(false)}
-              className="absolute top-3 right-3 w-7 h-7 bg-slate-200 dark:bg-slate-800 hover:bg-rose-500 hover:text-white text-slate-700 dark:text-slate-300 flex items-center justify-center cursor-pointer border-2 border-slate-900 transition-colors"
-            >
-              <X className="w-4 h-4" />
-            </button>
-
-            <h3 className="font-pixel text-xs sm:text-sm text-slate-900 dark:text-white mb-1">
-              Tulis Pesan Baru
-            </h3>
-            <p className="font-silk text-[10px] text-slate-500 mb-4 uppercase">
-              Bagikan kesan atau doa untuk angkatan 2026
-            </p>
-
-            <form onSubmit={handleSubmit} className="space-y-3.5">
-              <div>
-                <label className="block font-silk font-bold text-[10px] text-slate-700 dark:text-slate-300 mb-1 uppercase">
-                  Nama Anda
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Contoh: Rizky Alfianno"
-                  className="w-full px-3 py-2 pixel-box bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white font-silk text-xs focus:outline-none focus:border-amber-500"
-                />
-              </div>
-
-              <div>
-                <label className="block font-silk font-bold text-[10px] text-slate-700 dark:text-slate-300 mb-1 uppercase">
-                  Peran / Status
-                </label>
-                <select
-                  value={role}
-                  onChange={(e) => setRole(e.target.value)}
-                  className="w-full px-3 py-2 pixel-box bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white font-silk text-xs focus:outline-none focus:border-amber-500 cursor-pointer"
-                >
-                  <option value="Siswa">Siswa</option>
-                  <option value="Wali Kelas">Wali Kelas</option>
-                  <option value="Guru">Guru</option>
-                  <option value="Alumni">Alumni</option>
-                  <option value="Teman">Teman</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block font-silk font-bold text-[10px] text-slate-700 dark:text-slate-300 mb-1 uppercase">
-                  Pesan atau Doa
-                </label>
-                <textarea
-                  required
-                  rows={3}
-                  value={text}
-                  onChange={(e) => setText(e.target.value)}
-                  placeholder="Tuliskan pesan berhargamu di sini..."
-                  className="w-full px-3 py-2 pixel-box bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white font-sans text-xs focus:outline-none focus:border-amber-500 resize-none"
-                />
-              </div>
-
+            <div className="pixel-corners p-5 sm:p-7 bg-white dark:bg-[#111827] border-[3px] border-slate-900 dark:border-amber-400">
               <button
-                type="submit"
-                className="pixel-btn pixel-btn-primary w-full py-2.5 text-[10px] flex items-center justify-center gap-1.5"
+                onClick={() => setModalOpen(false)}
+                className="absolute top-3 right-3 w-7 h-7 bg-slate-200 dark:bg-slate-800 hover:bg-rose-500 hover:text-white text-slate-800 dark:text-slate-200 flex items-center justify-center cursor-pointer border-2 border-slate-900 pixel-corners-sm transition-colors"
               >
-                <Send className="w-3.5 h-3.5" />
-                <span>Kirim Pesan</span>
+                <X className="w-4 h-4" />
               </button>
-            </form>
+
+              <h3 className="font-pixel text-xs sm:text-sm text-slate-900 dark:text-white mb-1">
+                Tulis Pesan Baru
+              </h3>
+              <p className="font-silk text-[10px] text-slate-700 dark:text-slate-300 font-bold mb-4 uppercase">
+                Bagikan kesan atau doa untuk angkatan 2026
+              </p>
+
+              <form onSubmit={handleSubmit} className="space-y-3.5">
+                <div>
+                  <label className="block font-silk font-bold text-[10px] text-slate-900 dark:text-white mb-1 uppercase">
+                    Nama Anda
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Contoh: Rizky Alfianno"
+                    className="w-full px-3 py-2 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-silk text-xs border-2 border-slate-300 dark:border-slate-700 focus:outline-none focus:border-amber-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-silk font-bold text-[10px] text-slate-900 dark:text-white mb-1 uppercase">
+                    Peran / Status
+                  </label>
+                  <select
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                    className="w-full px-3 py-2 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-silk text-xs border-2 border-slate-300 dark:border-slate-700 focus:outline-none focus:border-amber-500 cursor-pointer"
+                  >
+                    <option value="Siswa">Siswa</option>
+                    <option value="Wali Kelas">Wali Kelas</option>
+                    <option value="Guru">Guru</option>
+                    <option value="Alumni">Alumni</option>
+                    <option value="Teman">Teman</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block font-silk font-bold text-[10px] text-slate-900 dark:text-white mb-1 uppercase">
+                    Pesan atau Doa
+                  </label>
+                  <textarea
+                    required
+                    rows={3}
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                    placeholder="Tuliskan pesan berhargamu di sini..."
+                    className="w-full px-3 py-2 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-sans text-xs border-2 border-slate-300 dark:border-slate-700 focus:outline-none focus:border-amber-500 resize-none"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="pixel-btn pixel-btn-primary w-full py-2.5 text-[10px] flex items-center justify-center gap-1.5"
+                >
+                  <Send className="w-3.5 h-3.5" />
+                  <span>Kirim Pesan</span>
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       )}

@@ -26,13 +26,13 @@ export default function Home() {
           {students.slice(0, 16).map((s) => (
             <div
               key={s.id}
-              className="flex items-center gap-2 px-3 py-1 pixel-box bg-white dark:bg-[#111827] text-xs font-silk whitespace-nowrap mx-1.5"
+              className="flex items-center gap-2 px-3 py-1 pixel-box bg-white dark:bg-[#111827] text-xs font-silk whitespace-nowrap mx-1.5 pixel-corners-sm"
             >
               <span className="px-1.5 py-0.5 bg-amber-500 text-slate-950 font-pixel text-[8px] font-bold">
                 #{s.id}
               </span>
               <span className="font-bold text-slate-900 dark:text-white uppercase">{s.name}</span>
-              <span className="text-amber-500 text-[10px]">@{s.ig}</span>
+              <span className="text-amber-600 dark:text-amber-400 font-bold text-[10px]">@{s.ig}</span>
             </div>
           ))}
         </Marquee>
@@ -41,13 +41,13 @@ export default function Home() {
           {students.slice(16, 31).map((s) => (
             <div
               key={s.id}
-              className="flex items-center gap-2 px-3 py-1 pixel-box bg-white dark:bg-[#111827] text-xs font-silk whitespace-nowrap mx-1.5"
+              className="flex items-center gap-2 px-3 py-1 pixel-box bg-white dark:bg-[#111827] text-xs font-silk whitespace-nowrap mx-1.5 pixel-corners-sm"
             >
               <span className="px-1.5 py-0.5 bg-sky-500 text-white font-pixel text-[8px] font-bold">
                 #{s.id}
               </span>
               <span className="font-bold text-slate-900 dark:text-white uppercase">{s.name}</span>
-              <span className="text-sky-500 text-[10px]">@{s.ig}</span>
+              <span className="text-sky-600 dark:text-sky-400 font-bold text-[10px]">@{s.ig}</span>
             </div>
           ))}
         </Marquee>
