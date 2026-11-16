@@ -84,11 +84,11 @@ export function StudentProfiles() {
     <section id="siswa" ref={sectionRef} className="py-20 px-3 sm:px-6 max-w-7xl mx-auto relative select-none">
       {/* Section Header */}
       <div className="text-center max-w-xl mx-auto mb-10">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 pixel-box bg-slate-900 text-[#FBBF24] font-pixel text-[10px] mb-3">
-          <Users className="w-3.5 h-3.5" />
-          <span>DAFTAR KELAS</span>
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-500 text-slate-950 font-pixel text-[9px] font-bold border-2 border-slate-950 shadow-[2px_2px_0px_#000] mb-3">
+          <Users className="w-3.5 h-3.5 text-slate-950" />
+          <span>DAFTAR SISWA</span>
         </div>
-        <h2 className="font-pixel text-xl sm:text-3xl text-slate-900 dark:text-white mb-3">
+        <h2 className="font-pixel text-xl sm:text-3xl text-slate-900 dark:text-white mb-3 pixel-title-shadow">
           31 Siswa XII PPLG 3
         </h2>
         <p className="font-silk text-xs sm:text-sm text-slate-700 dark:text-slate-200 font-bold uppercase">
@@ -129,11 +129,6 @@ export function StudentProfiles() {
               <div>
                 {/* Photo Frame with Stepped 8-Bit Pixel Borders */}
                 <div className="relative aspect-[3/4] w-full overflow-hidden mb-3 bg-slate-950 pixel-frame shadow-[3px_3px_0px_#000]">
-                  <span className="absolute top-0 left-0 w-1.5 h-1.5 bg-[#FBBF24] z-20 pointer-events-none" />
-                  <span className="absolute top-0 right-0 w-1.5 h-1.5 bg-[#FBBF24] z-20 pointer-events-none" />
-                  <span className="absolute bottom-0 left-0 w-1.5 h-1.5 bg-[#FBBF24] z-20 pointer-events-none" />
-                  <span className="absolute bottom-0 right-0 w-1.5 h-1.5 bg-[#FBBF24] z-20 pointer-events-none" />
-
                   <Image
                     src={s.avatar}
                     alt={s.name}
@@ -224,12 +219,6 @@ export function StudentProfiles() {
             onClick={(e) => e.stopPropagation()}
             className="pixel-box p-5 sm:p-7 max-w-sm w-full relative z-10"
           >
-            {/* 4 Corner 8-Bit Pixel Blocks */}
-            <span className="absolute top-1 left-1 w-2 h-2 bg-amber-400 pointer-events-none z-20" />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-amber-400 pointer-events-none z-20" />
-            <span className="absolute bottom-1 left-1 w-2 h-2 bg-amber-400 pointer-events-none z-20" />
-            <span className="absolute bottom-1 right-1 w-2 h-2 bg-amber-400 pointer-events-none z-20" />
-
             {/* Close Button */}
             <button
               onClick={() => setSelectedStudent(null)}
@@ -241,10 +230,6 @@ export function StudentProfiles() {
             {/* Profile Info */}
             <div className="flex flex-col items-center text-center">
               <div className="relative w-40 h-52 sm:w-44 sm:h-56 overflow-hidden mb-3.5 pixel-frame bg-slate-950 shadow-[3px_3px_0px_#000]">
-                <span className="absolute top-0 left-0 w-1.5 h-1.5 bg-[#FBBF24] z-20 pointer-events-none" />
-                <span className="absolute top-0 right-0 w-1.5 h-1.5 bg-[#FBBF24] z-20 pointer-events-none" />
-                <span className="absolute bottom-0 left-0 w-1.5 h-1.5 bg-[#FBBF24] z-20 pointer-events-none" />
-                <span className="absolute bottom-0 right-0 w-1.5 h-1.5 bg-[#FBBF24] z-20 pointer-events-none" />
                 <Image
                   src={selectedStudent.avatar}
                   alt={selectedStudent.name}
@@ -260,19 +245,19 @@ export function StudentProfiles() {
               <h3 className="font-pixel text-sm sm:text-base text-slate-900 dark:text-white mb-1 leading-snug">
                 {selectedStudent.name}
               </h3>
-              <p className="font-silk text-xs text-amber-600 dark:text-amber-300 font-bold mb-4 uppercase">
+              <p className="font-silk text-xs text-amber-500 dark:text-amber-400 font-bold mb-4 uppercase">
                 Panggilan: {selectedStudent.nickname}
               </p>
 
               {/* Class Info */}
-              <div className="flex flex-wrap items-center justify-center gap-1.5 mb-5 font-silk text-[10px]">
-                <span className="px-2 py-0.5 pixel-box bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 font-bold">
+              <div className="flex flex-wrap items-center justify-center gap-2 mb-5 font-silk text-[10px]">
+                <span className="px-2.5 py-1 bg-amber-400/15 text-amber-600 dark:text-amber-400 border border-amber-500/40 font-bold">
                   XII PPLG 3
                 </span>
-                <span className="px-2 py-0.5 pixel-box bg-amber-500/20 text-amber-900 dark:text-amber-300 font-bold">
+                <span className="px-2.5 py-1 bg-amber-400/15 text-amber-600 dark:text-amber-400 border border-amber-500/40 font-bold">
                   SMKN 1 BERINGIN
                 </span>
-                <span className="px-2 py-0.5 pixel-box bg-sky-500/20 text-sky-900 dark:text-sky-300 font-bold">
+                <span className="px-2.5 py-1 bg-amber-400/15 text-amber-600 dark:text-amber-400 border border-amber-500/40 font-bold">
                   ANGKATAN 2026
                 </span>
               </div>

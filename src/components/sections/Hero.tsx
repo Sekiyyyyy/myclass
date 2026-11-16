@@ -40,7 +40,7 @@ export function Hero() {
     >
       {/* 8-Bit Stepped Pixel Badge */}
       <div className="inline-flex items-center gap-2 px-3.5 py-1.5 mb-6 pixel-pill bg-white dark:bg-[#111827]">
-        <span className="w-2.5 h-2.5 bg-emerald-500 border border-slate-950 inline-block animate-pulse" />
+        <span className="w-2 h-2 bg-amber-500 border border-slate-950 inline-block animate-pulse" />
         <span className="font-pixel text-[9px] sm:text-[10px] text-slate-900 dark:text-white uppercase tracking-wider">
           SMK NEGERI 1 BERINGIN
         </span>

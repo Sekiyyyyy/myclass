@@ -96,11 +96,11 @@ export function Messages() {
     <section id="pesan" className="py-20 px-3 sm:px-6 max-w-6xl mx-auto relative select-none">
       {/* Header */}
       <div className="text-center max-w-xl mx-auto mb-10">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 pixel-box bg-slate-900 text-[#FBBF24] font-pixel text-[10px] mb-3">
-          <MessageSquareHeart className="w-3.5 h-3.5" />
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-500 text-slate-950 font-pixel text-[9px] font-bold border-2 border-slate-950 shadow-[2px_2px_0px_#000] mb-3">
+          <MessageSquareHeart className="w-3.5 h-3.5 text-slate-950" />
           <span>BUKU KENANGAN</span>
         </div>
-        <h2 className="font-pixel text-xl sm:text-3xl text-slate-900 dark:text-white mb-3">
+        <h2 className="font-pixel text-xl sm:text-3xl text-slate-900 dark:text-white mb-3 pixel-title-shadow">
           Kesan &amp; Pesan
         </h2>
         <p className="font-silk text-xs sm:text-sm text-slate-700 dark:text-slate-200 font-bold uppercase mb-6">
@@ -119,37 +119,51 @@ export function Messages() {
       {/* Grid of Messages */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
         {messages.map((msg) => (
-          <PixelCard key={msg.id} className="flex flex-col justify-between">
+          <div
+            key={msg.id}
+            className="pixel-box p-4 sm:p-5 flex flex-col justify-between transition-transform duration-150 hover:-translate-y-1"
+          >
+            {/* Header: Author & Role */}
             <div>
-              <div className="w-7 h-7 pixel-box bg-amber-500/15 text-amber-600 dark:text-amber-300 flex items-center justify-center mb-3 pixel-corners-sm">
-                <Quote className="w-3.5 h-3.5 fill-current" />
-              </div>
-              <p className="font-sans text-xs sm:text-sm text-slate-800 dark:text-slate-200 italic leading-relaxed mb-5 font-medium">
-                &ldquo;{msg.text}&rdquo;
-              </p>
-            </div>
+              <div className="flex items-center justify-between gap-3 mb-3 pb-3 border-b border-slate-200 dark:border-slate-800">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="relative w-10 h-10 overflow-hidden shrink-0 border-2 border-slate-950 dark:border-amber-400 bg-slate-950 shadow-[2px_2px_0px_#000]">
+                    <Image
+                      src={msg.avatar}
+                      alt={msg.author}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="min-w-0">
+                    <h4 className="font-silk font-bold text-xs sm:text-sm text-slate-900 dark:text-white leading-tight truncate">
+                      {msg.author}
+                    </h4>
+                    <div className="flex items-center gap-1.5 mt-1">
+                      <span className="px-1.5 py-0.5 bg-amber-400/20 text-amber-600 dark:text-amber-400 border border-amber-500/40 font-pixel text-[8px] font-bold">
+                        {msg.role}
+                      </span>
+                      <span className="text-slate-400 text-[8px]">•</span>
+                      <span className="text-slate-500 dark:text-slate-400 font-pixel text-[8px]">
+                        {msg.date}
+                      </span>
+                    </div>
+                  </div>
+                </div>
 
-            <div className="flex items-center gap-3 pt-3.5 border-t border-slate-200 dark:border-slate-800">
-              <div className="relative w-9 h-9 overflow-hidden shrink-0 border-2 border-slate-900 dark:border-slate-700 bg-slate-950 pixel-corners-sm">
-                <Image
-                  src={msg.avatar}
-                  alt={msg.author}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div>
-                <h4 className="font-silk font-bold text-xs text-slate-900 dark:text-white leading-tight">
-                  {msg.author}
-                </h4>
-                <div className="flex items-center gap-1.5 font-pixel text-[8px] mt-0.5">
-                  <span className="text-amber-600 dark:text-amber-400 font-bold">{msg.role}</span>
-                  <span className="text-slate-400">•</span>
-                  <span className="text-slate-800 dark:text-slate-200 font-bold">{msg.date}</span>
+                <div className="w-7 h-7 bg-amber-500/15 text-amber-500 border border-amber-500/30 flex items-center justify-center shrink-0">
+                  <Quote className="w-3.5 h-3.5 fill-current" />
                 </div>
               </div>
+
+              {/* Message Content: Dialogue Box */}
+              <div className="p-3.5 bg-slate-50 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800">
+                <p className="font-sans text-xs sm:text-sm text-slate-800 dark:text-slate-100 italic leading-relaxed font-normal">
+                  &ldquo;{msg.text}&rdquo;
+                </p>
+              </div>
             </div>
-          </PixelCard>
+          </div>
         ))}
       </div>
 
@@ -165,12 +179,6 @@ export function Messages() {
             onClick={(e) => e.stopPropagation()}
             className="pixel-box p-5 sm:p-7 max-w-sm w-full relative z-10"
           >
-            {/* 4 Corner 8-Bit Pixel Blocks */}
-            <span className="absolute top-1 left-1 w-2 h-2 bg-amber-400 pointer-events-none z-20" />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-amber-400 pointer-events-none z-20" />
-            <span className="absolute bottom-1 left-1 w-2 h-2 bg-amber-400 pointer-events-none z-20" />
-            <span className="absolute bottom-1 right-1 w-2 h-2 bg-amber-400 pointer-events-none z-20" />
-
             <button
               onClick={() => setModalOpen(false)}
               className="absolute top-3 right-3 w-7 h-7 bg-slate-200 dark:bg-slate-800 hover:bg-rose-500 hover:text-white text-slate-800 dark:text-slate-200 flex items-center justify-center cursor-pointer border border-slate-900 transition-colors"

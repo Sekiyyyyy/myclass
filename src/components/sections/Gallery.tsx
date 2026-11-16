@@ -62,11 +62,11 @@ export function Gallery() {
     <section id="galeri" ref={galleryRef} className="py-20 px-3 sm:px-6 max-w-7xl mx-auto relative select-none">
       {/* Header */}
       <div className="text-center max-w-xl mx-auto mb-10">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 pixel-box bg-slate-900 text-[#FBBF24] font-pixel text-[10px] mb-3">
-          <Camera className="w-3.5 h-3.5" />
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-500 text-slate-950 font-pixel text-[9px] font-bold border-2 border-slate-950 shadow-[2px_2px_0px_#000] mb-3">
+          <Camera className="w-3.5 h-3.5 text-slate-950" />
           <span>DOKUMENTASI</span>
         </div>
-        <h2 className="font-pixel text-xl sm:text-3xl text-slate-900 dark:text-white mb-3">
+        <h2 className="font-pixel text-xl sm:text-3xl text-slate-900 dark:text-white mb-3 pixel-title-shadow">
           Galeri Kenangan
         </h2>
         <p className="font-silk text-xs sm:text-sm text-slate-700 dark:text-slate-200 font-bold uppercase">
@@ -141,12 +141,6 @@ export function Gallery() {
             onClick={(e) => e.stopPropagation()}
             className="pixel-box p-4 sm:p-6 max-w-xl w-full relative z-10"
           >
-            {/* 4 Corner 8-Bit Pixel Blocks */}
-            <span className="absolute top-1 left-1 w-2 h-2 bg-amber-400 pointer-events-none z-20" />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-amber-400 pointer-events-none z-20" />
-            <span className="absolute bottom-1 left-1 w-2 h-2 bg-amber-400 pointer-events-none z-20" />
-            <span className="absolute bottom-1 right-1 w-2 h-2 bg-amber-400 pointer-events-none z-20" />
-
             <button
               onClick={() => setSelectedPhoto(null)}
               className="absolute top-3 right-3 z-10 w-7 h-7 bg-slate-200 dark:bg-slate-800 hover:bg-rose-500 hover:text-white text-slate-800 dark:text-slate-200 flex items-center justify-center cursor-pointer border border-slate-900 transition-colors"
@@ -155,10 +149,6 @@ export function Gallery() {
             </button>
 
             <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950 mb-3.5 pixel-frame shadow-md">
-              <span className="absolute top-0 left-0 w-1.5 h-1.5 bg-[#FBBF24] z-20 pointer-events-none" />
-              <span className="absolute top-0 right-0 w-1.5 h-1.5 bg-[#FBBF24] z-20 pointer-events-none" />
-              <span className="absolute bottom-0 left-0 w-1.5 h-1.5 bg-[#FBBF24] z-20 pointer-events-none" />
-              <span className="absolute bottom-0 right-0 w-1.5 h-1.5 bg-[#FBBF24] z-20 pointer-events-none" />
               <Image
                 src={selectedPhoto.imageUrl}
                 alt={selectedPhoto.title}
