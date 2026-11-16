@@ -2,10 +2,9 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Plus, Quote, Terminal, X, Send, Radio } from "lucide-react";
+import { Plus, Quote, X, Send, MessageSquareHeart } from "lucide-react";
 import { MessageItem } from "@/types";
 import confetti from "canvas-confetti";
-import { playBlip, playClick, playPowerUp } from "@/lib/sound";
 
 const initialMessages: MessageItem[] = [
   {
@@ -20,7 +19,7 @@ const initialMessages: MessageItem[] = [
     id: "msg-02",
     author: "Arrosid Hadi Nur Majid",
     avatar: "/students/student-02.jpg",
-    role: "XII PPLG 3",
+    role: "Siswa",
     text: "Tiga tahun penuh cerita di lab komputer SMK Negeri 1 Beringin. Terima kasih untuk kerja sama dan persahabatan yang solid.",
     date: "Tahun Ajaran 2026"
   },
@@ -28,7 +27,7 @@ const initialMessages: MessageItem[] = [
     id: "msg-03",
     author: "Clara Savira",
     avatar: "/students/student-05.jpg",
-    role: "XII PPLG 3",
+    role: "Siswa",
     text: "Semoga setelah lulus nanti kita semua bisa meraih cita-cita masing-masing dan tetap saling menyapa saat jumpa.",
     date: "Tahun Ajaran 2026"
   },
@@ -36,7 +35,7 @@ const initialMessages: MessageItem[] = [
     id: "msg-04",
     author: "Bima Triyanda",
     avatar: "/students/student-03.jpg",
-    role: "XII PPLG 3",
+    role: "Siswa",
     text: "Dari yang awalnya bingung waktu pertama kali buka editor koding, sampai akhirnya bisa bikin project bareng. Pengalaman terbaik!",
     date: "Tahun Ajaran 2026"
   },
@@ -44,7 +43,7 @@ const initialMessages: MessageItem[] = [
     id: "msg-05",
     author: "Winner Aurasari Debes",
     avatar: "/students/student-30.jpg",
-    role: "XII PPLG 3",
+    role: "Siswa",
     text: "Banyak hal berharga yang dipelajari bersama di kelas XII PPLG 3, bukan cuma soal koding tapi juga arti solidaritas.",
     date: "Tahun Ajaran 2026"
   },
@@ -52,7 +51,7 @@ const initialMessages: MessageItem[] = [
     id: "msg-06",
     author: "Mhd Fathir Aldiansyah",
     avatar: "/students/student-21.jpg",
-    role: "XII PPLG 3",
+    role: "Siswa",
     text: "Sampai jumpa di masa depan teman-teman. Sukses selalu untuk XII PPLG 3 angkatan 2026!",
     date: "Tahun Ajaran 2026"
   }
@@ -83,40 +82,35 @@ export function Messages() {
     setText("");
     setModalOpen(false);
 
-    playPowerUp();
     confetti({
-      particleCount: 80,
-      spread: 75,
+      particleCount: 50,
+      spread: 60,
       origin: { y: 0.6 },
-      colors: ["#00F0FF", "#A855F7", "#10B981"],
+      colors: ["#6366F1", "#EC4899", "#38BDF8"],
     });
   };
 
   return (
     <section id="pesan" className="py-20 px-4 sm:px-6 max-w-6xl mx-auto relative">
-      {/* Header */}
-      <div className="text-center max-w-xl mx-auto mb-10">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 font-mono text-xs border border-cyan-500/25 mb-3">
-          <Radio className="w-3.5 h-3.5" />
-          <span>COMM-LINK // TRANSMISSIONS</span>
+      {/* Section Header */}
+      <div className="text-center max-w-xl mx-auto mb-12">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-semibold text-xs border border-indigo-200 dark:border-indigo-800/60 mb-3">
+          <MessageSquareHeart className="w-3.5 h-3.5" />
+          <span>Buku Kenangan</span>
         </div>
-        <h2 className="text-3xl sm:text-5xl font-heading font-black tracking-tight text-slate-900 dark:text-white mb-2">
+        <h2 className="text-3xl sm:text-5xl font-heading font-black tracking-tight text-slate-900 dark:text-white mb-3">
           Kesan &amp; Pesan
         </h2>
-        <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 mb-6 font-medium">
-          Untaian pesan dari guru dan siswa kelas XII PPLG 3 SMK Negeri 1 Beringin.
+        <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 mb-6">
+          Untaian kata dan doa dari guru serta teman-teman kelas XII PPLG 3.
         </p>
 
         <button
-          onClick={() => {
-            playClick();
-            setModalOpen(true);
-          }}
-          onMouseEnter={() => playBlip(750)}
-          className="arcade-btn arcade-btn-primary px-6 py-3.5 text-xs sm:text-sm flex items-center gap-2 mx-auto"
+          onClick={() => setModalOpen(true)}
+          className="btn-primary inline-flex items-center gap-2"
         >
           <Plus className="w-4 h-4" />
-          <span>Transmisikan Pesan</span>
+          <span>Tulis Pesan Anda</span>
         </button>
       </div>
 
@@ -125,20 +119,19 @@ export function Messages() {
         {messages.map((msg) => (
           <div
             key={msg.id}
-            onMouseEnter={() => playBlip(720)}
-            className="arcade-card arcade-card-interactive hud-corner p-6 flex flex-col justify-between group"
+            className="glass-card p-6 flex flex-col justify-between"
           >
             <div>
-              <div className="w-9 h-9 rounded-lg bg-cyan-500/10 text-cyan-500 flex items-center justify-center mb-4 border border-cyan-500/20">
+              <div className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-4">
                 <Quote className="w-4 h-4 fill-current" />
               </div>
-              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 italic leading-relaxed mb-6 font-medium">
+              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 italic leading-relaxed mb-6">
                 &ldquo;{msg.text}&rdquo;
               </p>
             </div>
 
-            <div className="flex items-center gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
-              <div className="relative w-10 h-10 rounded-lg overflow-hidden shrink-0 border border-cyan-500/30 bg-slate-950">
+            <div className="flex items-center gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
+              <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0 border border-slate-200 dark:border-slate-700 bg-slate-100">
                 <Image
                   src={msg.avatar}
                   alt={msg.author}
@@ -150,8 +143,8 @@ export function Messages() {
                 <h4 className="font-heading font-bold text-xs sm:text-sm text-slate-900 dark:text-white leading-tight">
                   {msg.author}
                 </h4>
-                <div className="flex items-center gap-2 text-[11px] font-mono text-slate-500 dark:text-slate-400 mt-0.5">
-                  <span className="text-cyan-500 font-bold">{msg.role}</span>
+                <div className="flex items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                  <span className="text-indigo-600 dark:text-indigo-400 font-medium">{msg.role}</span>
                   <span>•</span>
                   <span>{msg.date}</span>
                 </div>
@@ -166,82 +159,79 @@ export function Messages() {
         <div
           role="dialog"
           aria-modal="true"
-          onClick={() => {
-            playBlip(500);
-            setModalOpen(false);
-          }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200"
+          onClick={() => setModalOpen(false)}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md animate-in fade-in duration-200"
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="arcade-card hud-corner p-6 sm:p-8 max-w-md w-full relative border border-cyan-500/40 shadow-2xl animate-in zoom-in-95 duration-200"
+            className="glass-card p-6 sm:p-8 max-w-md w-full relative shadow-2xl border border-slate-200 dark:border-slate-800 animate-in zoom-in-95 duration-200 bg-white dark:bg-slate-900"
           >
             <button
-              onClick={() => {
-                playBlip(500);
-                setModalOpen(false);
-              }}
-              className="absolute top-4 right-4 w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 hover:text-cyan-500 text-slate-600 dark:text-slate-400 flex items-center justify-center transition-all cursor-pointer"
+              onClick={() => setModalOpen(false)}
+              className="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 flex items-center justify-center transition-all cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
 
-            <h3 className="font-heading font-black text-xl text-slate-900 dark:text-white mb-1">
-              Transmisikan Pesan
+            <h3 className="font-heading font-bold text-xl text-slate-900 dark:text-white mb-1">
+              Tulis Pesan Baru
             </h3>
-            <p className="text-xs font-mono text-slate-500 dark:text-slate-400 mb-5">
-              Kirimkan transmisi kesan &amp; pesan untuk angkatan 2026.
+            <p className="text-xs text-slate-500 mb-5">
+              Bagikan kesan, doa, atau kenangan untuk teman-teman sekelas.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-mono font-bold text-slate-700 dark:text-slate-300 mb-1.5">
-                  NAMA OPERATIVE
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                  Nama Anda
                 </label>
                 <input
                   type="text"
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="Contoh: Arrosid / Clara / Rizky"
-                  className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-900 dark:text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500"
+                  placeholder="Contoh: Rizky Alfianno"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-mono font-bold text-slate-700 dark:text-slate-300 mb-1.5">
-                  ROLE / PERAN
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                  Peran / Status
                 </label>
-                <input
-                  type="text"
+                <select
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
-                  placeholder="Contoh: Siswa / Frontend Dev"
-                  className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-900 dark:text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500"
-                />
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 cursor-pointer"
+                >
+                  <option value="Siswa">Siswa</option>
+                  <option value="Wali Kelas">Wali Kelas</option>
+                  <option value="Guru">Guru</option>
+                  <option value="Alumni">Alumni</option>
+                  <option value="Teman">Teman</option>
+                </select>
               </div>
 
               <div>
-                <label className="block text-xs font-mono font-bold text-slate-700 dark:text-slate-300 mb-1.5">
-                  PESAN INTEL
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                  Isi Pesan atau Doa
                 </label>
                 <textarea
                   required
                   rows={4}
                   value={text}
                   onChange={(e) => setText(e.target.value)}
-                  placeholder="Tuliskan pengalaman atau pesan terbaikmu selama di kelas..."
-                  className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-900 dark:text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500 resize-none"
+                  placeholder="Tuliskan pesan berhargamu di sini..."
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 resize-none"
                 />
               </div>
 
               <button
                 type="submit"
-                onClick={() => playClick()}
-                className="arcade-btn arcade-btn-primary w-full py-3.5 text-xs sm:text-sm flex items-center justify-center gap-2"
+                className="btn-primary w-full py-3 text-xs sm:text-sm flex items-center justify-center gap-2"
               >
                 <Send className="w-4 h-4" />
-                <span>Kirim Transmisi</span>
+                <span>Kirim Pesan</span>
               </button>
             </form>
           </div>
