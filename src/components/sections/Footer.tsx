@@ -17,7 +17,7 @@ export function Footer() {
         <div className="flex items-center gap-3.5">
           <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden border-2 border-slate-300 dark:border-indigo-400/50 shadow-sm shrink-0 group hover:scale-105 transition-transform">
             <Image
-              src="/logo.png"
+              src="/logo-v2.png"
               alt="Logo XII PPLG 3"
               fill
               className="object-contain p-0.5"

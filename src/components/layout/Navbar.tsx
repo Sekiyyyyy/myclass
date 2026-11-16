@@ -56,7 +56,7 @@ export function Navbar() {
         <a href="#hero" className="flex items-center gap-2.5 select-none group pr-1">
           <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden border border-slate-300 dark:border-indigo-400/50 shadow-sm shrink-0 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
             <Image
-              src="/logo.png"
+              src="/logo-v2.png"
               alt="Logo XII PPLG 3"
               fill
               className="object-contain p-0.5"
