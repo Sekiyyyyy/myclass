@@ -2,15 +2,16 @@
 
 import { useState, useMemo, useRef, useEffect } from "react";
 import Image from "next/image";
-import { Search, Instagram, X, Heart, ExternalLink, Sparkles, UserCheck } from "lucide-react";
+import { Search, Instagram, X, Heart, ExternalLink, Gamepad2 } from "lucide-react";
 import { students, Student } from "@/data/students";
 import { useGSAP, gsap } from "@/lib/gsap-config";
+import { PixelCard } from "@/components/ui/PixelCard";
 import confetti from "canvas-confetti";
 
 export function StudentProfiles() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
-  const [likes, setLikes] = useState<{ [id: string]: number }>({});
+  const [coins, setCoins] = useState<{ [id: string]: number }>({});
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const filteredStudents = useMemo(() => {
@@ -24,36 +25,36 @@ export function StudentProfiles() {
     });
   }, [searchQuery]);
 
-  const handleLike = (e: React.MouseEvent, id: string) => {
+  const handleCoin = (e: React.MouseEvent, id: string) => {
     e.stopPropagation();
-    setLikes((prev) => ({ ...prev, [id]: (prev[id] || 0) + 1 }));
+    setCoins((prev) => ({ ...prev, [id]: (prev[id] || 0) + 1 }));
 
     confetti({
-      particleCount: 25,
-      spread: 45,
+      particleCount: 20,
+      spread: 40,
       origin: {
         x: e.clientX / window.innerWidth,
         y: e.clientY / window.innerHeight,
       },
-      colors: ["#6366F1", "#EC4899", "#38BDF8"],
+      colors: ["#FBBF24", "#F59E0B", "#FCD34D"],
+      shapes: ["square"],
     });
   };
 
   useGSAP(
     () => {
-      const cards = sectionRef.current?.querySelectorAll(".student-card");
+      const cards = sectionRef.current?.querySelectorAll(".pixel-player-card");
       if (!cards || cards.length === 0) return;
 
       gsap.fromTo(
         cards,
-        { opacity: 0, y: 30, scale: 0.98 },
+        { opacity: 0, y: 20 },
         {
           opacity: 1,
           y: 0,
-          scale: 1,
-          duration: 0.45,
+          duration: 0.35,
           stagger: 0.02,
-          ease: "power2.out",
+          ease: "steps(4)",
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top 80%",
@@ -80,36 +81,36 @@ export function StudentProfiles() {
   }, [selectedStudent]);
 
   return (
-    <section id="siswa" ref={sectionRef} className="py-20 px-4 sm:px-6 max-w-7xl mx-auto relative">
-      {/* Section Header */}
+    <section id="siswa" ref={sectionRef} className="py-20 px-3 sm:px-6 max-w-7xl mx-auto relative select-none">
+      {/* Arcade Header */}
       <div className="text-center max-w-xl mx-auto mb-10">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-semibold text-xs border border-indigo-200 dark:border-indigo-800/60 mb-3">
-          <UserCheck className="w-3.5 h-3.5" />
-          <span>Daftar Anggota Kelas</span>
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded pixel-box bg-slate-900 text-[#FBBF24] font-pixel text-[10px] mb-3">
+          <Gamepad2 className="w-3.5 h-3.5" />
+          <span>[ CHARACTER SELECT ]</span>
         </div>
-        <h2 className="text-3xl sm:text-5xl font-heading font-black tracking-tight text-slate-900 dark:text-white mb-3">
-          31 Siswa XII PPLG 3
+        <h2 className="font-pixel text-xl sm:text-3xl text-slate-900 dark:text-white mb-3">
+          31 PLAYERS ROSTER
         </h2>
-        <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400">
-          Temukan dan kenali profil lengkap setiap teman sekelas kita angkatan 2026.
+        <p className="font-silk text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-bold uppercase">
+          Klik kartu pemain untuk melihat profil lengkap angkatan 2026
         </p>
       </div>
 
-      {/* Clean Modern Search Bar */}
-      <div className="max-w-md mx-auto mb-12">
+      {/* Pixel Search Bar */}
+      <div className="max-w-md mx-auto mb-10">
         <div className="relative">
-          <Search className="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Cari nama atau username Instagram..."
-            className="w-full pl-11 pr-10 py-3 rounded-2xl bg-white dark:bg-slate-900/80 text-slate-900 dark:text-white placeholder:text-slate-400 text-sm border border-slate-200 dark:border-slate-800 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all shadow-xs"
+            placeholder="Cari nama atau username..."
+            className="w-full pl-10 pr-9 py-2.5 rounded pixel-box bg-white dark:bg-[#111827] text-slate-900 dark:text-white placeholder:text-slate-400 font-silk text-xs focus:outline-none focus:border-amber-500"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery("")}
-              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
             >
               <X className="w-4 h-4" />
             </button>
@@ -117,117 +118,118 @@ export function StudentProfiles() {
         </div>
       </div>
 
-      {/* Clean Grid Showcase */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5 sm:gap-5">
+      {/* Pixel Grid Showcase */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5 sm:gap-4">
         {filteredStudents.map((s) => (
-          <div
-            key={s.id}
-            onClick={() => setSelectedStudent(s)}
-            className="student-card glass-card glass-card-interactive p-3 sm:p-3.5 flex flex-col group cursor-pointer"
-          >
-            {/* Student Photo */}
-            <div className="relative aspect-[3/4] w-full rounded-xl overflow-hidden mb-3 bg-slate-100 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80">
-              <Image
-                src={s.avatar}
-                alt={s.name}
-                fill
-                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-                className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
-              />
-
-              {/* Number Badge */}
-              <div className="absolute top-2 left-2 z-10 px-2 py-0.5 rounded-md bg-slate-900/80 text-white font-mono font-bold text-[10px] backdrop-blur-xs">
-                #{s.id}
-              </div>
-
-              {/* Like Heart Button */}
-              <button
-                type="button"
-                onClick={(e) => handleLike(e, s.id)}
-                title="Beri Apresiasi"
-                className="absolute top-2 right-2 z-10 w-7 h-7 rounded-lg bg-white/90 dark:bg-slate-900/90 text-rose-500 hover:bg-white dark:hover:bg-slate-800 flex items-center justify-center shadow-xs backdrop-blur-xs transition-transform active:scale-90"
-              >
-                <Heart className={`w-3.5 h-3.5 ${likes[s.id] ? "fill-rose-500 text-rose-500" : ""}`} />
-              </button>
-
-              {likes[s.id] ? (
-                <div className="absolute bottom-2 right-2 z-10 px-1.5 py-0.5 rounded-full bg-rose-500 text-white text-[10px] font-semibold flex items-center gap-0.5">
-                  <Heart className="w-2.5 h-2.5 fill-current" />
-                  <span>{likes[s.id]}</span>
-                </div>
-              ) : null}
-            </div>
-
-            {/* Student Info */}
-            <div className="flex flex-col flex-1 justify-between">
+          <div key={s.id} className="pixel-player-card">
+            <PixelCard
+              onClick={() => setSelectedStudent(s)}
+              className="p-2.5 sm:p-3 flex flex-col justify-between h-full"
+            >
               <div>
-                <h3 className="font-heading font-bold text-xs sm:text-sm text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors leading-snug line-clamp-1 mb-1">
+                {/* Photo Frame with 8-bit Border */}
+                <div className="relative aspect-[3/4] w-full rounded overflow-hidden mb-2.5 bg-slate-950 border-2 border-slate-900 dark:border-slate-700">
+                  <Image
+                    src={s.avatar}
+                    alt={s.name}
+                    fill
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                    className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                  />
+
+                  {/* Player Number Tag */}
+                  <div className="absolute top-1.5 left-1.5 z-10 px-1.5 py-0.5 rounded bg-slate-950/90 text-[#FBBF24] font-pixel text-[9px] border border-amber-500/50">
+                    #{s.id}
+                  </div>
+
+                  {/* Coin / Like Button */}
+                  <button
+                    type="button"
+                    onClick={(e) => handleCoin(e, s.id)}
+                    title="Beri Koin"
+                    className="absolute top-1.5 right-1.5 z-10 w-6 h-6 rounded bg-slate-950/90 text-amber-400 hover:text-amber-300 flex items-center justify-center border border-amber-500/50 transition-transform active:scale-90"
+                  >
+                    <Heart className={`w-3.5 h-3.5 ${coins[s.id] ? "fill-amber-400 text-amber-400" : ""}`} />
+                  </button>
+
+                  {coins[s.id] ? (
+                    <div className="absolute bottom-1.5 right-1.5 z-10 px-1.5 py-0.5 rounded bg-amber-500 text-slate-950 font-pixel text-[8px] font-bold">
+                      +{coins[s.id]}
+                    </div>
+                  ) : null}
+                </div>
+
+                {/* Info */}
+                <h3 className="font-silk font-bold text-xs sm:text-sm text-slate-900 dark:text-white truncate mb-0.5">
                   {s.name}
                 </h3>
+                <p className="font-pixel text-[9px] text-amber-500 mb-2 truncate">
+                  {s.nickname}
+                </p>
+              </div>
+
+              {/* Instagram & Choose Trigger */}
+              <div className="pt-2 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-[10px] font-silk">
                 <a
                   href={`https://instagram.com/${s.ig}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
-                  className="inline-flex items-center gap-1 text-[11px] text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:underline mb-2.5 truncate max-w-full font-medium"
+                  className="inline-flex items-center gap-1 text-slate-500 hover:text-amber-500 truncate max-w-[70%]"
                 >
                   <Instagram className="w-3 h-3 shrink-0" />
                   <span className="truncate">@{s.ig}</span>
                 </a>
-              </div>
-
-              <div className="pt-2 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
-                <span className="font-medium text-indigo-600 dark:text-indigo-400">{s.nickname}</span>
-                <span className="group-hover:translate-x-0.5 transition-transform text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-200">
-                  Lihat &rarr;
+                <span className="text-amber-500 font-bold group-hover:translate-x-0.5 transition-transform">
+                  &gt;
                 </span>
               </div>
-            </div>
+            </PixelCard>
           </div>
         ))}
       </div>
 
       {filteredStudents.length === 0 && (
-        <div className="text-center py-16 glass-card max-w-md mx-auto p-8">
-          <Search className="w-8 h-8 text-slate-400 mx-auto mb-3" />
-          <h3 className="font-heading font-bold text-base text-slate-800 dark:text-white mb-1">
-            Tidak Ditemukan
+        <div className="text-center py-16 pixel-box max-w-md mx-auto p-8">
+          <Gamepad2 className="w-8 h-8 text-amber-500 mx-auto mb-3" />
+          <h3 className="font-pixel text-xs text-slate-800 dark:text-white mb-2">
+            PLAYER NOT FOUND
           </h3>
-          <p className="text-xs text-slate-500 mb-4">
-            Tidak ada siswa dengan nama atau akun &ldquo;{searchQuery}&rdquo;.
+          <p className="font-silk text-xs text-slate-500 mb-4">
+            Tidak ada pemain dengan kata kunci &ldquo;{searchQuery}&rdquo;.
           </p>
           <button
             onClick={() => setSearchQuery("")}
-            className="btn-secondary text-xs px-4 py-2"
+            className="pixel-btn pixel-btn-primary text-[10px] py-2 px-3"
           >
-            Reset Pencarian
+            [ RESET SEARCH ]
           </button>
         </div>
       )}
 
-      {/* Clean Student Detail Modal */}
+      {/* Arcade Character Dossier Modal */}
       {selectedStudent && (
         <div
           role="dialog"
           aria-modal="true"
           onClick={() => setSelectedStudent(null)}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md animate-in fade-in duration-200"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-xs animate-in fade-in duration-150"
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="glass-card p-6 sm:p-8 max-w-md w-full relative z-10 shadow-2xl border border-slate-200 dark:border-slate-800 animate-in zoom-in-95 duration-200 bg-white/95 dark:bg-slate-900/95"
+            className="pixel-box p-5 sm:p-7 max-w-sm w-full relative z-10 bg-white dark:bg-[#111827] border-4 border-slate-900 dark:border-amber-500/80 shadow-2xl"
           >
             {/* Close Button */}
             <button
               onClick={() => setSelectedStudent(null)}
-              className="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 flex items-center justify-center transition-all cursor-pointer"
+              className="absolute top-3 right-3 w-7 h-7 rounded bg-slate-200 dark:bg-slate-800 hover:bg-rose-500 hover:text-white text-slate-700 dark:text-slate-300 flex items-center justify-center cursor-pointer border border-slate-900 transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
 
-            {/* Student Photo & Profile Details */}
+            {/* Content */}
             <div className="flex flex-col items-center text-center">
-              <div className="relative w-44 h-56 sm:w-48 sm:h-60 rounded-2xl overflow-hidden mb-4 shadow-md bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-800">
+              <div className="relative w-40 h-52 sm:w-44 sm:h-56 rounded overflow-hidden mb-3.5 border-4 border-slate-900 dark:border-slate-700 bg-slate-950">
                 <Image
                   src={selectedStudent.avatar}
                   alt={selectedStudent.name}
@@ -235,53 +237,51 @@ export function StudentProfiles() {
                   priority
                   className="object-cover object-center"
                 />
-                <div className="absolute top-2 left-2 px-2.5 py-0.5 rounded-full bg-slate-900/80 text-white font-mono font-bold text-xs backdrop-blur-xs">
-                  Absen #{selectedStudent.id}
+                <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-slate-950 text-[#FBBF24] font-pixel text-[9px] border border-amber-500">
+                  PLAYER #{selectedStudent.id}
                 </div>
               </div>
 
-              {/* Name & Identity */}
-              <h3 className="text-xl sm:text-2xl font-heading font-black text-slate-900 dark:text-white tracking-tight mb-1">
+              <h3 className="font-pixel text-sm sm:text-base text-slate-900 dark:text-white mb-1 leading-snug">
                 {selectedStudent.name}
               </h3>
-              <p className="text-sm font-semibold text-indigo-600 dark:text-indigo-400 mb-4">
-                Panggilan: {selectedStudent.nickname}
+              <p className="font-silk text-xs text-amber-500 font-bold mb-4 uppercase">
+                &lt; {selectedStudent.nickname} &gt;
               </p>
 
-              {/* Class & School Badges */}
-              <div className="flex flex-wrap items-center justify-center gap-2 mb-6 text-xs">
-                <span className="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium border border-slate-200 dark:border-slate-700">
+              {/* Badges */}
+              <div className="flex flex-wrap items-center justify-center gap-1.5 mb-5 font-silk text-[10px]">
+                <span className="px-2 py-0.5 rounded pixel-box bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">
                   XII PPLG 3
                 </span>
-                <span className="px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-medium border border-indigo-200 dark:border-indigo-800/60">
-                  SMK Negeri 1 Beringin
+                <span className="px-2 py-0.5 rounded pixel-box bg-amber-500/20 text-amber-500">
+                  SMKN 1 BERINGIN
                 </span>
-                <span className="px-3 py-1 rounded-full bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 font-medium border border-sky-200 dark:border-sky-800/60">
-                  Angkatan 2026
+                <span className="px-2 py-0.5 rounded pixel-box bg-sky-500/20 text-sky-500">
+                  STAGE 2026
                 </span>
               </div>
 
-              {/* Instagram Action Button */}
-              <div className="flex items-center gap-3 w-full">
+              {/* Actions */}
+              <div className="flex items-center gap-2 w-full">
                 <a
                   href={`https://instagram.com/${selectedStudent.ig}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-primary flex-1 py-3 text-xs sm:text-sm flex items-center justify-center gap-2"
+                  className="pixel-btn pixel-btn-primary flex-1 py-2 text-[9px] flex items-center justify-center gap-1.5"
                 >
-                  <Instagram className="w-4 h-4" />
-                  <span>Kunjungi Instagram</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
+                  <Instagram className="w-3.5 h-3.5" />
+                  <span>INSTAGRAM</span>
+                  <ExternalLink className="w-3 h-3" />
                 </a>
 
                 <button
                   type="button"
-                  onClick={(e) => handleLike(e, selectedStudent.id)}
-                  className="btn-secondary px-4 py-3 text-xs sm:text-sm flex items-center justify-center gap-1.5"
-                  title="Beri Suka"
+                  onClick={(e) => handleCoin(e, selectedStudent.id)}
+                  className="pixel-btn pixel-btn-secondary py-2 px-3 text-[9px] flex items-center justify-center gap-1"
                 >
-                  <Heart className={`w-4 h-4 text-rose-500 ${likes[selectedStudent.id] ? "fill-rose-500" : ""}`} />
-                  <span>{likes[selectedStudent.id] || "Suka"}</span>
+                  <Heart className={`w-3.5 h-3.5 text-amber-500 ${coins[selectedStudent.id] ? "fill-amber-500" : ""}`} />
+                  <span>+{coins[selectedStudent.id] || 1}</span>
                 </button>
               </div>
             </div>

@@ -1,7 +1,6 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { playToggle } from "./sound";
 
 type Theme = "dark" | "light";
 
@@ -43,7 +42,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   };
 
   const toggleTheme = () => {
-    playToggle();
     const nextTheme: Theme = theme === "dark" ? "light" : "dark";
     setThemeState(nextTheme);
     localStorage.setItem("pplg3_theme", nextTheme);
@@ -63,6 +61,4 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function useTheme() {
-  return useContext(ThemeContext);
-}
+export const useTheme = () => useContext(ThemeContext);

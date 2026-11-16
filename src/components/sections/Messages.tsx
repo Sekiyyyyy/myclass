@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Plus, Quote, X, Send, MessageSquareHeart } from "lucide-react";
+import { Plus, Quote, X, Send, Gamepad2 } from "lucide-react";
 import { MessageItem } from "@/types";
+import { PixelCard } from "@/components/ui/PixelCard";
 import confetti from "canvas-confetti";
 
 const initialMessages: MessageItem[] = [
@@ -83,55 +84,53 @@ export function Messages() {
     setModalOpen(false);
 
     confetti({
-      particleCount: 50,
-      spread: 60,
+      particleCount: 40,
+      spread: 50,
       origin: { y: 0.6 },
-      colors: ["#6366F1", "#EC4899", "#38BDF8"],
+      colors: ["#FBBF24", "#38BDF8", "#34D399"],
+      shapes: ["square"],
     });
   };
 
   return (
-    <section id="pesan" className="py-20 px-4 sm:px-6 max-w-6xl mx-auto relative">
-      {/* Section Header */}
-      <div className="text-center max-w-xl mx-auto mb-12">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-semibold text-xs border border-indigo-200 dark:border-indigo-800/60 mb-3">
-          <MessageSquareHeart className="w-3.5 h-3.5" />
-          <span>Buku Kenangan</span>
+    <section id="pesan" className="py-20 px-3 sm:px-6 max-w-6xl mx-auto relative select-none">
+      {/* Arcade Header */}
+      <div className="text-center max-w-xl mx-auto mb-10">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded pixel-box bg-slate-900 text-[#FBBF24] font-pixel text-[10px] mb-3">
+          <Gamepad2 className="w-3.5 h-3.5" />
+          <span>[ HIGH SCORE GUESTBOOK ]</span>
         </div>
-        <h2 className="text-3xl sm:text-5xl font-heading font-black tracking-tight text-slate-900 dark:text-white mb-3">
-          Kesan &amp; Pesan
+        <h2 className="font-pixel text-xl sm:text-3xl text-slate-900 dark:text-white mb-3">
+          MESSAGES &amp; TRIBUTES
         </h2>
-        <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 mb-6">
-          Untaian kata dan doa dari guru serta teman-teman kelas XII PPLG 3.
+        <p className="font-silk text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-bold uppercase mb-6">
+          Kesan dan pesan kenangan dari guru serta teman-teman XII PPLG 3
         </p>
 
         <button
           onClick={() => setModalOpen(true)}
-          className="btn-primary inline-flex items-center gap-2"
+          className="pixel-btn pixel-btn-primary mx-auto"
         >
-          <Plus className="w-4 h-4" />
-          <span>Tulis Pesan Anda</span>
+          <Plus className="w-3.5 h-3.5 mr-1.5" />
+          <span>[ INSERT MESSAGE ]</span>
         </button>
       </div>
 
       {/* Grid of Messages */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
         {messages.map((msg) => (
-          <div
-            key={msg.id}
-            className="glass-card p-6 flex flex-col justify-between"
-          >
+          <PixelCard key={msg.id} className="p-5 flex flex-col justify-between">
             <div>
-              <div className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-4">
-                <Quote className="w-4 h-4 fill-current" />
+              <div className="w-7 h-7 rounded pixel-box bg-amber-500/10 text-amber-500 flex items-center justify-center mb-3">
+                <Quote className="w-3.5 h-3.5 fill-current" />
               </div>
-              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 italic leading-relaxed mb-6">
+              <p className="font-sans text-xs sm:text-sm text-slate-700 dark:text-slate-300 italic leading-relaxed mb-5">
                 &ldquo;{msg.text}&rdquo;
               </p>
             </div>
 
-            <div className="flex items-center gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
-              <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0 border border-slate-200 dark:border-slate-700 bg-slate-100">
+            <div className="flex items-center gap-3 pt-3.5 border-t border-slate-200 dark:border-slate-800">
+              <div className="relative w-9 h-9 rounded overflow-hidden shrink-0 border border-slate-900 dark:border-slate-700 bg-slate-950">
                 <Image
                   src={msg.avatar}
                   alt={msg.author}
@@ -140,17 +139,17 @@ export function Messages() {
                 />
               </div>
               <div>
-                <h4 className="font-heading font-bold text-xs sm:text-sm text-slate-900 dark:text-white leading-tight">
+                <h4 className="font-silk font-bold text-xs text-slate-900 dark:text-white leading-tight">
                   {msg.author}
                 </h4>
-                <div className="flex items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
-                  <span className="text-indigo-600 dark:text-indigo-400 font-medium">{msg.role}</span>
+                <div className="flex items-center gap-1.5 font-pixel text-[8px] text-slate-500 mt-0.5">
+                  <span className="text-amber-500">{msg.role}</span>
                   <span>•</span>
                   <span>{msg.date}</span>
                 </div>
               </div>
             </div>
-          </div>
+          </PixelCard>
         ))}
       </div>
 
@@ -160,29 +159,29 @@ export function Messages() {
           role="dialog"
           aria-modal="true"
           onClick={() => setModalOpen(false)}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md animate-in fade-in duration-200"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-xs animate-in fade-in duration-150"
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="glass-card p-6 sm:p-8 max-w-md w-full relative shadow-2xl border border-slate-200 dark:border-slate-800 animate-in zoom-in-95 duration-200 bg-white dark:bg-slate-900"
+            className="pixel-box p-5 sm:p-7 max-w-sm w-full relative z-10 bg-white dark:bg-[#111827] border-4 border-slate-900 dark:border-amber-500/80 shadow-2xl"
           >
             <button
               onClick={() => setModalOpen(false)}
-              className="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 flex items-center justify-center transition-all cursor-pointer"
+              className="absolute top-3 right-3 w-7 h-7 rounded bg-slate-200 dark:bg-slate-800 hover:bg-rose-500 hover:text-white text-slate-700 dark:text-slate-300 flex items-center justify-center cursor-pointer border border-slate-900 transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
 
-            <h3 className="font-heading font-bold text-xl text-slate-900 dark:text-white mb-1">
-              Tulis Pesan Baru
+            <h3 className="font-pixel text-xs sm:text-sm text-slate-900 dark:text-white mb-1">
+              [ INSERT MESSAGE ]
             </h3>
-            <p className="text-xs text-slate-500 mb-5">
-              Bagikan kesan, doa, atau kenangan untuk teman-teman sekelas.
+            <p className="font-silk text-[10px] text-slate-500 mb-4 uppercase">
+              Tuliskan pesan kenangan untuk angkatan 2026
             </p>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-3.5">
               <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                <label className="block font-silk font-bold text-[10px] text-slate-700 dark:text-slate-300 mb-1 uppercase">
                   Nama Anda
                 </label>
                 <input
@@ -191,18 +190,18 @@ export function Messages() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Contoh: Rizky Alfianno"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30"
+                  className="w-full px-3 py-2 rounded pixel-box bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white font-silk text-xs focus:outline-none focus:border-amber-500"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                <label className="block font-silk font-bold text-[10px] text-slate-700 dark:text-slate-300 mb-1 uppercase">
                   Peran / Status
                 </label>
                 <select
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 cursor-pointer"
+                  className="w-full px-3 py-2 rounded pixel-box bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white font-silk text-xs focus:outline-none focus:border-amber-500 cursor-pointer"
                 >
                   <option value="Siswa">Siswa</option>
                   <option value="Wali Kelas">Wali Kelas</option>
@@ -213,25 +212,25 @@ export function Messages() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                  Isi Pesan atau Doa
+                <label className="block font-silk font-bold text-[10px] text-slate-700 dark:text-slate-300 mb-1 uppercase">
+                  Pesan / Doa
                 </label>
                 <textarea
                   required
-                  rows={4}
+                  rows={3}
                   value={text}
                   onChange={(e) => setText(e.target.value)}
                   placeholder="Tuliskan pesan berhargamu di sini..."
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 resize-none"
+                  className="w-full px-3 py-2 rounded pixel-box bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white font-sans text-xs focus:outline-none focus:border-amber-500 resize-none"
                 />
               </div>
 
               <button
                 type="submit"
-                className="btn-primary w-full py-3 text-xs sm:text-sm flex items-center justify-center gap-2"
+                className="pixel-btn pixel-btn-primary w-full py-2.5 text-[10px] flex items-center justify-center gap-1.5"
               >
-                <Send className="w-4 h-4" />
-                <span>Kirim Pesan</span>
+                <Send className="w-3.5 h-3.5" />
+                <span>[ POST MESSAGE ]</span>
               </button>
             </form>
           </div>

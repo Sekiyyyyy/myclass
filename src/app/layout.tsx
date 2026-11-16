@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
-import { CyberGridBackground } from "@/components/layout/CyberGridBackground";
+import { PixelBackground } from "@/components/layout/PixelBackground";
 import { ThemeProvider } from "@/lib/theme-provider";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space",
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-sans",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
 
@@ -19,48 +19,39 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-const jakarta = Plus_Jakarta_Sans({
-  variable: "--font-sans",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  display: "swap",
-});
-
 export const metadata: Metadata = {
-  title: "XII PPLG 3 — SMK Negeri 1 Beringin | Arcade Roster & Digital Portal",
+  title: "XII PPLG 3 — Pixel Arcade Edition | SMKN 1 Beringin",
   description:
-    "Portal resmi dan arsip digital kelas XII PPLG 3 SMK Negeri 1 Beringin (Angkatan 2026). 31 Siswa Rekayasa Perangkat Lunak dan Gim.",
+    "Portal digital resmi dan buku kenangan bergaya Pixel Arcade kelas XII PPLG 3 SMK Negeri 1 Beringin (Angkatan 2026). 31 Siswa Rekayasa Perangkat Lunak dan Gim.",
   keywords: [
     "XII PPLG 3",
     "SMK Negeri 1 Beringin",
     "PPLG",
-    "Software Engineering",
-    "Game Engineering",
-    "Arcade Modern",
+    "Pixel Arcade",
+    "Retro Game",
     "Angkatan 2026"
   ],
   authors: [{ name: "Keluarga Besar XII PPLG 3" }],
-  openGraph: {
-    title: "XII PPLG 3 — SMK Negeri 1 Beringin",
-    description: "Ruang digital kebersamaan 31 siswa XII PPLG 3 SMK Negeri 1 Beringin.",
-    type: "website",
-    locale: "id_ID",
-  },
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <html
-      lang="id"
-      className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${jakarta.variable} dark scroll-smooth`}
-    >
-      <body className="min-h-screen bg-[#F8FAFC] text-slate-900 dark:bg-[#07090E] dark:text-slate-100 font-sans antialiased selection:bg-cyan-500 selection:text-black relative overflow-x-hidden transition-colors duration-300">
+    <html lang="id" suppressHydrationWarning className={`${jakarta.variable} ${jetbrainsMono.variable} dark scroll-smooth`}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="antialiased min-h-screen bg-[#F8FAFC] dark:bg-[#0B0F19] text-[#0F172A] dark:text-[#F8FAFC] transition-colors duration-200">
         <ThemeProvider>
-          <CyberGridBackground />
+          <PixelBackground />
           <SmoothScroll>{children}</SmoothScroll>
         </ThemeProvider>
       </body>
