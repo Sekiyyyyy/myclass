@@ -145,7 +145,7 @@ export function Messages() {
                 <div className="flex items-center gap-1.5 font-pixel text-[8px] mt-0.5">
                   <span className="text-amber-600 dark:text-amber-400 font-bold">{msg.role}</span>
                   <span className="text-slate-400">•</span>
-                  <span className="text-slate-700 dark:text-slate-300 font-bold">{msg.date}</span>
+                  <span className="text-slate-800 dark:text-slate-200 font-bold">{msg.date}</span>
                 </div>
               </div>
             </div>
@@ -163,22 +163,27 @@ export function Messages() {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="pixel-drop-shadow max-w-sm w-full relative z-10"
+            className="pixel-box p-5 sm:p-7 max-w-sm w-full relative z-10 border-4 border-slate-950"
           >
-            <div className="pixel-corners p-5 sm:p-7 bg-white dark:bg-[#111827] border-[3px] border-slate-900 dark:border-amber-400">
-              <button
-                onClick={() => setModalOpen(false)}
-                className="absolute top-3 right-3 w-7 h-7 bg-slate-200 dark:bg-slate-800 hover:bg-rose-500 hover:text-white text-slate-800 dark:text-slate-200 flex items-center justify-center cursor-pointer border-2 border-slate-900 pixel-corners-sm transition-colors"
-              >
-                <X className="w-4 h-4" />
-              </button>
+            {/* 4 Corner 8-Bit Pixel Blocks */}
+            <span className="absolute top-1 left-1 w-2 h-2 bg-amber-400 pointer-events-none z-20" />
+            <span className="absolute top-1 right-1 w-2 h-2 bg-amber-400 pointer-events-none z-20" />
+            <span className="absolute bottom-1 left-1 w-2 h-2 bg-amber-400 pointer-events-none z-20" />
+            <span className="absolute bottom-1 right-1 w-2 h-2 bg-amber-400 pointer-events-none z-20" />
 
-              <h3 className="font-pixel text-xs sm:text-sm text-slate-900 dark:text-white mb-1">
-                Tulis Pesan Baru
-              </h3>
-              <p className="font-silk text-[10px] text-slate-700 dark:text-slate-300 font-bold mb-4 uppercase">
-                Bagikan kesan atau doa untuk angkatan 2026
-              </p>
+            <button
+              onClick={() => setModalOpen(false)}
+              className="absolute top-3 right-3 w-7 h-7 bg-slate-200 dark:bg-slate-800 hover:bg-rose-500 hover:text-white text-slate-800 dark:text-slate-200 flex items-center justify-center cursor-pointer border-2 border-slate-900 transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            <h3 className="font-pixel text-xs sm:text-sm text-slate-900 dark:text-white mb-1">
+              Tulis Pesan Baru
+            </h3>
+            <p className="font-silk text-[10px] text-slate-800 dark:text-slate-200 font-bold mb-4 uppercase">
+              Bagikan kesan atau doa untuk angkatan 2026
+            </p>
 
               <form onSubmit={handleSubmit} className="space-y-3.5">
                 <div>
@@ -236,8 +241,7 @@ export function Messages() {
               </form>
             </div>
           </div>
-        </div>
-      )}
-    </section>
-  );
-}
+        )}
+      </section>
+    );
+  }

@@ -20,34 +20,44 @@ export default function Home() {
       {/* 3. Section: Tentang Kelas & Wali Kelas */}
       <AboutClass />
 
-      {/* 4. Running Marquee Nama Siswa */}
-      <div className="py-3 border-y-2 border-slate-300 dark:border-slate-800 bg-amber-500/10 dark:bg-slate-900/60 overflow-hidden my-4 space-y-2 select-none">
-        <Marquee speed={26} direction="left">
+      {/* 4. Running Marquee Nama Siswa - 16-Bit Pixel Pills */}
+      <div className="py-5 border-y-4 border-slate-900 dark:border-black bg-amber-500/10 dark:bg-[#070a12] overflow-hidden my-6 space-y-3 select-none">
+        <Marquee speed={25} direction="left" pauseOnHover={false}>
           {students.slice(0, 16).map((s) => (
             <div
               key={s.id}
-              className="flex items-center gap-2 px-3 py-1 pixel-box bg-white dark:bg-[#111827] text-xs font-silk whitespace-nowrap mx-1.5 pixel-corners-sm"
+              className="pixel-pill whitespace-nowrap mx-1.5"
             >
-              <span className="px-1.5 py-0.5 bg-amber-500 text-slate-950 font-pixel text-[8px] font-bold">
+              <span className="px-2 py-0.5 bg-[#FBBF24] text-slate-950 font-pixel text-[9px] font-bold border-2 border-slate-950 shadow-[1px_1px_0px_#000]">
                 #{s.id}
               </span>
-              <span className="font-bold text-slate-900 dark:text-white uppercase">{s.name}</span>
-              <span className="text-amber-600 dark:text-amber-400 font-bold text-[10px]">@{s.ig}</span>
+              <span className="text-amber-500 font-pixel text-[10px]">■</span>
+              <span className="font-silk font-bold text-xs text-slate-900 dark:text-white uppercase tracking-wider">
+                {s.name}
+              </span>
+              <span className="font-silk text-amber-600 dark:text-amber-400 font-bold text-[11px] bg-amber-400/10 dark:bg-amber-400/20 px-1.5 py-0.5 border border-amber-500/30">
+                @{s.ig}
+              </span>
             </div>
           ))}
         </Marquee>
 
-        <Marquee speed={30} direction="right">
+        <Marquee speed={28} direction="right" pauseOnHover={false}>
           {students.slice(16, 31).map((s) => (
             <div
               key={s.id}
-              className="flex items-center gap-2 px-3 py-1 pixel-box bg-white dark:bg-[#111827] text-xs font-silk whitespace-nowrap mx-1.5 pixel-corners-sm"
+              className="pixel-pill whitespace-nowrap mx-1.5"
             >
-              <span className="px-1.5 py-0.5 bg-sky-500 text-white font-pixel text-[8px] font-bold">
+              <span className="px-2 py-0.5 bg-[#38BDF8] text-slate-950 font-pixel text-[9px] font-bold border-2 border-slate-950 shadow-[1px_1px_0px_#000]">
                 #{s.id}
               </span>
-              <span className="font-bold text-slate-900 dark:text-white uppercase">{s.name}</span>
-              <span className="text-sky-600 dark:text-sky-400 font-bold text-[10px]">@{s.ig}</span>
+              <span className="text-sky-500 font-pixel text-[10px]">■</span>
+              <span className="font-silk font-bold text-xs text-slate-900 dark:text-white uppercase tracking-wider">
+                {s.name}
+              </span>
+              <span className="font-silk text-sky-600 dark:text-sky-400 font-bold text-[11px] bg-sky-400/10 dark:bg-sky-400/20 px-1.5 py-0.5 border border-sky-500/30">
+                @{s.ig}
+              </span>
             </div>
           ))}
         </Marquee>

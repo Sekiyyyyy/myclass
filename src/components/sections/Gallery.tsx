@@ -141,34 +141,42 @@ export function Gallery() {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="pixel-drop-shadow max-w-xl w-full relative z-10"
+            className="pixel-box p-4 sm:p-6 max-w-xl w-full relative z-10 border-4 border-slate-950"
           >
-            <div className="pixel-corners p-4 sm:p-6 bg-white dark:bg-[#111827] border-[3px] border-slate-900 dark:border-amber-400">
-              <button
-                onClick={() => setSelectedPhoto(null)}
-                className="absolute top-3 right-3 z-10 w-7 h-7 bg-slate-200 dark:bg-slate-800 hover:bg-rose-500 hover:text-white text-slate-800 dark:text-slate-200 flex items-center justify-center cursor-pointer border-2 border-slate-900 pixel-corners-sm transition-colors"
-              >
-                <X className="w-4 h-4" />
-              </button>
+            {/* 4 Corner 8-Bit Pixel Blocks */}
+            <span className="absolute top-1 left-1 w-2 h-2 bg-amber-400 pointer-events-none z-20" />
+            <span className="absolute top-1 right-1 w-2 h-2 bg-amber-400 pointer-events-none z-20" />
+            <span className="absolute bottom-1 left-1 w-2 h-2 bg-amber-400 pointer-events-none z-20" />
+            <span className="absolute bottom-1 right-1 w-2 h-2 bg-amber-400 pointer-events-none z-20" />
 
-              <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950 mb-3.5 border-2 border-slate-900 dark:border-slate-700 shadow-md pixel-corners-sm">
-                <Image
-                  src={selectedPhoto.imageUrl}
-                  alt={selectedPhoto.title}
-                  fill
-                  priority
-                  className="object-cover object-center"
-                />
-              </div>
+            <button
+              onClick={() => setSelectedPhoto(null)}
+              className="absolute top-3 right-3 z-10 w-7 h-7 bg-slate-200 dark:bg-slate-800 hover:bg-rose-500 hover:text-white text-slate-800 dark:text-slate-200 flex items-center justify-center cursor-pointer border-2 border-slate-900 transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
 
-              <div>
-                <h3 className="font-pixel text-xs sm:text-sm text-slate-900 dark:text-white mb-1.5 leading-snug">
-                  {selectedPhoto.title}
-                </h3>
-                <p className="font-sans text-xs sm:text-sm text-slate-800 dark:text-slate-200 leading-relaxed font-medium">
-                  {selectedPhoto.caption}
-                </p>
-              </div>
+            <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950 mb-3.5 border-3 border-slate-900 dark:border-slate-700 shadow-md">
+              <span className="absolute top-0 left-0 w-1.5 h-1.5 bg-[#FBBF24] z-20 pointer-events-none" />
+              <span className="absolute top-0 right-0 w-1.5 h-1.5 bg-[#FBBF24] z-20 pointer-events-none" />
+              <span className="absolute bottom-0 left-0 w-1.5 h-1.5 bg-[#FBBF24] z-20 pointer-events-none" />
+              <span className="absolute bottom-0 right-0 w-1.5 h-1.5 bg-[#FBBF24] z-20 pointer-events-none" />
+              <Image
+                src={selectedPhoto.imageUrl}
+                alt={selectedPhoto.title}
+                fill
+                priority
+                className="object-cover object-center"
+              />
+            </div>
+
+            <div>
+              <h3 className="font-pixel text-xs sm:text-sm text-slate-900 dark:text-white mb-1.5 leading-snug">
+                {selectedPhoto.title}
+              </h3>
+              <p className="font-sans text-xs sm:text-sm text-slate-800 dark:text-slate-200 leading-relaxed font-medium">
+                {selectedPhoto.caption}
+              </p>
             </div>
           </div>
         </div>

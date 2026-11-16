@@ -23,22 +23,26 @@ export function PixelCard({
   return (
     <div
       onClick={onClick}
-      className={`relative group ${
-        interactive ? "pixel-card-interactive cursor-pointer" : ""
-      } pixel-drop-shadow ${className}`}
+      className={`relative group overflow-hidden pixel-box ${
+        interactive ? "pixel-box-interactive cursor-pointer" : ""
+      } ${className}`}
     >
-      <div className="relative w-full h-full pixel-corners border-[3px] border-slate-900 dark:border-slate-700 bg-white dark:bg-[#111827] overflow-hidden p-3 transition-colors">
-        {pixelCanvas && (
-          <PixelCanvas
-            className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            pixelSize={8}
-            gap={2}
-            colors={colors}
-            fadeSpeed={0.05}
-          />
-        )}
-        <div className="relative z-10 w-full h-full">{children}</div>
-      </div>
+      {/* 4 Corner 8-Bit Pixel Blocks */}
+      <span className="absolute top-1 left-1 w-1.5 h-1.5 bg-amber-400 dark:bg-amber-400 pointer-events-none z-20 group-hover:bg-amber-300 transition-colors" />
+      <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-amber-400 dark:bg-amber-400 pointer-events-none z-20 group-hover:bg-amber-300 transition-colors" />
+      <span className="absolute bottom-1 left-1 w-1.5 h-1.5 bg-amber-400 dark:bg-amber-400 pointer-events-none z-20 group-hover:bg-amber-300 transition-colors" />
+      <span className="absolute bottom-1 right-1 w-1.5 h-1.5 bg-amber-400 dark:bg-amber-400 pointer-events-none z-20 group-hover:bg-amber-300 transition-colors" />
+
+      {pixelCanvas && (
+        <PixelCanvas
+          className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+          pixelSize={8}
+          gap={2}
+          colors={colors}
+          fadeSpeed={0.05}
+        />
+      )}
+      <div className="relative z-10 w-full h-full">{children}</div>
     </div>
   );
 }

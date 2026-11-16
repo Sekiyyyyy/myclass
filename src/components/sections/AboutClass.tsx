@@ -114,7 +114,7 @@ export function AboutClass() {
                 </div>
               </div>
 
-              <div className="pt-4 mt-4 flex items-center justify-between font-silk text-[10px] text-slate-700 dark:text-slate-300">
+              <div className="pt-4 mt-4 flex items-center justify-between font-silk text-[10px] text-slate-800 dark:text-slate-200">
                 <span>Guru Pembimbing</span>
                 <span className="text-amber-600 dark:text-amber-400 font-bold">Ibu Vevy Sisnia</span>
               </div>
@@ -136,7 +136,7 @@ export function AboutClass() {
             <h4 className="font-silk font-bold text-xs text-slate-900 dark:text-white mb-1">
               Dasar Pemrograman &amp; Logika
             </h4>
-            <p className="font-sans text-xs text-slate-700 dark:text-slate-300">
+            <p className="font-sans text-xs text-slate-800 dark:text-slate-200">
               Awal mula belajar sintaks koding, logika pemrograman dasar, dan adaptasi 31 siswa baru.
             </p>
           </div>
@@ -153,7 +153,7 @@ export function AboutClass() {
             <h4 className="font-silk font-bold text-xs text-slate-900 dark:text-white mb-1">
               Web &amp; Game Development
             </h4>
-            <p className="font-sans text-xs text-slate-700 dark:text-slate-300">
+            <p className="font-sans text-xs text-slate-800 dark:text-slate-200">
               Membangun aplikasi fungsional, proyek gim interaktif, dan kerja kelompok yang solid.
             </p>
           </div>
@@ -170,7 +170,7 @@ export function AboutClass() {
             <h4 className="font-silk font-bold text-xs text-slate-900 dark:text-white mb-1">
               Karya Akhir &amp; Kelulusan 2026
             </h4>
-            <p className="font-sans text-xs text-slate-700 dark:text-slate-300">
+            <p className="font-sans text-xs text-slate-800 dark:text-slate-200">
               Penyempurnaan portofolio, persiapan masa depan, dan kenangan kelulusan bersama.
             </p>
           </div>
