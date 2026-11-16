@@ -261,6 +261,19 @@ a, button, [role="button"], input, select, textarea, .cursor-pointer {
   animation: spinSlow 25s linear infinite;
 }
 
+@keyframes gridGlide {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 32px;
+  }
+}
+
+.animate-grid-glide {
+  animation: gridGlide 2s linear infinite;
+}
+
 @keyframes holoSheen {
   0% {
     transform: translateX(-150%) skewX(-20deg);

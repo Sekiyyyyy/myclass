@@ -54,12 +54,12 @@ export function Navbar() {
       >
         {/* Brand */}
         <a href="#hero" className="flex items-center gap-2.5 select-none group pr-1">
-          <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden bg-[#080C16] border border-slate-700 dark:border-indigo-400/60 shadow-[0_0_10px_rgba(168,85,247,0.35)] shrink-0 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
+          <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden border border-slate-300 dark:border-indigo-400/50 shadow-sm shrink-0 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
             <Image
               src="/logo.png"
               alt="Logo XII PPLG 3"
               fill
-              className="object-contain p-1"
+              className="object-contain p-0.5"
             />
           </div>
           <div className="flex flex-col">

@@ -50,8 +50,8 @@ export function AboutClass() {
         </p>
       </div>
 
-      {/* Main Layout */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-stretch mb-6">
+      {/* Main Layout: Story & Wali Kelas */}
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-stretch">
         {/* Card 1: Story (7 Cols) */}
         <div className="about-card-box md:col-span-7">
           <PixelCard className="h-full">
@@ -121,60 +121,6 @@ export function AboutClass() {
             </div>
           </PixelCard>
         </div>
-      </div>
-
-      {/* 3 Tahap Perjalanan */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <PixelCard>
-          <div className="flex items-center gap-2.5 mb-2.5">
-            <span className="w-7 h-7 bg-amber-500 text-slate-950 font-pixel text-[11px] font-bold flex items-center justify-center border-2 border-slate-950 shadow-[2px_2px_0px_#000] shrink-0">
-              1
-            </span>
-            <span className="font-pixel text-[10px] text-amber-500 dark:text-amber-400 font-bold tracking-wider">
-              KELAS X
-            </span>
-          </div>
-          <h4 className="font-silk font-bold text-xs sm:text-sm text-slate-900 dark:text-white mb-1.5">
-            Dasar Pemrograman &amp; Logika
-          </h4>
-          <p className="font-sans text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
-            Awal mula belajar sintaks koding, logika pemrograman dasar, dan adaptasi 31 siswa baru.
-          </p>
-        </PixelCard>
-
-        <PixelCard>
-          <div className="flex items-center gap-2.5 mb-2.5">
-            <span className="w-7 h-7 bg-amber-500 text-slate-950 font-pixel text-[11px] font-bold flex items-center justify-center border-2 border-slate-950 shadow-[2px_2px_0px_#000] shrink-0">
-              2
-            </span>
-            <span className="font-pixel text-[10px] text-amber-500 dark:text-amber-400 font-bold tracking-wider">
-              KELAS XI
-            </span>
-          </div>
-          <h4 className="font-silk font-bold text-xs sm:text-sm text-slate-900 dark:text-white mb-1.5">
-            Web &amp; Game Development
-          </h4>
-          <p className="font-sans text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
-            Membangun aplikasi fungsional, proyek gim interaktif, dan kerja kelompok yang solid.
-          </p>
-        </PixelCard>
-
-        <PixelCard>
-          <div className="flex items-center gap-2.5 mb-2.5">
-            <span className="w-7 h-7 bg-amber-500 text-slate-950 font-pixel text-[11px] font-bold flex items-center justify-center border-2 border-slate-950 shadow-[2px_2px_0px_#000] shrink-0">
-              3
-            </span>
-            <span className="font-pixel text-[10px] text-amber-500 dark:text-amber-400 font-bold tracking-wider">
-              KELAS XII
-            </span>
-          </div>
-          <h4 className="font-silk font-bold text-xs sm:text-sm text-slate-900 dark:text-white mb-1.5">
-            Karya Akhir &amp; Kelulusan 2026
-          </h4>
-          <p className="font-sans text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
-            Penyempurnaan portofolio, persiapan masa depan, dan kenangan kelulusan bersama.
-          </p>
-        </PixelCard>
       </div>
     </section>
   );
