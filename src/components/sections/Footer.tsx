@@ -15,12 +15,12 @@ export function Footer() {
     <footer className="border-t-2 border-slate-300 dark:border-slate-800 bg-white dark:bg-[#111827] py-10 px-4 sm:px-6 select-none">
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-3.5">
-          <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden border-2 border-slate-300 dark:border-indigo-400/50 shadow-sm shrink-0 group hover:scale-105 transition-transform">
+          <div className="relative w-12 h-12 sm:w-14 sm:h-14 shrink-0 group hover:scale-105 transition-transform">
             <Image
-              src="/logo-v2.png"
+              src="/logo-v3.png"
               alt="Logo XII PPLG 3"
               fill
-              className="object-contain p-0.5"
+              className="object-contain"
             />
           </div>
           <div>
