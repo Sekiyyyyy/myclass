@@ -325,7 +325,7 @@ export function StudentProfiles() {
               exit={{ opacity: 0, scale: 0.94, y: 12 }}
               transition={modalSpring}
               onClick={(e) => e.stopPropagation()}
-              className="pixel-box max-w-md w-full max-h-[90dvh] flex flex-col relative z-10 overflow-hidden"
+              className="pixel-box max-w-lg w-full max-h-[90dvh] flex flex-col relative z-10 overflow-hidden"
             >
               {/* Retro Window Titlebar */}
               <div className="pixel-titlebar shrink-0">
@@ -398,28 +398,28 @@ export function StudentProfiles() {
                         {selectedStudent.name}
                       </h3>
 
-                      <dl className="space-y-1.5 text-left bg-[var(--bg-inset)] border-2 border-[var(--border-soft)] p-3">
-                        <div className="flex justify-between gap-2 text-[11px] font-silk">
-                          <dt className="text-[var(--fg-muted)]">Panggilan</dt>
-                          <dd className="font-bold text-[var(--fg-primary)]">
+                      <dl className="divide-y divide-[var(--border-soft)]/70 text-left bg-[var(--bg-inset)] border-2 border-[var(--border-soft)] px-3 py-1.5">
+                        <div className="py-1.5 flex items-baseline justify-between gap-3 text-[10px] sm:text-[11px] font-silk">
+                          <dt className="text-[var(--fg-muted)] shrink-0">Panggilan</dt>
+                          <dd className="font-bold text-[var(--fg-primary)] text-right whitespace-nowrap">
                             {selectedStudent.nickname}
                           </dd>
                         </div>
-                        <div className="flex justify-between gap-2 text-[11px] font-silk">
-                          <dt className="text-[var(--fg-muted)]">No. Absen</dt>
-                          <dd className="font-bold text-[var(--fg-primary)]">
+                        <div className="py-1.5 flex items-baseline justify-between gap-3 text-[10px] sm:text-[11px] font-silk">
+                          <dt className="text-[var(--fg-muted)] shrink-0">No. Absen</dt>
+                          <dd className="font-bold text-[var(--fg-primary)] text-right whitespace-nowrap">
                             {selectedStudent.id} / {CLASS_INFO.totalStudents}
                           </dd>
                         </div>
-                        <div className="flex justify-between gap-2 text-[11px] font-silk">
-                          <dt className="text-[var(--fg-muted)]">Kelas</dt>
-                          <dd className="font-bold text-[var(--fg-primary)]">
+                        <div className="py-1.5 flex items-baseline justify-between gap-3 text-[10px] sm:text-[11px] font-silk">
+                          <dt className="text-[var(--fg-muted)] shrink-0">Kelas</dt>
+                          <dd className="font-bold text-[var(--fg-primary)] text-right whitespace-nowrap">
                             {CLASS_INFO.name}
                           </dd>
                         </div>
-                        <div className="flex justify-between gap-2 text-[11px] font-silk">
-                          <dt className="text-[var(--fg-muted)]">Sekolah</dt>
-                          <dd className="font-bold text-[var(--fg-primary)]">
+                        <div className="py-1.5 flex items-baseline justify-between gap-3 text-[10px] sm:text-[11px] font-silk">
+                          <dt className="text-[var(--fg-muted)] shrink-0">Sekolah</dt>
+                          <dd className="font-bold text-[var(--fg-primary)] text-right whitespace-nowrap">
                             SMKN 1 Beringin
                           </dd>
                         </div>
