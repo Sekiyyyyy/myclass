@@ -41,11 +41,13 @@ export function ArchiveBanner() {
             whileHover={{ y: -2 }}
             whileTap={{ y: 2 }}
             transition={snappySpring}
-            className="pixel-btn pixel-btn-primary w-full md:w-auto !m-0 !px-3.5 sm:!px-5 !font-silk !text-[11px] sm:!text-xs font-bold !tracking-normal shrink-0"
+            className="pixel-btn pixel-btn-primary w-full md:w-auto max-w-full !m-0 !px-3 sm:!px-5 !py-2.5 sm:!py-3 gap-1.5 sm:gap-2 shrink-0"
           >
-            <Instagram className="w-3.5 h-3.5 mr-2 shrink-0" />
-            <span className="whitespace-nowrap">@{CLASS_INFO.instagramHandle}</span>
-            <ArrowUpRight className="w-3.5 h-3.5 ml-1.5 shrink-0" />
+            <Instagram className="w-3.5 h-3.5 shrink-0" />
+            <span className="font-silk text-[10px] min-[390px]:text-[11px] sm:text-xs font-bold tracking-normal leading-none truncate">
+              @{CLASS_INFO.instagramHandle}
+            </span>
+            <ArrowUpRight className="w-3.5 h-3.5 shrink-0" />
           </motion.a>
         </div>
       </motion.div>
