@@ -1,9 +1,9 @@
 "use client";
 
-import { useRef } from "react";
-import { useGSAP, gsap } from "@/lib/gsap-config";
+import { motion } from "motion/react";
 import { Instagram, ArrowUpRight, Terminal, FolderOpen } from "lucide-react";
 import { CLASS_INFO } from "@/data/students";
+import { pixelEase, snappySpring, viewportOnce } from "@/lib/motion-presets";
 
 const classSpecs = [
   { label: "KELAS", value: CLASS_INFO.name },
@@ -16,44 +16,19 @@ const classSpecs = [
 ];
 
 export function AboutClass() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  useGSAP(
-    () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-      const panels = sectionRef.current?.querySelectorAll(".about-panel");
-      if (!panels || panels.length === 0) return;
-
-      gsap.fromTo(
-        panels,
-        { opacity: 0, y: 18 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.35,
-          stagger: 0.1,
-          ease: "steps(4)",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 82%",
-            toggleActions: "play none none none",
-            once: true,
-          },
-        }
-      );
-    },
-    { scope: sectionRef }
-  );
-
   return (
     <section
       id="tentang"
-      ref={sectionRef}
       className="py-16 sm:py-20 px-4 sm:px-6 max-w-6xl mx-auto relative select-none"
     >
       {/* Left-Aligned Editorial Section Header */}
-      <div className="mb-10 flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b-2 border-[var(--border-soft)] pb-5">
+      <motion.div
+        initial={{ opacity: 0, y: 14 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={viewportOnce}
+        transition={{ duration: 0.34, ease: pixelEase }}
+        className="mb-10 flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b-2 border-[var(--border-soft)] pb-5"
+      >
         <div>
           <p className="font-pixel text-[9px] sm:text-[10px] text-[var(--accent-indigo)] dark:text-[#FACC15] tracking-widest uppercase mb-2">
             01 // PROFIL KELAS
@@ -65,12 +40,18 @@ export function AboutClass() {
         <p className="font-silk text-xs text-[var(--fg-muted)] font-bold uppercase">
           {CLASS_INFO.school} &bull; {CLASS_INFO.period}
         </p>
-      </div>
+      </motion.div>
 
       {/* Asymmetric 12-Column Retro Window Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
         {/* Left Window: Class Overview (7 Cols) */}
-        <div className="about-panel lg:col-span-7">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={viewportOnce}
+          transition={{ duration: 0.38, ease: pixelEase }}
+          className="lg:col-span-7"
+        >
           <div className="pixel-box h-full flex flex-col">
             {/* Retro OS Window Titlebar */}
             <div className="pixel-titlebar">
@@ -119,23 +100,32 @@ export function AboutClass() {
                 <span className="font-silk text-[11px] font-bold text-[var(--fg-muted)] uppercase">
                   Arsip Resmi Kelas
                 </span>
-                <a
+                <motion.a
                   href={CLASS_INFO.instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={snappySpring}
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[var(--bg-inset)] hover:bg-[#5B46C8] hover:text-white dark:hover:bg-[#FACC15] dark:hover:text-[#181624] border-2 border-[var(--border-hard)] font-silk text-[11px] font-bold text-[var(--fg-primary)] transition-colors"
                 >
                   <Instagram className="w-3.5 h-3.5 shrink-0" />
                   <span>@{CLASS_INFO.instagramHandle}</span>
                   <ArrowUpRight className="w-3.5 h-3.5 shrink-0" />
-                </a>
+                </motion.a>
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Right Window: Authentic Class Data Spec Sheet (5 Cols) */}
-        <div className="about-panel lg:col-span-5">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={viewportOnce}
+          transition={{ duration: 0.38, delay: 0.08, ease: pixelEase }}
+          className="lg:col-span-5"
+        >
           <div className="pixel-box h-full flex flex-col">
             <div className="pixel-titlebar">
               <div className="flex items-center gap-2 font-pixel text-[9px] text-[var(--fg-primary)]">
@@ -149,9 +139,17 @@ export function AboutClass() {
 
             <div className="p-4 sm:p-5 flex-1 flex flex-col justify-center">
               <dl className="divide-y-2 divide-dashed divide-[var(--border-soft)]">
-                {classSpecs.map((spec) => (
-                  <div
+                {classSpecs.map((spec, idx) => (
+                  <motion.div
                     key={spec.label}
+                    initial={{ opacity: 0, x: 10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={viewportOnce}
+                    transition={{
+                      duration: 0.25,
+                      delay: 0.1 + idx * 0.035,
+                      ease: pixelEase,
+                    }}
                     className="py-2.5 first:pt-0 last:pb-0 flex items-baseline justify-between gap-4"
                   >
                     <dt className="font-pixel text-[8px] sm:text-[9px] text-[var(--fg-muted)] shrink-0">
@@ -160,12 +158,12 @@ export function AboutClass() {
                     <dd className="font-silk text-xs font-bold text-[var(--fg-primary)] text-right">
                       {spec.value}
                     </dd>
-                  </div>
+                  </motion.div>
                 ))}
               </dl>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

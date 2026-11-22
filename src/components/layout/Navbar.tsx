@@ -1,9 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { Sun, Moon } from "lucide-react";
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useSpring,
+  useMotionValueEvent,
+} from "motion/react";
 import { useTheme } from "@/lib/theme-provider";
+import { snappySpring } from "@/lib/motion-presets";
 
 const navItems = [
   { href: "#hero", id: "hero", label: "Beranda" },
@@ -15,42 +23,35 @@ const navItems = [
 export function Navbar() {
   const [visible, setVisible] = useState(true);
   const [activeSection, setActiveSection] = useState("hero");
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const lastScrollY = useRef(0);
   const { theme, toggleTheme } = useTheme();
 
-  useEffect(() => {
-    let lastScrollY = window.scrollY;
+  // GPU-driven scroll progress with zero per-frame React re-renders
+  const { scrollY, scrollYProgress } = useScroll();
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 280,
+    damping: 32,
+    restDelta: 0.001,
+  });
 
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      const totalHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-      if (totalHeight > 0) {
-        setScrollProgress(
-          Math.min(1, Math.max(0, currentScrollY / totalHeight))
-        );
-      }
-
-      if (currentScrollY > 80) {
-        if (currentScrollY > lastScrollY && currentScrollY - lastScrollY > 12) {
-          setVisible(false);
-        } else if (lastScrollY - currentScrollY > 12) {
-          setVisible(true);
-        }
-      } else {
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const prev = lastScrollY.current;
+    if (latest > 80) {
+      if (latest > prev && latest - prev > 12) {
+        setVisible(false);
+      } else if (prev - latest > 12) {
         setVisible(true);
       }
+    } else {
+      setVisible(true);
+    }
+    lastScrollY.current = latest;
+  });
 
-      lastScrollY = currentScrollY;
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    const sectionIds = navItems.map((item) => item.id);
+  useEffect(() => {
     const observers: IntersectionObserver[] = [];
 
-    sectionIds.forEach((id) => {
+    navItems.forEach(({ id }) => {
       const el = document.getElementById(id);
       if (!el) return;
       const obs = new IntersectionObserver(
@@ -68,34 +69,39 @@ export function Navbar() {
     });
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
       observers.forEach((o) => o.disconnect());
     };
   }, []);
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 flex justify-center px-3 sm:px-6 pt-3 transition-transform duration-150 ${
-        visible ? "translate-y-0" : "-translate-y-full"
-      }`}
+    <motion.header
+      initial={{ y: -24, opacity: 0 }}
+      animate={{ y: visible ? 0 : -110, opacity: 1 }}
+      transition={snappySpring}
+      className="fixed top-0 left-0 right-0 z-50 flex justify-center px-3 sm:px-6 pt-3 pointer-events-none"
     >
       <nav
         aria-label="Navigasi utama"
-        className="relative flex items-center gap-2 sm:gap-4 px-3 sm:px-4 py-2 pixel-box max-w-4xl w-full sm:w-auto"
+        className="pointer-events-auto relative flex items-center gap-2 sm:gap-4 px-3 sm:px-4 py-2 pixel-box max-w-4xl w-full sm:w-auto"
       >
         {/* Brand */}
         <a
           href="#hero"
           className="flex items-center gap-2.5 select-none group pr-1"
         >
-          <div className="relative w-8 h-8 sm:w-9 sm:h-9 shrink-0 transition-transform duration-100 group-hover:scale-105">
+          <motion.div
+            whileHover={{ scale: 1.08, rotate: -4 }}
+            whileTap={{ scale: 0.94 }}
+            transition={snappySpring}
+            className="relative w-8 h-8 sm:w-9 sm:h-9 shrink-0"
+          >
             <Image
               src="/logo-v4.png"
               alt="Logo XII PPLG 3"
               fill
               className="object-contain"
             />
-          </div>
+          </motion.div>
           <div className="flex flex-col">
             <span className="font-pixel text-[9px] sm:text-[10px] text-[var(--fg-primary)] leading-none">
               XII PPLG 3
@@ -112,72 +118,100 @@ export function Navbar() {
           className="w-[2px] h-6 bg-[var(--border-soft)] hidden sm:block"
         />
 
-        {/* Navigation Links */}
-        <div className="flex items-center gap-0.5 sm:gap-1.5 font-silk font-bold text-xs">
+        {/* Navigation Links with Shared-Element Sliding Pixel Active Pill */}
+        <div className="flex items-center gap-0.5 sm:gap-1 font-silk font-bold text-xs">
           {navItems.map((item) => {
             const isActive = activeSection === item.id;
             return (
               <a
                 key={item.id}
                 href={item.href}
-                className={`inline-flex items-center gap-1.5 px-2 sm:px-2.5 py-1 transition-colors ${
+                className={`relative inline-flex items-center gap-1.5 px-2 sm:px-2.5 py-1 transition-colors ${
                   item.id === "hero" ? "hidden sm:inline-flex" : ""
                 } ${item.id === "tentang" ? "hidden md:inline-flex" : ""} ${
                   isActive
-                    ? "bg-[#5B46C8] text-white dark:bg-[#FACC15] dark:text-[#181624]"
-                    : "text-[var(--fg-secondary)] hover:text-[var(--fg-primary)] hover:bg-[var(--bg-inset)]"
+                    ? "text-white dark:text-[#181624]"
+                    : "text-[var(--fg-secondary)] hover:text-[var(--fg-primary)]"
                 }`}
               >
                 {isActive && (
-                  <span
+                  <motion.span
+                    layoutId="nav-active-pill"
+                    transition={snappySpring}
                     aria-hidden="true"
-                    className="w-1.5 h-1.5 bg-current inline-block shrink-0"
+                    className="absolute inset-0 bg-[#5B46C8] dark:bg-[#FACC15] z-0"
                   />
                 )}
-                <span>{item.label}</span>
+                <span className="relative z-10 inline-flex items-center gap-1.5">
+                  {isActive && (
+                    <span
+                      aria-hidden="true"
+                      className="w-1.5 h-1.5 bg-current inline-block shrink-0"
+                    />
+                  )}
+                  <span>{item.label}</span>
+                </span>
               </a>
             );
           })}
         </div>
 
-        {/* Tactile Theme Toggle */}
-        <button
+        {/* Tactile Theme Toggle with Animated Icon Swap */}
+        <motion.button
           type="button"
           onClick={toggleTheme}
+          whileTap={{ scale: 0.94, y: 1 }}
+          transition={snappySpring}
           aria-label={
             theme === "dark" ? "Ubah ke Mode Terang" : "Ubah ke Mode Gelap"
           }
           title={theme === "dark" ? "Mode Terang" : "Mode Gelap"}
-          className="group ml-auto inline-flex items-center gap-1.5 px-2.5 py-1.5 border-2 border-[var(--border-hard)] bg-[var(--bg-inset)] hover:bg-[var(--accent-gold)] hover:text-[#181624] text-[var(--fg-primary)] font-silk text-[10px] font-bold shadow-[2px_2px_0px_var(--shadow-hard)] active:translate-y-[1px] active:shadow-none transition-all shrink-0 cursor-pointer"
+          className="group ml-auto inline-flex items-center gap-1.5 px-2.5 py-1.5 border-2 border-[var(--border-hard)] bg-[var(--bg-inset)] hover:bg-[var(--accent-gold)] hover:text-[#181624] text-[var(--fg-primary)] font-silk text-[10px] font-bold shadow-[2px_2px_0px_var(--shadow-hard)] transition-colors shrink-0 cursor-pointer"
         >
-          {theme === "dark" ? (
-            <>
-              <Sun className="w-3.5 h-3.5 text-[#FACC15] group-hover:text-[#181624] transition-colors" />
-              <span className="hidden sm:inline">TERANG</span>
-            </>
-          ) : (
-            <>
-              <Moon className="w-3.5 h-3.5 text-[#5B46C8] group-hover:text-[#181624] transition-colors" />
-              <span className="hidden sm:inline">GELAP</span>
-            </>
-          )}
-        </button>
+          <AnimatePresence mode="wait" initial={false}>
+            {theme === "dark" ? (
+              <motion.span
+                key="sun"
+                initial={{ rotate: -60, opacity: 0, scale: 0.7 }}
+                animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                exit={{ rotate: 60, opacity: 0, scale: 0.7 }}
+                transition={{ duration: 0.16 }}
+                className="inline-flex items-center gap-1.5"
+              >
+                <Sun className="w-3.5 h-3.5 text-[#FACC15] group-hover:text-[#181624] transition-colors" />
+                <span className="hidden sm:inline">TERANG</span>
+              </motion.span>
+            ) : (
+              <motion.span
+                key="moon"
+                initial={{ rotate: 60, opacity: 0, scale: 0.7 }}
+                animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                exit={{ rotate: -60, opacity: 0, scale: 0.7 }}
+                transition={{ duration: 0.16 }}
+                className="inline-flex items-center gap-1.5"
+              >
+                <Moon className="w-3.5 h-3.5 text-[#5B46C8] group-hover:text-[#181624] transition-colors" />
+                <span className="hidden sm:inline">GELAP</span>
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </motion.button>
 
-        {/* Discrete 8-Bit Segmented Pixel Scroll Progress Bar */}
+        {/* Discrete 8-Bit Segmented Pixel Scroll Progress Bar (GPU Spring) */}
         <div
           aria-hidden="true"
           className="absolute bottom-0 left-1 right-1 h-[3px] bg-[var(--bg-inset)] overflow-hidden"
         >
-          <div
-            className="h-full origin-left transition-transform duration-75"
+          <motion.div
+            className="h-full origin-left"
             style={{
-              transform: `scaleX(${scrollProgress})`,
+              scaleX: smoothProgress,
               backgroundImage:
                 "repeating-linear-gradient(90deg, var(--accent-indigo) 0px, var(--accent-indigo) 6px, transparent 6px, transparent 8px)",
             }}
           />
         </div>
       </nav>
-    </header>
+    </motion.header>
   );
 }

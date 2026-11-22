@@ -33,7 +33,6 @@
     --text-4xl--line-height: calc(2.5 / 2.25);
     --text-5xl: 3rem;
     --text-5xl--line-height: 1;
-    --font-weight-medium: 500;
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
     --tracking-wide: 0.025em;
@@ -198,6 +197,9 @@
   }
 }
 @layer utilities {
+  .pointer-events-auto {
+    pointer-events: auto;
+  }
   .pointer-events-none {
     pointer-events: none;
   }
@@ -495,23 +497,18 @@
   .shrink-0 {
     flex-shrink: 0;
   }
+  .origin-center {
+    transform-origin: center;
+  }
   .origin-left {
     transform-origin: 0;
+  }
+  .origin-top {
+    transform-origin: top;
   }
   .-translate-y-1\/2 {
     --tw-translate-y: calc(calc(1 / 2 * 100%) * -1);
     translate: var(--tw-translate-x) var(--tw-translate-y);
-  }
-  .-translate-y-full {
-    --tw-translate-y: -100%;
-    translate: var(--tw-translate-x) var(--tw-translate-y);
-  }
-  .translate-y-0 {
-    --tw-translate-y: 0px;
-    translate: var(--tw-translate-x) var(--tw-translate-y);
-  }
-  .transform {
-    transform: var(--tw-rotate-x, ) var(--tw-rotate-y, ) var(--tw-rotate-z, ) var(--tw-skew-x, ) var(--tw-skew-y, );
   }
   .cursor-pointer {
     cursor: pointer;
@@ -989,8 +986,8 @@
     --tw-drop-shadow: var(--tw-drop-shadow-size);
     filter: var(--tw-blur, ) var(--tw-brightness, ) var(--tw-contrast, ) var(--tw-grayscale, ) var(--tw-hue-rotate, ) var(--tw-invert, ) var(--tw-saturate, ) var(--tw-sepia, ) var(--tw-drop-shadow, );
   }
-  .transition-all {
-    transition-property: all;
+  .transition {
+    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
   }
@@ -1003,18 +1000,6 @@
     transition-property: transform, translate, scale, rotate;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
-  }
-  .duration-75 {
-    --tw-duration: 75ms;
-    transition-duration: 75ms;
-  }
-  .duration-100 {
-    --tw-duration: 100ms;
-    transition-duration: 100ms;
-  }
-  .duration-150 {
-    --tw-duration: 150ms;
-    transition-duration: 150ms;
   }
   .duration-200 {
     --tw-duration: 200ms;
@@ -1039,12 +1024,6 @@
     :is(:where(.group):hover .group-hover\:translate-x-0\.5) {
       --tw-translate-x: calc(var(--spacing) * 0.5);
       translate: var(--tw-translate-x) var(--tw-translate-y);
-    }
-    :is(:where(.group):hover .group-hover\:scale-105) {
-      --tw-scale-x: 105%;
-      --tw-scale-y: 105%;
-      --tw-scale-z: 105%;
-      scale: var(--tw-scale-x) var(--tw-scale-y);
     }
     :is(:where(.group):hover .group-hover\:scale-\[1\.04\]) {
       scale: 1.04;
@@ -1097,14 +1076,6 @@
   .focus\:outline-none:focus {
     --tw-outline-style: none;
     outline-style: none;
-  }
-  .active\:translate-y-\[1px\]:active {
-    --tw-translate-y: 1px;
-    translate: var(--tw-translate-x) var(--tw-translate-y);
-  }
-  .active\:shadow-none:active {
-    --tw-shadow: 0 0 #0000;
-    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
   @media (width >= 40rem) {
     .sm\:mb-3 {
@@ -1176,8 +1147,8 @@
     .sm\:items-start {
       align-items: flex-start;
     }
-    .sm\:gap-1\.5 {
-      gap: calc(var(--spacing) * 1.5);
+    .sm\:gap-1 {
+      gap: var(--spacing);
     }
     .sm\:gap-4 {
       gap: calc(var(--spacing) * 4);
@@ -1527,7 +1498,7 @@ a, button, [role="button"], input, select, textarea, .cursor-pointer {
   color: var(--fg-primary);
   box-shadow: 0 4px 0 0 #181624;
   user-select: none;
-  transition: transform 0.07s steps(2), box-shadow 0.07s steps(2), background-color 0.08s ease;
+  transition: box-shadow 0.08s ease, background-color 0.08s ease;
 }
 .pixel-btn::after {
   position: absolute;
@@ -1537,11 +1508,9 @@ a, button, [role="button"], input, select, textarea, .cursor-pointer {
   pointer-events: none;
 }
 .pixel-btn:hover {
-  transform: translateY(-2px);
   box-shadow: 0 6px 0 0 #181624;
 }
 .pixel-btn:active {
-  transform: translateY(3px);
   box-shadow: 0 1px 0 0 #181624;
 }
 .pixel-btn:active::after {
@@ -1604,7 +1573,7 @@ a, button, [role="button"], input, select, textarea, .cursor-pointer {
   border-image-source: url('data:image/svg+xml;utf8,<svg version="1.1" width="5" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M2 1 h1 v1 h-1 z M1 2 h1 v1 h-1 z M3 2 h1 v1 h-1 z M2 3 h1 v1 h-1 z" fill="rgb(24,22,36)" /></svg>');
   border-image-outset: 1;
   box-shadow: 3px 3px 0px 0px #181624;
-  transition: transform 0.1s steps(2), box-shadow 0.1s steps(2), background-color 0.1s ease;
+  transition: box-shadow 0.12s ease, background-color 0.12s ease;
 }
 .dark .student-card-box {
   background-color: #1A182B;
@@ -1612,7 +1581,6 @@ a, button, [role="button"], input, select, textarea, .cursor-pointer {
   box-shadow: 3px 3px 0px 0px #07060D;
 }
 .student-card-box:hover {
-  transform: translate(-2px, -3px);
   border-image-source: url('data:image/svg+xml;utf8,<svg version="1.1" width="5" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M2 1 h1 v1 h-1 z M1 2 h1 v1 h-1 z M3 2 h1 v1 h-1 z M2 3 h1 v1 h-1 z" fill="rgb(91,70,200)" /></svg>');
   box-shadow: 5px 6px 0px 0px #5B46C8;
 }
@@ -1622,7 +1590,6 @@ a, button, [role="button"], input, select, textarea, .cursor-pointer {
   box-shadow: 5px 6px 0px 0px #07060D;
 }
 .student-card-box:active {
-  transform: translate(1px, 1px);
   box-shadow: 1px 1px 0px 0px var(--shadow-hard);
 }
 .pixel-frame-portrait {
@@ -1722,26 +1689,6 @@ a, button, [role="button"], input, select, textarea, .cursor-pointer {
   syntax: "*";
   inherits: false;
   initial-value: 0;
-}
-@property --tw-rotate-x {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-rotate-y {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-rotate-z {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-skew-x {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-skew-y {
-  syntax: "*";
-  inherits: false;
 }
 @property --tw-space-y-reverse {
   syntax: "*";
@@ -1901,32 +1848,12 @@ a, button, [role="button"], input, select, textarea, .cursor-pointer {
   syntax: "*";
   inherits: false;
 }
-@property --tw-scale-x {
-  syntax: "*";
-  inherits: false;
-  initial-value: 1;
-}
-@property --tw-scale-y {
-  syntax: "*";
-  inherits: false;
-  initial-value: 1;
-}
-@property --tw-scale-z {
-  syntax: "*";
-  inherits: false;
-  initial-value: 1;
-}
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: block))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
       --tw-translate-x: 0;
       --tw-translate-y: 0;
       --tw-translate-z: 0;
-      --tw-rotate-x: initial;
-      --tw-rotate-y: initial;
-      --tw-rotate-z: initial;
-      --tw-skew-x: initial;
-      --tw-skew-y: initial;
       --tw-space-y-reverse: 0;
       --tw-divide-y-reverse: 0;
       --tw-border-style: solid;
@@ -1963,9 +1890,6 @@ a, button, [role="button"], input, select, textarea, .cursor-pointer {
       --tw-drop-shadow-size: initial;
       --tw-duration: initial;
       --tw-ease: initial;
-      --tw-scale-x: 1;
-      --tw-scale-y: 1;
-      --tw-scale-z: 1;
     }
   }
 }

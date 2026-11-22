@@ -169,7 +169,7 @@ textarea,
   color: var(--fg-primary);
   box-shadow: 0 4px 0 0 #181624;
   user-select: none;
-  transition: transform 0.07s steps(2), box-shadow 0.07s steps(2), background-color 0.08s ease;
+  transition: box-shadow 0.08s ease, background-color 0.08s ease;
 }
 
 .pixel-btn::after {
@@ -181,12 +181,10 @@ textarea,
 }
 
 .pixel-btn:hover {
-  transform: translateY(-2px);
   box-shadow: 0 6px 0 0 #181624;
 }
 
 .pixel-btn:active {
-  transform: translateY(3px);
   box-shadow: 0 1px 0 0 #181624;
 }
 
@@ -268,7 +266,7 @@ textarea,
   border-image-source: url('data:image/svg+xml;utf8,<svg version="1.1" width="5" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M2 1 h1 v1 h-1 z M1 2 h1 v1 h-1 z M3 2 h1 v1 h-1 z M2 3 h1 v1 h-1 z" fill="rgb(24,22,36)" /></svg>');
   border-image-outset: 1;
   box-shadow: 3px 3px 0px 0px #181624;
-  transition: transform 0.1s steps(2), box-shadow 0.1s steps(2), background-color 0.1s ease;
+  transition: box-shadow 0.12s ease, background-color 0.12s ease;
 }
 
 .dark .student-card-box {
@@ -278,7 +276,6 @@ textarea,
 }
 
 .student-card-box:hover {
-  transform: translate(-2px, -3px);
   border-image-source: url('data:image/svg+xml;utf8,<svg version="1.1" width="5" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M2 1 h1 v1 h-1 z M1 2 h1 v1 h-1 z M3 2 h1 v1 h-1 z M2 3 h1 v1 h-1 z" fill="rgb(91,70,200)" /></svg>');
   box-shadow: 5px 6px 0px 0px #5B46C8;
 }
@@ -290,7 +287,6 @@ textarea,
 }
 
 .student-card-box:active {
-  transform: translate(1px, 1px);
   box-shadow: 1px 1px 0px 0px var(--shadow-hard);
 }
 

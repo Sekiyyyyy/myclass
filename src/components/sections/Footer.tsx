@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "motion/react";
 import { ArrowUp, Instagram } from "lucide-react";
 import { CLASS_INFO } from "@/data/students";
+import { snappySpring } from "@/lib/motion-presets";
 
 export function Footer() {
   const scrollToTop = () => {
@@ -66,14 +68,17 @@ export function Footer() {
             Struktur
           </a>
 
-          <button
+          <motion.button
             type="button"
             onClick={scrollToTop}
+            whileHover={{ y: -2 }}
+            whileTap={{ y: 2 }}
+            transition={snappySpring}
             className="pixel-btn pixel-btn-secondary !text-[8px] !py-2 !px-3 !m-0 flex items-center gap-1 cursor-pointer"
           >
             <span>KE ATAS</span>
             <ArrowUp className="w-3 h-3" />
-          </button>
+          </motion.button>
         </div>
       </div>
     </footer>

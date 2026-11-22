@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { ThemeProvider } from "@/lib/theme-provider";
+import { MotionProvider } from "@/components/layout/MotionProvider";
 
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-sans",
@@ -74,7 +75,9 @@ export default function RootLayout({
       </head>
       <body className="antialiased min-h-screen transition-colors duration-200">
         <ThemeProvider>
-          <SmoothScroll>{children}</SmoothScroll>
+          <MotionProvider>
+            <SmoothScroll>{children}</SmoothScroll>
+          </MotionProvider>
         </ThemeProvider>
       </body>
     </html>

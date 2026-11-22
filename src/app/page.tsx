@@ -3,10 +3,10 @@ import { Hero } from "@/components/sections/Hero";
 import { AboutClass } from "@/components/sections/AboutClass";
 import { StudentProfiles } from "@/components/sections/StudentProfiles";
 import { ClassStructure } from "@/components/sections/ClassStructure";
+import { ArchiveBanner } from "@/components/sections/ArchiveBanner";
 import { Footer } from "@/components/sections/Footer";
 import { Marquee } from "@/components/animated/Marquee";
-import { students, CLASS_INFO } from "@/data/students";
-import { Instagram, ArrowUpRight } from "lucide-react";
+import { students } from "@/data/students";
 
 export default function Home() {
   return (
@@ -62,7 +62,7 @@ export default function Home() {
         </Marquee>
       </div>
 
-      {/* 5. Daftar 31 Siswa (Interactive Character Roster & Dossier Modal) */}
+      {/* 5. Daftar 31 Siswa (Motion Layout Grid & Animated Dossier Modal) */}
       <StudentProfiles />
 
       {/* Crisp 16-Bit Pixel Dither Divider */}
@@ -71,41 +71,8 @@ export default function Home() {
       {/* 6. Struktur Organisasi & Kepengurusan Kelas */}
       <ClassStructure />
 
-      {/* 7. Authentic Official Archive Banner (Replaces Fake Stock Photo Gallery) */}
-      <section className="px-4 sm:px-6 pb-20 max-w-6xl mx-auto select-none">
-        <div className="pixel-box overflow-hidden">
-          <div className="pixel-titlebar">
-            <span className="font-pixel text-[9px] text-[var(--fg-primary)]">
-              ARSIP_DOKUMENTASI.LNK
-            </span>
-            <span className="font-silk text-[10px] font-bold text-[var(--fg-muted)]">
-              INSTAGRAM RESMI
-            </span>
-          </div>
-          <div className="p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <div className="max-w-xl">
-              <h2 className="font-pixel text-sm sm:text-base text-[var(--fg-primary)] leading-relaxed mb-2">
-                Foto &amp; Dokumentasi Kegiatan Kelas
-              </h2>
-              <p className="font-sans text-sm text-[var(--fg-secondary)] leading-relaxed">
-                Seluruh dokumentasi asli kegiatan, momen di sekolah, dan arsip
-                foto bersama kelas {CLASS_INFO.name} tersimpan di akun Instagram
-                resmi kelas kami.
-              </p>
-            </div>
-            <a
-              href={CLASS_INFO.instagramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="pixel-btn pixel-btn-primary shrink-0"
-            >
-              <Instagram className="w-3.5 h-3.5 mr-2 shrink-0" />
-              <span>@{CLASS_INFO.instagramHandle}</span>
-              <ArrowUpRight className="w-3.5 h-3.5 ml-1.5 shrink-0" />
-            </a>
-          </div>
-        </div>
-      </section>
+      {/* 7. Authentic Official Archive Banner */}
+      <ArchiveBanner />
 
       {/* 8. Footer */}
       <Footer />

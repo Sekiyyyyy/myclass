@@ -2,68 +2,41 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import { useGSAP, gsap } from "@/lib/gsap-config";
+import { motion, useScroll, useTransform } from "motion/react";
 import { ArrowDown, Users, Network } from "lucide-react";
 import { HeroBackground } from "@/components/sections/HeroBackground";
 import { CLASS_INFO } from "@/data/students";
+import { snappySpring, pixelEase } from "@/lib/motion-presets";
+
+const heroContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.06,
+    },
+  },
+};
+
+const heroItem = {
+  hidden: { opacity: 0, y: 14 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.36, ease: pixelEase },
+  },
+};
 
 export function Hero() {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const logoRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
 
-  useGSAP(
-    () => {
-      const prefersReducedMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-      ).matches;
-
-      if (prefersReducedMotion) return;
-
-      const tl = gsap.timeline();
-
-      tl.fromTo(
-        ".hero-logo-stage",
-        { opacity: 0, x: -20 },
-        { opacity: 1, x: 0, duration: 0.45, ease: "steps(5)" }
-      )
-        .fromTo(
-          ".pixel-hero-badge",
-          { opacity: 0, y: -8 },
-          { opacity: 1, y: 0, duration: 0.3, ease: "steps(4)" },
-          "-=0.25"
-        )
-        .fromTo(
-          ".pixel-hero-title",
-          { opacity: 0, y: 12 },
-          { opacity: 1, y: 0, duration: 0.35, ease: "steps(4)" },
-          "-=0.15"
-        )
-        .fromTo(
-          ".pixel-hero-sub",
-          { opacity: 0, y: 10 },
-          { opacity: 1, y: 0, duration: 0.3, ease: "steps(4)" },
-          "-=0.15"
-        )
-        .fromTo(
-          ".pixel-hero-btns",
-          { opacity: 0, y: 10 },
-          { opacity: 1, y: 0, duration: 0.3, ease: "steps(4)" },
-          "-=0.1"
-        );
-
-      // Stepped 16-bit idle bob animation for the emblem
-      if (logoRef.current) {
-        gsap.to(logoRef.current, {
-          y: -10,
-          duration: 1.8,
-          repeat: -1,
-          yoyo: true,
-          ease: "steps(5)",
-        });
-      }
-    },
-    { scope: heroRef }
-  );
+  // Subtle GPU parallax depth as the user scrolls past the Hero
+  const logoParallaxY = useTransform(scrollYProgress, [0, 1], [0, -36]);
 
   return (
     <section
@@ -76,9 +49,22 @@ export function Hero() {
 
       <div className="relative z-10 max-w-6xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         {/* Left Column: Clean Floating Official 3D Planet Logo */}
-        <div className="hero-logo-stage lg:col-span-5 flex justify-center lg:justify-start">
-          <div
-            ref={logoRef}
+        <motion.div
+          initial={{ opacity: 0, x: -24, scale: 0.94 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          transition={snappySpring}
+          style={{ y: logoParallaxY }}
+          className="lg:col-span-5 flex justify-center lg:justify-start"
+        >
+          <motion.div
+            animate={{ y: [0, -10, 0] }}
+            transition={{
+              duration: 3.2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            whileHover={{ scale: 1.04, rotate: 1.5 }}
+            whileTap={{ scale: 0.97 }}
             className="relative w-52 h-52 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 xl:w-[22rem] xl:h-[22rem] will-change-transform"
           >
             <Image
@@ -88,13 +74,21 @@ export function Hero() {
               priority
               className="object-contain drop-shadow-[4px_6px_0px_rgba(24,22,36,0.28)] dark:drop-shadow-[4px_6px_0px_rgba(7,6,13,0.85)]"
             />
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Right Column: Minimalist Editorial Pixel Title & Actions */}
-        <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
+        <motion.div
+          variants={heroContainer}
+          initial="hidden"
+          animate="visible"
+          className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left"
+        >
           {/* School Pill Badge */}
-          <div className="pixel-hero-badge inline-flex items-center gap-2 px-3.5 py-1.5 mb-5 pixel-pill">
+          <motion.div
+            variants={heroItem}
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 mb-5 pixel-pill"
+          >
             <span className="w-2 h-2 bg-[#5B46C8] dark:bg-[#FACC15] border border-[#181624] inline-block shrink-0" />
             <span className="font-pixel text-[9px] sm:text-[10px] text-[var(--fg-primary)] uppercase tracking-wider">
               {CLASS_INFO.school}
@@ -102,10 +96,13 @@ export function Hero() {
             <span className="font-pixel text-[9px] text-[var(--accent-indigo)] dark:text-[#FACC15] font-bold">
               [{CLASS_INFO.year}]
             </span>
-          </div>
+          </motion.div>
 
           {/* Main Headline */}
-          <h1 className="pixel-hero-title font-pixel text-2xl sm:text-4xl lg:text-[2.75rem] xl:text-5xl text-[var(--fg-primary)] leading-[1.3] tracking-wide mb-4 pixel-title-shadow">
+          <motion.h1
+            variants={heroItem}
+            className="font-pixel text-2xl sm:text-4xl lg:text-[2.75rem] xl:text-5xl text-[var(--fg-primary)] leading-[1.3] tracking-wide mb-4 pixel-title-shadow"
+          >
             BUKU KENANGAN
             <br />
             DIGITAL
@@ -113,27 +110,45 @@ export function Hero() {
               aria-hidden="true"
               className="inline-block w-3 sm:w-4 h-6 sm:h-9 ml-2 align-middle bg-[#5B46C8] dark:bg-[#FACC15] animate-pixel-blink"
             />
-          </h1>
+          </motion.h1>
 
           {/* Concise Single-Line Subtitle */}
-          <p className="pixel-hero-sub font-silk text-xs sm:text-sm md:text-base text-[var(--accent-indigo)] dark:text-[#FACC15] font-bold tracking-wider mb-8 uppercase">
+          <motion.p
+            variants={heroItem}
+            className="font-silk text-xs sm:text-sm md:text-base text-[var(--accent-indigo)] dark:text-[#FACC15] font-bold tracking-wider mb-8 uppercase"
+          >
             {CLASS_INFO.major}
-          </p>
+          </motion.p>
 
           {/* Action Buttons */}
-          <div className="pixel-hero-btns flex flex-wrap items-center justify-center lg:justify-start gap-3">
-            <a href="#siswa" className="pixel-btn pixel-btn-primary">
+          <motion.div
+            variants={heroItem}
+            className="flex flex-wrap items-center justify-center lg:justify-start gap-3"
+          >
+            <motion.a
+              href="#siswa"
+              whileHover={{ y: -2 }}
+              whileTap={{ y: 2 }}
+              transition={snappySpring}
+              className="pixel-btn pixel-btn-primary"
+            >
               <Users className="w-3.5 h-3.5 mr-2 shrink-0" />
               <span>Lihat 31 Siswa</span>
               <ArrowDown className="w-3.5 h-3.5 ml-2 shrink-0" />
-            </a>
+            </motion.a>
 
-            <a href="#struktur" className="pixel-btn pixel-btn-secondary">
+            <motion.a
+              href="#struktur"
+              whileHover={{ y: -2 }}
+              whileTap={{ y: 2 }}
+              transition={snappySpring}
+              className="pixel-btn pixel-btn-secondary"
+            >
               <Network className="w-3.5 h-3.5 mr-2 shrink-0" />
               <span>Struktur Kelas</span>
-            </a>
-          </div>
-        </div>
+            </motion.a>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

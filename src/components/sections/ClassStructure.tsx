@@ -1,10 +1,10 @@
 "use client";
 
-import { useRef } from "react";
 import Image from "next/image";
+import { motion } from "motion/react";
 import { Crown, Shield, FileText, Wallet, Award } from "lucide-react";
-import { useGSAP, gsap } from "@/lib/gsap-config";
 import { CLASS_INFO } from "@/data/students";
+import { pixelEase, snappySpring, viewportOnce } from "@/lib/motion-presets";
 
 interface Officer {
   id: string;
@@ -53,44 +53,19 @@ const officers: Officer[] = [
 ];
 
 export function ClassStructure() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  useGSAP(
-    () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-      const cards = sectionRef.current?.querySelectorAll(".structure-card-item");
-      if (!cards || cards.length === 0) return;
-
-      gsap.fromTo(
-        cards,
-        { opacity: 0, y: 18 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.35,
-          stagger: 0.08,
-          ease: "steps(4)",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 82%",
-            toggleActions: "play none none none",
-            once: true,
-          },
-        }
-      );
-    },
-    { scope: sectionRef }
-  );
-
   return (
     <section
       id="struktur"
-      ref={sectionRef}
       className="py-16 sm:py-20 px-4 sm:px-6 max-w-6xl mx-auto relative select-none"
     >
       {/* Left-Aligned Section Header */}
-      <div className="mb-12 flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b-2 border-[var(--border-soft)] pb-5">
+      <motion.div
+        initial={{ opacity: 0, y: 14 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={viewportOnce}
+        transition={{ duration: 0.34, ease: pixelEase }}
+        className="mb-12 flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b-2 border-[var(--border-soft)] pb-5"
+      >
         <div>
           <p className="font-pixel text-[9px] sm:text-[10px] text-[var(--accent-indigo)] dark:text-[#FACC15] tracking-widest uppercase mb-2">
             03 // STRUKTUR KELAS
@@ -102,10 +77,16 @@ export function ClassStructure() {
         <p className="font-silk text-xs text-[var(--fg-muted)] font-bold uppercase">
           {CLASS_INFO.name} &bull; Periode {CLASS_INFO.period}
         </p>
-      </div>
+      </motion.div>
 
       {/* Tier 1: Wali Kelas */}
-      <div className="structure-card-item max-w-md mx-auto">
+      <motion.div
+        initial={{ opacity: 0, y: 18, scale: 0.97 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        viewport={viewportOnce}
+        transition={snappySpring}
+        className="max-w-md mx-auto"
+      >
         <div className="pixel-box overflow-hidden">
           <div className="pixel-titlebar">
             <div className="inline-flex items-center gap-1.5 font-pixel text-[9px] text-[var(--fg-primary)]">
@@ -134,18 +115,29 @@ export function ClassStructure() {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
-      {/* True Pixel-Exact Stepped Org-Chart Tree Connectors */}
+      {/* Animated Pixel-Exact Stepped Org-Chart Tree Connectors */}
       <div aria-hidden="true" className="flex flex-col items-center">
-        {/* Vertical stem from Wali Kelas */}
-        <div className="w-[3px] h-7 bg-[var(--border-hard)]" />
+        {/* Vertical stem draws downward */}
+        <motion.div
+          initial={{ scaleY: 0 }}
+          whileInView={{ scaleY: 1 }}
+          viewport={viewportOnce}
+          transition={{ duration: 0.22, delay: 0.12, ease: pixelEase }}
+          className="w-[3px] h-7 bg-[var(--border-hard)] origin-top"
+        />
 
-        {/* Desktop pixel-exact 4-way branch aligned to exact column centers */}
-        <div className="hidden lg:grid lg:grid-cols-4 w-full">
+        {/* Desktop pixel-exact 4-way branch */}
+        <motion.div
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={viewportOnce}
+          transition={{ duration: 0.3, delay: 0.22, ease: pixelEase }}
+          className="hidden lg:grid lg:grid-cols-4 w-full origin-center"
+        >
           {officers.map((officer, idx) => (
             <div key={officer.id} className="relative h-7 flex justify-center">
-              {/* Horizontal connector bar */}
               <div
                 className={`absolute top-0 h-[3px] bg-[var(--border-hard)] ${
                   idx === 0
@@ -155,11 +147,10 @@ export function ClassStructure() {
                       : "left-0 right-0"
                 }`}
               />
-              {/* Vertical drop stem */}
               <div className="w-[3px] h-full bg-[var(--border-hard)]" />
             </div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Mobile/Tablet compact label bridge */}
         <div className="lg:hidden px-3 py-1 bg-[var(--bg-inset)] border-2 border-[var(--border-hard)] font-pixel text-[8px] text-[var(--fg-primary)] mb-5 shadow-[2px_2px_0px_var(--shadow-hard)]">
@@ -169,12 +160,21 @@ export function ClassStructure() {
 
       {/* Tier 2: 4 Core Class Officers */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        {officers.map((officer) => {
+        {officers.map((officer, idx) => {
           const Icon = officer.icon;
           return (
-            <div
+            <motion.div
               key={officer.id}
-              className="structure-card-item student-card-box group flex flex-col justify-between overflow-hidden"
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -4 }}
+              viewport={viewportOnce}
+              transition={{
+                duration: 0.32,
+                delay: 0.2 + idx * 0.06,
+                ease: pixelEase,
+              }}
+              className="student-card-box group flex flex-col justify-between overflow-hidden"
             >
               {/* Cohesive Role Header Bar */}
               <div
@@ -218,7 +218,7 @@ export function ClassStructure() {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           );
         })}
       </div>
