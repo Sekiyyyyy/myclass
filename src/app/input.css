@@ -137,6 +137,7 @@ textarea,
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 0.75rem;
   padding: 0.5rem 0.75rem;
   background-color: var(--bg-inset);
   border-bottom: 3px solid var(--border-hard);

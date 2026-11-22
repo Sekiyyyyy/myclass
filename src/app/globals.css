@@ -15,7 +15,6 @@
     --container-md: 28rem;
     --container-xl: 36rem;
     --container-3xl: 48rem;
-    --container-4xl: 56rem;
     --container-5xl: 64rem;
     --container-6xl: 72rem;
     --container-7xl: 80rem;
@@ -39,6 +38,7 @@
     --text-5xl--line-height: 1;
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
+    --tracking-normal: 0em;
     --tracking-wide: 0.025em;
     --tracking-wider: 0.05em;
     --tracking-widest: 0.1em;
@@ -991,6 +991,9 @@
   .\!text-\[9px\] {
     font-size: 9px !important;
   }
+  .\!text-\[11px\] {
+    font-size: 11px !important;
+  }
   .text-\[1\.35rem\] {
     font-size: 1.35rem;
   }
@@ -1035,6 +1038,10 @@
   .font-semibold {
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
+  }
+  .\!tracking-normal {
+    --tw-tracking: var(--tracking-normal) !important;
+    letter-spacing: var(--tracking-normal) !important;
   }
   .tracking-wide {
     --tw-tracking: var(--tracking-wide);
@@ -1264,11 +1271,6 @@
       line-height: var(--tw-leading, var(--text-2xl--line-height));
     }
   }
-  @media (width >= 420px) {
-    .min-\[420px\]\:\!text-\[9px\] {
-      font-size: 9px !important;
-    }
-  }
   @media (width >= 40rem) {
     .sm\:mt-5 {
       margin-top: calc(var(--spacing) * 5);
@@ -1488,6 +1490,10 @@
     }
     .sm\:text-right {
       text-align: right;
+    }
+    .sm\:\!text-xs {
+      font-size: var(--text-xs) !important;
+      line-height: var(--tw-leading, var(--text-xs--line-height)) !important;
     }
     .sm\:text-2xl {
       font-size: var(--text-2xl);
@@ -1810,6 +1816,7 @@ a, button, [role="button"], input, select, textarea, .cursor-pointer {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 0.75rem;
   padding: 0.5rem 0.75rem;
   background-color: var(--bg-inset);
   border-bottom: 3px solid var(--border-hard);
