@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     "Eterna PPLG Three",
     "Angkatan 2026",
   ],
-  authors: [{ name: "Rizky Alfianno" }],
+  authors: [{ name: "Rizky Alfianno", url: "https://github.com/Sekiyyyyy" }],
   creator: "Rizky Alfianno",
 };
 

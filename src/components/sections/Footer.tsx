@@ -96,9 +96,14 @@ export function Footer() {
         </span>
         <span>
           Created by{" "}
-          <strong className="text-[var(--fg-primary)] font-bold">
+          <a
+            href="https://github.com/Sekiyyyyy"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[var(--fg-primary)] hover:text-[var(--accent-indigo)] dark:hover:text-[#FACC15] font-bold hover:underline transition-colors"
+          >
             Rizky Alfianno
-          </strong>
+          </a>
         </span>
       </div>
     </footer>
