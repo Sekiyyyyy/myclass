@@ -95,7 +95,7 @@ export function Footer() {
           &copy; {CLASS_INFO.year} {CLASS_INFO.name} &mdash; {CLASS_INFO.school}
         </span>
         <span>
-          Dibuat oleh{" "}
+          Created by{" "}
           <strong className="text-[var(--fg-primary)] font-bold">
             Rizky Alfianno
           </strong>
