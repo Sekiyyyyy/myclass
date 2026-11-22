@@ -12,13 +12,13 @@ interface PixelCardProps {
 export function PixelCard({
   children,
   className = "",
-  interactive = true,
+  interactive = false,
   onClick,
 }: PixelCardProps) {
   return (
     <div
       onClick={onClick}
-      className={`relative group overflow-hidden pixel-box p-4 ${
+      className={`relative overflow-hidden pixel-box ${
         interactive ? "pixel-box-interactive cursor-pointer" : ""
       } ${className}`}
     >

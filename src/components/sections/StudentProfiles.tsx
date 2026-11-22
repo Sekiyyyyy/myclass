@@ -1,206 +1,109 @@
 "use client";
 
-import { useState, useMemo, useRef, useEffect, MouseEvent } from "react";
+import { useState, useMemo, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
-import { Search, Instagram, X, Heart, ExternalLink, Users, Quote, Sparkles } from "lucide-react";
-import { students, Student } from "@/data/students";
+import {
+  Search,
+  X,
+  Users,
+  ChevronLeft,
+  ChevronRight,
+  Crown,
+  ArrowUpDown,
+} from "lucide-react";
+import { students, Student, CLASS_INFO } from "@/data/students";
 import { useGSAP, gsap } from "@/lib/gsap-config";
-import confetti from "canvas-confetti";
 
-interface StudentCardItemProps {
-  student: Student;
-  likesCount: number;
-  onLike: (e: React.MouseEvent, id: string) => void;
-  onSelect: (student: Student) => void;
-}
+type FilterMode = "all" | "officers";
+type SortMode = "absen" | "name";
 
-function StudentCardItem({
-  student,
-  likesCount,
-  onLike,
-  onSelect,
-}: StudentCardItemProps) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [tiltStyle, setTiltStyle] = useState<React.CSSProperties>({});
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    const rotateX = ((y - centerY) / centerY) * -6;
-    const rotateY = ((x - centerX) / centerX) * 6;
-
-    setTiltStyle({
-      transform: `perspective(700px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translate3d(0, -4px, 10px)`,
-      transition: "transform 0.08s ease-out",
-    });
-  };
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    setTiltStyle({
-      transform: "perspective(700px) rotateX(0deg) rotateY(0deg) translate3d(0, 0, 0)",
-      transition: "transform 0.4s cubic-bezier(0.2, 0, 0, 1)",
-    });
-  };
-
-  return (
-    <div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onClick={() => onSelect(student)}
-      style={tiltStyle}
-      className="student-card-item student-card-box group flex flex-col justify-between h-full p-2.5 sm:p-3 cursor-pointer overflow-hidden transform-gpu select-none"
-    >
-      {/* Holographic Sheen Overlay on Hover */}
-      {isHovered && <div className="holo-sheen" />}
-
-      <div className="relative z-10">
-        {/* Photo Frame with Clean Neutral Slate Bezel (No Clashing Yellow around Red Photo) */}
-        <div className="relative aspect-[3/4] w-full overflow-hidden mb-3 bg-[#0A0E18] pixel-frame-neutral shadow-[2px_2px_0px_#000]">
-          <Image
-            src={student.avatar}
-            alt={student.name}
-            fill
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-            className="object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
-          />
-
-          {/* High-Contrast Obsidian Absen Tag (Harmonizes perfectly with crimson red background) */}
-          <div className="absolute top-1.5 left-1.5 z-10 px-1.5 py-0.5 bg-[#080C14]/90 text-white font-pixel text-[9px] font-bold border border-slate-700/80 shadow-[1px_1px_0px_#000]">
-            #{student.id}
-          </div>
-
-          {/* Ruby / Rose Heart Like Button */}
-          <button
-            type="button"
-            onClick={(e) => onLike(e, student.id)}
-            title="Beri Suka"
-            className="absolute top-1.5 right-1.5 z-10 w-6 h-6 bg-[#080C14]/90 hover:bg-slate-900 text-rose-500 hover:text-rose-400 flex items-center justify-center border border-slate-700/80 shadow-[1px_1px_0px_#000] transition-transform active:scale-75 cursor-pointer"
-          >
-            <Heart
-              className={`w-3.5 h-3.5 transition-colors ${
-                likesCount ? "fill-rose-500 text-rose-500" : "text-rose-400"
-              }`}
-            />
-          </button>
-
-          {/* Active Likes Counter Badge */}
-          {likesCount ? (
-            <div className="absolute bottom-1.5 right-1.5 z-10 px-1.5 py-0.5 bg-rose-600 text-white font-pixel text-[8px] font-bold border border-slate-950 shadow-[1px_1px_0px_#000] animate-in zoom-in-50 duration-150">
-              +{likesCount}
-            </div>
-          ) : null}
-        </div>
-
-        {/* Student Name */}
-        <h3 className="font-silk font-bold text-xs sm:text-sm text-slate-900 dark:text-white truncate mb-1">
-          {student.name}
-        </h3>
-
-        {/* Cool Slate Nickname Badge (Non-clashing neutral color) */}
-        <div className="mb-2">
-          <span className="inline-block px-1.5 py-0.5 bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 font-pixel text-[8px] border border-slate-300 dark:border-slate-700 truncate max-w-full">
-            [{student.nickname}]
-          </span>
-        </div>
-      </div>
-
-      {/* Instagram & Quick Action */}
-      <div className="relative z-10 pt-2 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-[10px] font-silk">
-        <a
-          href={`https://instagram.com/${student.ig}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={(e) => e.stopPropagation()}
-          className="inline-flex items-center gap-1 text-slate-700 dark:text-slate-300 hover:text-rose-500 dark:hover:text-rose-400 truncate max-w-[80%] font-bold transition-colors"
-        >
-          <Instagram className="w-3 h-3 shrink-0" />
-          <span className="truncate">@{student.ig}</span>
-        </a>
-        <span className="text-slate-400 dark:text-slate-500 group-hover:text-rose-500 group-hover:translate-x-1 transition-all font-bold">
-          &gt;
-        </span>
-      </div>
-    </div>
-  );
+function getRoleShortLabel(role?: Student["role"]) {
+  if (!role) return null;
+  if (role === "Ketua Kelas") return "KETUA";
+  if (role === "Wakil Ketua") return "WAKIL";
+  return role.toUpperCase();
 }
 
 export function StudentProfiles() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
-  const [likes, setLikes] = useState<{ [id: string]: number }>({});
+  const [filterMode, setFilterMode] = useState<FilterMode>("all");
+  const [sortMode, setSortMode] = useState<SortMode>("absen");
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const filteredStudents = useMemo(() => {
-    return students.filter((s) => {
-      const q = searchQuery.toLowerCase();
+    const q = searchQuery.trim().toLowerCase();
+
+    const list = students.filter((s) => {
+      if (filterMode === "officers" && !s.role) return false;
+      if (!q) return true;
       return (
         s.name.toLowerCase().includes(q) ||
         s.nickname.toLowerCase().includes(q) ||
-        s.ig.toLowerCase().includes(q)
+        s.id.includes(q) ||
+        (s.role && s.role.toLowerCase().includes(q))
       );
     });
-  }, [searchQuery]);
 
-  const handleLike = (e: React.MouseEvent, id: string) => {
-    e.stopPropagation();
-    setLikes((prev) => ({ ...prev, [id]: (prev[id] || 0) + 1 }));
+    if (sortMode === "name") {
+      return [...list].sort((a, b) => a.name.localeCompare(b.name));
+    }
+    return list;
+  }, [searchQuery, filterMode, sortMode]);
 
-    // Confetti burst in Ruby Red, Soft Lavender Iridescent, and Warm Gold
-    confetti({
-      particleCount: 24,
-      spread: 45,
-      origin: {
-        x: e.clientX / window.innerWidth,
-        y: e.clientY / window.innerHeight,
-      },
-      colors: ["#F43F5E", "#E11D48", "#C084FC", "#FBBF24"],
-      shapes: ["square"],
-    });
-  };
+  const selectedIndex = useMemo(() => {
+    if (!selectedId) return -1;
+    return filteredStudents.findIndex((s) => s.id === selectedId);
+  }, [selectedId, filteredStudents]);
+
+  const selectedStudent: Student | null =
+    selectedIndex >= 0 ? filteredStudents[selectedIndex] : null;
+
+  const navigateModal = useCallback(
+    (delta: number) => {
+      if (selectedIndex < 0 || filteredStudents.length === 0) return;
+      const nextIdx =
+        (selectedIndex + delta + filteredStudents.length) %
+        filteredStudents.length;
+      setSelectedId(filteredStudents[nextIdx].id);
+    },
+    [selectedIndex, filteredStudents]
+  );
 
   useGSAP(
     () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
       const cards = sectionRef.current?.querySelectorAll(".student-card-item");
       if (!cards || cards.length === 0) return;
 
       gsap.fromTo(
         cards,
-        { opacity: 0, y: 15 },
+        { opacity: 0, y: 12 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.35,
-          stagger: 0.02,
+          duration: 0.28,
+          stagger: 0.015,
           ease: "steps(4)",
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 80%",
+            start: "top 82%",
             toggleActions: "play none none none",
             once: true,
           },
         }
       );
     },
-    { scope: sectionRef, dependencies: [filteredStudents] }
+    { scope: sectionRef }
   );
 
   useEffect(() => {
     if (!selectedStudent) return;
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setSelectedStudent(null);
+      if (e.key === "Escape") setSelectedId(null);
+      if (e.key === "ArrowLeft") navigateModal(-1);
+      if (e.key === "ArrowRight") navigateModal(1);
     };
     window.addEventListener("keydown", handleKeyDown);
     document.body.style.overflow = "hidden";
@@ -208,182 +111,310 @@ export function StudentProfiles() {
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
     };
-  }, [selectedStudent]);
+  }, [selectedStudent, navigateModal]);
 
   return (
-    <section id="siswa" ref={sectionRef} className="py-20 px-3 sm:px-6 max-w-7xl mx-auto relative select-none">
-      {/* Section Header */}
-      <div className="text-center max-w-xl mx-auto mb-10">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-500 text-slate-950 font-pixel text-[9px] font-bold border-2 border-slate-950 shadow-[2px_2px_0px_#000] mb-3">
-          <Users className="w-3.5 h-3.5 text-slate-950" />
-          <span>DAFTAR SISWA</span>
+    <section
+      id="siswa"
+      ref={sectionRef}
+      className="py-16 sm:py-20 px-4 sm:px-6 max-w-7xl mx-auto relative select-none"
+    >
+      {/* Split Section Header + Inline Controls */}
+      <div className="mb-8 flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b-2 border-[var(--border-soft)] pb-6">
+        <div>
+          <p className="font-pixel text-[9px] sm:text-[10px] text-[var(--accent-indigo)] dark:text-[#FACC15] tracking-widest uppercase mb-2">
+            02 // DAFTAR SISWA
+          </p>
+          <h2 className="font-pixel text-xl sm:text-2xl md:text-3xl text-[var(--fg-primary)] leading-snug pixel-title-shadow mb-2">
+            31 Anggota {CLASS_INFO.name}
+          </h2>
+          <p className="font-silk text-xs text-[var(--fg-muted)] font-bold">
+            Pilih kartu siswa untuk membuka profil lengkap ({filteredStudents.length}{" "}
+            ditampilkan)
+          </p>
         </div>
-        <h2 className="font-pixel text-xl sm:text-3xl text-slate-900 dark:text-white mb-3 pixel-title-shadow">
-          31 Siswa XII PPLG 3
-        </h2>
-        <p className="font-silk text-xs sm:text-sm text-slate-700 dark:text-slate-200 font-bold uppercase">
-          Klik kartu untuk melihat informasi profil lengkap dan pesan kenangan
-        </p>
+
+        {/* Search & Filter Toolbar */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto">
+          {/* Search Input */}
+          <div className="relative pixel-box !p-0 flex-1 sm:w-64">
+            <Search className="w-4 h-4 text-[var(--fg-muted)] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Cari nama / no. absen..."
+              aria-label="Cari siswa"
+              className="w-full pl-9 pr-8 py-2 bg-transparent text-[var(--fg-primary)] placeholder:text-[var(--fg-muted)] font-silk text-xs focus:outline-none"
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery("")}
+                aria-label="Hapus pencarian"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[var(--fg-muted)] hover:text-[var(--fg-primary)] cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
+          </div>
+
+          {/* Filter & Sort Controls */}
+          <div className="flex items-center gap-2 font-silk text-[11px] font-bold">
+            <button
+              type="button"
+              onClick={() => setFilterMode("all")}
+              className={`px-3 py-2 border-2 border-[var(--border-hard)] shadow-[2px_2px_0px_var(--shadow-hard)] active:translate-y-[1px] active:shadow-none transition-all cursor-pointer ${
+                filterMode === "all"
+                  ? "bg-[#5B46C8] text-white dark:bg-[#FACC15] dark:text-[#181624]"
+                  : "bg-[var(--bg-surface)] text-[var(--fg-secondary)] hover:bg-[var(--bg-inset)]"
+              }`}
+            >
+              Semua (31)
+            </button>
+            <button
+              type="button"
+              onClick={() => setFilterMode("officers")}
+              className={`px-3 py-2 border-2 border-[var(--border-hard)] shadow-[2px_2px_0px_var(--shadow-hard)] active:translate-y-[1px] active:shadow-none transition-all cursor-pointer ${
+                filterMode === "officers"
+                  ? "bg-[#5B46C8] text-white dark:bg-[#FACC15] dark:text-[#181624]"
+                  : "bg-[var(--bg-surface)] text-[var(--fg-secondary)] hover:bg-[var(--bg-inset)]"
+              }`}
+            >
+              Pengurus (4)
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                setSortMode((prev) => (prev === "absen" ? "name" : "absen"))
+              }
+              title="Ubah urutan"
+              className="inline-flex items-center gap-1 px-2.5 py-2 border-2 border-[var(--border-hard)] bg-[var(--bg-surface)] text-[var(--fg-primary)] hover:bg-[var(--bg-inset)] shadow-[2px_2px_0px_var(--shadow-hard)] active:translate-y-[1px] active:shadow-none transition-all cursor-pointer"
+            >
+              <ArrowUpDown className="w-3.5 h-3.5" />
+              <span>{sortMode === "absen" ? "01-31" : "A-Z"}</span>
+            </button>
+          </div>
+        </div>
       </div>
 
-      {/* Search Bar & Counter */}
-      <div className="max-w-md mx-auto mb-10 space-y-2">
-        <div className="relative pixel-box p-1">
-          <Search className="w-4 h-4 text-slate-500 dark:text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Cari nama atau username Instagram..."
-            className="w-full pl-10 pr-9 py-2 bg-transparent text-slate-900 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-400 font-silk text-xs focus:outline-none"
-          />
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white cursor-pointer"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          )}
-        </div>
-        <div className="flex items-center justify-between px-1 text-[10px] font-silk text-slate-600 dark:text-slate-400 font-bold">
-          <span>Menampilkan {filteredStudents.length} dari 31 siswa</span>
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery("")}
-              className="text-amber-600 dark:text-amber-400 hover:underline"
-            >
-              Reset filter
-            </button>
-          )}
-        </div>
-      </div>
-
-      {/* Grid of Student Cards with 3D Tilt & Holographic Sheen */}
+      {/* 16-Bit Roster Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5 sm:gap-5">
-        {filteredStudents.map((s) => (
-          <StudentCardItem
-            key={s.id}
-            student={s}
-            likesCount={likes[s.id] || 0}
-            onLike={handleLike}
-            onSelect={setSelectedStudent}
-          />
-        ))}
+        {filteredStudents.map((s) => {
+          const shortRole = getRoleShortLabel(s.role);
+          const isLeader = s.role === "Ketua Kelas";
+
+          return (
+            <button
+              key={s.id}
+              type="button"
+              onClick={() => setSelectedId(s.id)}
+              className="student-card-item student-card-box group flex flex-col justify-between text-left h-full p-2.5 sm:p-3 cursor-pointer overflow-hidden"
+            >
+              <div>
+                {/* Studio Red Pas-Foto Framed inside Neutral Matte Pixel Bezel */}
+                <div className="relative aspect-[3/4] w-full overflow-hidden mb-3 pixel-frame-portrait p-[2px]">
+                  <div className="relative w-full h-full overflow-hidden bg-[#181624]">
+                    <Image
+                      src={s.avatar}
+                      alt={s.name}
+                      fill
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                      className="object-cover object-top group-hover:scale-[1.04] transition-transform duration-300 ease-out"
+                    />
+                  </div>
+
+                  {/* Crisp Absen Stamp */}
+                  <div className="absolute top-1.5 left-1.5 z-10 px-1.5 py-0.5 bg-[#181624] text-[#F4F1FA] font-pixel text-[8px] font-bold border border-[#4C4672]">
+                    #{s.id}
+                  </div>
+
+                  {/* Real Officer Tag Only */}
+                  {shortRole && (
+                    <div
+                      className={`absolute bottom-1.5 right-1.5 z-10 inline-flex items-center gap-1 px-1.5 py-0.5 font-pixel text-[7px] font-bold border border-[#181624] shadow-[1px_1px_0px_#181624] ${
+                        isLeader
+                          ? "bg-[#FACC15] text-[#181624]"
+                          : "bg-[#5B46C8] text-white"
+                      }`}
+                    >
+                      {isLeader && <Crown className="w-2.5 h-2.5" />}
+                      <span>{shortRole}</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Student Name */}
+                <h3 className="font-silk font-bold text-xs sm:text-[13px] text-[var(--fg-primary)] leading-snug line-clamp-2 min-h-[2.2rem] mb-1">
+                  {s.name}
+                </h3>
+              </div>
+
+              {/* Card Footer Strip with Authentic 8-Bit Selector Indicator */}
+              <div className="pt-2 mt-1 border-t border-[var(--border-soft)] flex items-center justify-between gap-2 font-pixel text-[8px]">
+                <span className="text-[var(--fg-muted)] truncate">
+                  {s.nickname}
+                </span>
+                <span className="inline-flex items-center gap-1 text-[var(--accent-indigo)] dark:text-[#FACC15] opacity-70 group-hover:opacity-100 shrink-0">
+                  <span className="inline-block transition-transform group-hover:translate-x-0.5">
+                    &#9654;
+                  </span>
+                  <span className="hidden sm:inline">INFO</span>
+                </span>
+              </div>
+            </button>
+          );
+        })}
       </div>
 
       {/* Empty Search State */}
       {filteredStudents.length === 0 && (
-        <div className="text-center py-16 pixel-box max-w-md mx-auto p-8">
-          <Users className="w-8 h-8 text-amber-500 mx-auto mb-3" />
-          <h3 className="font-pixel text-xs text-slate-900 dark:text-white mb-2">
-            SISWA TIDAK DITEMUKAN
+        <div className="text-center py-14 pixel-box max-w-md mx-auto p-8 mt-4">
+          <Users className="w-8 h-8 text-[var(--accent-indigo)] dark:text-[#FACC15] mx-auto mb-3" />
+          <h3 className="font-pixel text-xs text-[var(--fg-primary)] mb-2">
+            DATA TIDAK DITEMUKAN
           </h3>
-          <p className="font-silk text-xs text-slate-700 dark:text-slate-300 mb-4">
-            Tidak ada siswa dengan nama &ldquo;{searchQuery}&rdquo;.
+          <p className="font-silk text-xs text-[var(--fg-secondary)] mb-5">
+            Tidak ada siswa yang cocok dengan &ldquo;{searchQuery}&rdquo;.
           </p>
           <button
-            onClick={() => setSearchQuery("")}
-            className="pixel-btn pixel-btn-primary text-[10px] py-2 px-3"
+            type="button"
+            onClick={() => {
+              setSearchQuery("");
+              setFilterMode("all");
+            }}
+            className="pixel-btn pixel-btn-primary text-[9px] py-2 px-3"
           >
             Reset Pencarian
           </button>
         </div>
       )}
 
-      {/* Student Detail Modal with Retro Dialogue Log & Quote */}
+      {/* 16-Bit Character Dossier Modal with Prev/Next Navigation */}
       {selectedStudent && (
         <div
           role="dialog"
           aria-modal="true"
-          onClick={() => setSelectedStudent(null)}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xs animate-in fade-in duration-150"
+          aria-labelledby="student-modal-title"
+          onClick={() => setSelectedId(null)}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#07060D]/85"
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="pixel-box p-5 sm:p-7 max-w-sm w-full relative z-10 bg-white dark:bg-[#0D1322]"
+            className="pixel-box max-w-md w-full relative z-10 overflow-hidden"
           >
-            {/* Close Button */}
-            <button
-              onClick={() => setSelectedStudent(null)}
-              className="absolute top-3 right-3 w-7 h-7 bg-slate-200 dark:bg-slate-800 hover:bg-rose-500 hover:text-white text-slate-800 dark:text-slate-200 flex items-center justify-center cursor-pointer border border-slate-950 shadow-[2px_2px_0px_#000] transition-colors"
-            >
-              <X className="w-4 h-4" />
-            </button>
+            {/* Retro Window Titlebar */}
+            <div className="pixel-titlebar">
+              <span className="font-pixel text-[9px] text-[var(--fg-primary)]">
+                SISWA_#{selectedStudent.id}.DAT
+              </span>
+              <button
+                type="button"
+                onClick={() => setSelectedId(null)}
+                aria-label="Tutup profil"
+                className="w-6 h-6 bg-[var(--bg-surface)] hover:bg-[var(--accent-crimson)] hover:text-white text-[var(--fg-primary)] flex items-center justify-center border-2 border-[var(--border-hard)] transition-colors cursor-pointer"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
 
-            {/* Profile Info */}
-            <div className="flex flex-col items-center text-center">
-              {/* Photo Frame with Clean Neutral Slate Bezel */}
-              <div className="relative w-40 h-52 sm:w-44 sm:h-56 overflow-hidden mb-3.5 pixel-frame-neutral bg-[#0A0E18] shadow-[3px_3px_0px_#000]">
-                <Image
-                  src={selectedStudent.avatar}
-                  alt={selectedStudent.name}
-                  fill
-                  priority
-                  className="object-cover object-center"
-                />
-                <div className="absolute top-2 left-2 px-2 py-0.5 bg-[#080C14]/90 text-white font-pixel text-[9px] font-bold border border-slate-700 shadow-[1px_1px_0px_#000]">
-                  ABSEN #{selectedStudent.id}
+            <div className="p-5 sm:p-6">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5">
+                {/* Framed Portrait */}
+                <div className="relative w-36 h-48 sm:w-40 sm:h-52 shrink-0 pixel-frame-portrait p-[2px]">
+                  <div className="relative w-full h-full overflow-hidden bg-[#181624]">
+                    <Image
+                      src={selectedStudent.avatar}
+                      alt={selectedStudent.name}
+                      fill
+                      priority
+                      className="object-cover object-top"
+                    />
+                  </div>
+                  <div className="absolute top-1.5 left-1.5 px-1.5 py-0.5 bg-[#181624] text-[#F4F1FA] font-pixel text-[8px] font-bold border border-[#4C4672]">
+                    #{selectedStudent.id}
+                  </div>
+                </div>
+
+                {/* Real Authentic Dossier Metadata */}
+                <div className="flex-1 text-center sm:text-left w-full">
+                  {selectedStudent.role ? (
+                    <span
+                      className={`inline-flex items-center gap-1 px-2 py-0.5 mb-2 font-pixel text-[8px] font-bold border border-[#181624] ${
+                        selectedStudent.role === "Ketua Kelas"
+                          ? "bg-[#FACC15] text-[#181624]"
+                          : "bg-[#5B46C8] text-white"
+                      }`}
+                    >
+                      {selectedStudent.role === "Ketua Kelas" && (
+                        <Crown className="w-2.5 h-2.5" />
+                      )}
+                      <span>{selectedStudent.role.toUpperCase()}</span>
+                    </span>
+                  ) : (
+                    <span className="inline-block px-2 py-0.5 mb-2 bg-[var(--bg-inset)] text-[var(--fg-muted)] font-pixel text-[8px] border border-[var(--border-soft)]">
+                      ANGGOTA KELAS
+                    </span>
+                  )}
+
+                  <h3
+                    id="student-modal-title"
+                    className="font-pixel text-xs sm:text-sm text-[var(--fg-primary)] leading-relaxed mb-3"
+                  >
+                    {selectedStudent.name}
+                  </h3>
+
+                  <dl className="space-y-1.5 text-left bg-[var(--bg-inset)] border-2 border-[var(--border-soft)] p-3">
+                    <div className="flex justify-between gap-2 text-[11px] font-silk">
+                      <dt className="text-[var(--fg-muted)]">Panggilan</dt>
+                      <dd className="font-bold text-[var(--fg-primary)]">
+                        {selectedStudent.nickname}
+                      </dd>
+                    </div>
+                    <div className="flex justify-between gap-2 text-[11px] font-silk">
+                      <dt className="text-[var(--fg-muted)]">No. Absen</dt>
+                      <dd className="font-bold text-[var(--fg-primary)]">
+                        {selectedStudent.id} / {CLASS_INFO.totalStudents}
+                      </dd>
+                    </div>
+                    <div className="flex justify-between gap-2 text-[11px] font-silk">
+                      <dt className="text-[var(--fg-muted)]">Kelas</dt>
+                      <dd className="font-bold text-[var(--fg-primary)]">
+                        {CLASS_INFO.name}
+                      </dd>
+                    </div>
+                    <div className="flex justify-between gap-2 text-[11px] font-silk">
+                      <dt className="text-[var(--fg-muted)]">Sekolah</dt>
+                      <dd className="font-bold text-[var(--fg-primary)]">
+                        SMKN 1 Beringin
+                      </dd>
+                    </div>
+                  </dl>
                 </div>
               </div>
 
-              {/* Name & Nickname */}
-              <h3 className="font-pixel text-sm sm:text-base text-slate-900 dark:text-white mb-1 leading-snug">
-                {selectedStudent.name}
-              </h3>
-              <p className="font-silk text-xs text-slate-600 dark:text-slate-400 font-bold mb-3 uppercase">
-                Panggilan: {selectedStudent.nickname}
-              </p>
-
-              {/* Student Quote Dialogue Box */}
-              {selectedStudent.quote && (
-                <div className="w-full bg-slate-100 dark:bg-slate-900/90 border-2 border-slate-300 dark:border-slate-800 p-3 mb-4 text-left relative">
-                  <Quote className="w-3.5 h-3.5 text-rose-500 mb-1" />
-                  <p className="font-sans text-xs text-slate-800 dark:text-slate-200 italic leading-relaxed">
-                    &ldquo;{selectedStudent.quote}&rdquo;
-                  </p>
-                </div>
-              )}
-
-              {/* School Badges */}
-              <div className="flex flex-wrap items-center justify-center gap-1.5 mb-5 font-silk text-[9px]">
-                <span className="px-2 py-0.5 bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 font-bold">
-                  XII PPLG 3
-                </span>
-                <span className="px-2 py-0.5 bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 font-bold">
-                  SMKN 1 BERINGIN
-                </span>
-                <span className="px-2 py-0.5 bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 font-bold">
-                  2026
-                </span>
-              </div>
-
-              {/* Actions */}
-              <div className="flex items-center gap-2 w-full">
-                <a
-                  href={`https://instagram.com/${selectedStudent.ig}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="pixel-btn pixel-btn-primary flex-1 py-2.5 text-[9px] flex items-center justify-center gap-1.5"
+              {/* Prev / Next Yearbook Flip Controls */}
+              <div className="mt-5 pt-4 border-t-2 border-dashed border-[var(--border-soft)] flex items-center justify-between gap-2">
+                <button
+                  type="button"
+                  onClick={() => navigateModal(-1)}
+                  className="pixel-btn pixel-btn-secondary !py-2 !px-3 !m-0 text-[8px] sm:text-[9px]"
                 >
-                  <Instagram className="w-3.5 h-3.5" />
-                  <span>Instagram</span>
-                  <ExternalLink className="w-3 h-3" />
-                </a>
+                  <ChevronLeft className="w-3.5 h-3.5 mr-1" />
+                  <span>SEBELUMNYA</span>
+                </button>
+
+                <span className="font-silk text-[11px] font-bold text-[var(--fg-muted)]">
+                  {selectedIndex + 1} / {filteredStudents.length}
+                </span>
 
                 <button
                   type="button"
-                  onClick={(e) => handleLike(e, selectedStudent.id)}
-                  className="pixel-btn pixel-btn-secondary py-2.5 px-3 text-[9px] flex items-center justify-center gap-1.5 hover:text-rose-500"
+                  onClick={() => navigateModal(1)}
+                  className="pixel-btn pixel-btn-accent !py-2 !px-3 !m-0 text-[8px] sm:text-[9px]"
                 >
-                  <Heart
-                    className={`w-3.5 h-3.5 ${
-                      likes[selectedStudent.id]
-                        ? "fill-rose-500 text-rose-500"
-                        : "text-rose-400"
-                    }`}
-                  />
-                  <span>+{likes[selectedStudent.id] || 1}</span>
+                  <span>BERIKUTNYA</span>
+                  <ChevronRight className="w-3.5 h-3.5 ml-1" />
                 </button>
               </div>
             </div>
