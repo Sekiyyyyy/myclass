@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { Sun, Moon } from "lucide-react";
+import { Sun, Moon, Menu, X } from "lucide-react";
 import {
   motion,
   AnimatePresence,
@@ -11,7 +11,7 @@ import {
   useMotionValueEvent,
 } from "motion/react";
 import { useTheme } from "@/lib/theme-provider";
-import { snappySpring } from "@/lib/motion-presets";
+import { snappySpring, pixelEase } from "@/lib/motion-presets";
 
 const navItems = [
   { href: "#hero", id: "hero", label: "Beranda" },
@@ -22,11 +22,11 @@ const navItems = [
 
 export function Navbar() {
   const [visible, setVisible] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
   const lastScrollY = useRef(0);
   const { theme, toggleTheme } = useTheme();
 
-  // GPU-driven scroll progress with zero per-frame React re-renders
   const { scrollY, scrollYProgress } = useScroll();
   const smoothProgress = useSpring(scrollYProgress, {
     stiffness: 280,
@@ -36,6 +36,10 @@ export function Navbar() {
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const prev = lastScrollY.current;
+    if (mobileMenuOpen) {
+      lastScrollY.current = latest;
+      return;
+    }
     if (latest > 80) {
       if (latest > prev && latest - prev > 12) {
         setVisible(false);
@@ -76,18 +80,19 @@ export function Navbar() {
   return (
     <motion.header
       initial={{ y: -24, opacity: 0 }}
-      animate={{ y: visible ? 0 : -110, opacity: 1 }}
+      animate={{ y: visible || mobileMenuOpen ? 0 : -110, opacity: 1 }}
       transition={snappySpring}
-      className="fixed top-0 left-0 right-0 z-50 flex justify-center px-3 sm:px-6 pt-3 pointer-events-none"
+      className="fixed top-0 left-0 right-0 z-50 flex flex-col items-center px-3 sm:px-6 pt-3 pointer-events-none"
     >
       <nav
         aria-label="Navigasi utama"
-        className="pointer-events-auto relative flex items-center gap-2 sm:gap-4 px-3 sm:px-4 py-2 pixel-box max-w-4xl w-full sm:w-auto"
+        className="pointer-events-auto relative flex items-center justify-between sm:justify-start gap-2 sm:gap-4 px-3 sm:px-4 py-2 pixel-box max-w-4xl w-full sm:w-auto"
       >
         {/* Brand */}
         <a
           href="#hero"
-          className="flex items-center gap-2.5 select-none group pr-1"
+          onClick={() => setMobileMenuOpen(false)}
+          className="flex items-center gap-2 sm:gap-2.5 select-none group pr-1 min-w-0"
         >
           <motion.div
             whileHover={{ scale: 1.08, rotate: -4 }}
@@ -102,33 +107,31 @@ export function Navbar() {
               className="object-contain"
             />
           </motion.div>
-          <div className="flex flex-col">
-            <span className="font-pixel text-[9px] sm:text-[10px] text-[var(--fg-primary)] leading-none">
+          <div className="flex flex-col min-w-0">
+            <span className="font-pixel text-[9px] sm:text-[10px] text-[var(--fg-primary)] leading-none truncate">
               XII PPLG 3
             </span>
-            <span className="font-silk text-[9px] text-[var(--accent-indigo)] dark:text-[#FACC15] font-bold leading-tight mt-0.5">
+            <span className="font-silk text-[8px] sm:text-[9px] text-[var(--accent-indigo)] dark:text-[#FACC15] font-bold leading-tight mt-0.5 truncate">
               SMKN 1 BERINGIN
             </span>
           </div>
         </a>
 
-        {/* Pixel Divider */}
+        {/* Pixel Divider (Desktop/Tablet) */}
         <div
           aria-hidden="true"
           className="w-[2px] h-6 bg-[var(--border-soft)] hidden sm:block"
         />
 
-        {/* Navigation Links with Shared-Element Sliding Pixel Active Pill */}
-        <div className="flex items-center gap-0.5 sm:gap-1 font-silk font-bold text-xs">
+        {/* Desktop / Tablet Navigation Links */}
+        <div className="hidden sm:flex items-center gap-1 font-silk font-bold text-xs">
           {navItems.map((item) => {
             const isActive = activeSection === item.id;
             return (
               <a
                 key={item.id}
                 href={item.href}
-                className={`relative inline-flex items-center gap-1.5 px-2 sm:px-2.5 py-1 transition-colors ${
-                  item.id === "hero" ? "hidden sm:inline-flex" : ""
-                } ${item.id === "tentang" ? "hidden md:inline-flex" : ""} ${
+                className={`relative inline-flex items-center gap-1.5 px-2.5 py-1 transition-colors ${
                   isActive
                     ? "text-white dark:text-[#181624]"
                     : "text-[var(--fg-secondary)] hover:text-[var(--fg-primary)]"
@@ -156,48 +159,67 @@ export function Navbar() {
           })}
         </div>
 
-        {/* Tactile Theme Toggle with Animated Icon Swap */}
-        <motion.button
-          type="button"
-          onClick={toggleTheme}
-          whileTap={{ scale: 0.94, y: 1 }}
-          transition={snappySpring}
-          aria-label={
-            theme === "dark" ? "Ubah ke Mode Terang" : "Ubah ke Mode Gelap"
-          }
-          title={theme === "dark" ? "Mode Terang" : "Mode Gelap"}
-          className="group ml-auto inline-flex items-center gap-1.5 px-2.5 py-1.5 border-2 border-[var(--border-hard)] bg-[var(--bg-inset)] hover:bg-[var(--accent-gold)] hover:text-[#181624] text-[var(--fg-primary)] font-silk text-[10px] font-bold shadow-[2px_2px_0px_var(--shadow-hard)] transition-colors shrink-0 cursor-pointer"
-        >
-          <AnimatePresence mode="wait" initial={false}>
-            {theme === "dark" ? (
-              <motion.span
-                key="sun"
-                initial={{ rotate: -60, opacity: 0, scale: 0.7 }}
-                animate={{ rotate: 0, opacity: 1, scale: 1 }}
-                exit={{ rotate: 60, opacity: 0, scale: 0.7 }}
-                transition={{ duration: 0.16 }}
-                className="inline-flex items-center gap-1.5"
-              >
-                <Sun className="w-3.5 h-3.5 text-[#FACC15] group-hover:text-[#181624] transition-colors" />
-                <span className="hidden sm:inline">TERANG</span>
-              </motion.span>
-            ) : (
-              <motion.span
-                key="moon"
-                initial={{ rotate: 60, opacity: 0, scale: 0.7 }}
-                animate={{ rotate: 0, opacity: 1, scale: 1 }}
-                exit={{ rotate: -60, opacity: 0, scale: 0.7 }}
-                transition={{ duration: 0.16 }}
-                className="inline-flex items-center gap-1.5"
-              >
-                <Moon className="w-3.5 h-3.5 text-[#5B46C8] group-hover:text-[#181624] transition-colors" />
-                <span className="hidden sm:inline">GELAP</span>
-              </motion.span>
-            )}
-          </AnimatePresence>
-        </motion.button>
+        {/* Right Actions: Theme Toggle + Mobile Menu Toggle */}
+        <div className="flex items-center gap-2 ml-auto">
+          <motion.button
+            type="button"
+            onClick={toggleTheme}
+            whileTap={{ scale: 0.94, y: 1 }}
+            transition={snappySpring}
+            aria-label={
+              theme === "dark" ? "Ubah ke Mode Terang" : "Ubah ke Mode Gelap"
+            }
+            title={theme === "dark" ? "Mode Terang" : "Mode Gelap"}
+            className="group inline-flex items-center justify-center gap-1.5 px-2.5 py-1.5 border-2 border-[var(--border-hard)] bg-[var(--bg-inset)] hover:bg-[var(--accent-gold)] hover:text-[#181624] text-[var(--fg-primary)] font-silk text-[10px] font-bold shadow-[2px_2px_0px_var(--shadow-hard)] transition-colors shrink-0 cursor-pointer"
+          >
+            <AnimatePresence mode="wait" initial={false}>
+              {theme === "dark" ? (
+                <motion.span
+                  key="sun"
+                  initial={{ rotate: -60, opacity: 0, scale: 0.7 }}
+                  animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                  exit={{ rotate: 60, opacity: 0, scale: 0.7 }}
+                  transition={{ duration: 0.16 }}
+                  className="inline-flex items-center gap-1.5"
+                >
+                  <Sun className="w-3.5 h-3.5 text-[#FACC15] group-hover:text-[#181624] transition-colors" />
+                  <span className="hidden sm:inline">TERANG</span>
+                </motion.span>
+              ) : (
+                <motion.span
+                  key="moon"
+                  initial={{ rotate: 60, opacity: 0, scale: 0.7 }}
+                  animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                  exit={{ rotate: -60, opacity: 0, scale: 0.7 }}
+                  transition={{ duration: 0.16 }}
+                  className="inline-flex items-center gap-1.5"
+                >
+                  <Moon className="w-3.5 h-3.5 text-[#5B46C8] group-hover:text-[#181624] transition-colors" />
+                  <span className="hidden sm:inline">GELAP</span>
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </motion.button>
 
-        {/* Discrete 8-Bit Segmented Pixel Scroll Progress Bar (GPU Spring) */}
+          {/* Mobile Hamburger Button */}
+          <motion.button
+            type="button"
+            whileTap={{ scale: 0.94, y: 1 }}
+            transition={snappySpring}
+            onClick={() => setMobileMenuOpen((prev) => !prev)}
+            aria-label={mobileMenuOpen ? "Tutup menu" : "Buka menu"}
+            aria-expanded={mobileMenuOpen}
+            className="sm:hidden inline-flex items-center justify-center w-8 h-8 border-2 border-[var(--border-hard)] bg-[var(--bg-inset)] text-[var(--fg-primary)] shadow-[2px_2px_0px_var(--shadow-hard)] cursor-pointer shrink-0"
+          >
+            {mobileMenuOpen ? (
+              <X className="w-4 h-4" />
+            ) : (
+              <Menu className="w-4 h-4" />
+            )}
+          </motion.button>
+        </div>
+
+        {/* Discrete 8-Bit Segmented Pixel Scroll Progress Bar */}
         <div
           aria-hidden="true"
           className="absolute bottom-0 left-1 right-1 h-[3px] bg-[var(--bg-inset)] overflow-hidden"
@@ -212,6 +234,45 @@ export function Navbar() {
           />
         </div>
       </nav>
+
+      {/* Animated Mobile Navigation Drawer */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+            transition={{ duration: 0.18, ease: pixelEase }}
+            className="sm:hidden pointer-events-auto w-full mt-2 pixel-box p-2"
+          >
+            <div className="grid grid-cols-2 gap-1.5 font-silk font-bold text-xs">
+              {navItems.map((item) => {
+                const isActive = activeSection === item.id;
+                return (
+                  <a
+                    key={item.id}
+                    href={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`flex items-center justify-between px-3 py-2.5 border-2 transition-colors ${
+                      isActive
+                        ? "bg-[#5B46C8] text-white border-[#181624] dark:bg-[#FACC15] dark:text-[#181624]"
+                        : "bg-[var(--bg-inset)] text-[var(--fg-primary)] border-transparent hover:border-[var(--border-hard)]"
+                    }`}
+                  >
+                    <span>{item.label}</span>
+                    {isActive && (
+                      <span
+                        aria-hidden="true"
+                        className="w-1.5 h-1.5 bg-current inline-block"
+                      />
+                    )}
+                  </a>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 }

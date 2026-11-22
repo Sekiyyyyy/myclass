@@ -10,7 +10,7 @@ import { students } from "@/data/students";
 
 export default function Home() {
   return (
-    <main className="min-h-screen relative overflow-hidden transition-colors duration-200">
+    <main className="min-h-screen relative overflow-x-clip transition-colors duration-200">
       {/* 1. 16-Bit Pixel HUD Navbar */}
       <Navbar />
 

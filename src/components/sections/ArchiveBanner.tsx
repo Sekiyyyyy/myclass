@@ -23,12 +23,12 @@ export function ArchiveBanner() {
             INSTAGRAM RESMI
           </span>
         </div>
-        <div className="p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div className="p-5 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-5 sm:gap-6">
           <div className="max-w-xl">
-            <h2 className="font-pixel text-sm sm:text-base text-[var(--fg-primary)] leading-relaxed mb-2">
+            <h2 className="font-pixel text-xs sm:text-base text-[var(--fg-primary)] leading-relaxed mb-2">
               Foto &amp; Dokumentasi Kegiatan Kelas
             </h2>
-            <p className="font-sans text-sm text-[var(--fg-secondary)] leading-relaxed">
+            <p className="font-sans text-xs sm:text-sm text-[var(--fg-secondary)] leading-relaxed">
               Seluruh dokumentasi asli kegiatan, momen di sekolah, dan arsip
               foto bersama kelas {CLASS_INFO.name} tersimpan di akun Instagram
               resmi kelas kami.
@@ -41,10 +41,10 @@ export function ArchiveBanner() {
             whileHover={{ y: -2 }}
             whileTap={{ y: 2 }}
             transition={snappySpring}
-            className="pixel-btn pixel-btn-primary shrink-0"
+            className="pixel-btn pixel-btn-primary w-full md:w-auto !m-0 !px-3.5 sm:!px-5 !text-[8px] min-[420px]:!text-[9px] sm:!text-[10px] shrink-0"
           >
             <Instagram className="w-3.5 h-3.5 mr-2 shrink-0" />
-            <span>@{CLASS_INFO.instagramHandle}</span>
+            <span className="truncate">@{CLASS_INFO.instagramHandle}</span>
             <ArrowUpRight className="w-3.5 h-3.5 ml-1.5 shrink-0" />
           </motion.a>
         </div>

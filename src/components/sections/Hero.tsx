@@ -35,19 +35,18 @@ export function Hero() {
     offset: ["start start", "end start"],
   });
 
-  // Subtle GPU parallax depth as the user scrolls past the Hero
-  const logoParallaxY = useTransform(scrollYProgress, [0, 1], [0, -36]);
+  const logoParallaxY = useTransform(scrollYProgress, [0, 1], [0, -32]);
 
   return (
     <section
       id="hero"
       ref={heroRef}
-      className="relative min-h-[82vh] flex items-center justify-center px-4 sm:px-6 lg:px-10 pt-28 pb-20 select-none overflow-hidden"
+      className="relative min-h-[82vh] flex items-center justify-center px-4 sm:px-6 lg:px-10 pt-24 sm:pt-28 pb-16 sm:pb-20 select-none overflow-hidden"
     >
-      {/* Theme-Aware 16-Bit Pixel Sky (Day Clouds in Light Mode / Stars & Comets in Dark Mode) */}
+      {/* Theme-Aware 16-Bit Pixel Sky */}
       <HeroBackground />
 
-      <div className="relative z-10 max-w-6xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <div className="relative z-10 max-w-6xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center">
         {/* Left Column: Clean Floating Official 3D Planet Logo */}
         <motion.div
           initial={{ opacity: 0, x: -24, scale: 0.94 }}
@@ -65,7 +64,7 @@ export function Hero() {
             }}
             whileHover={{ scale: 1.04, rotate: 1.5 }}
             whileTap={{ scale: 0.97 }}
-            className="relative w-52 h-52 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 xl:w-[22rem] xl:h-[22rem] will-change-transform"
+            className="relative w-44 h-44 min-[400px]:w-52 min-[400px]:h-52 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 xl:w-[22rem] xl:h-[22rem] will-change-transform"
           >
             <Image
               src="/logo-v4.png"
@@ -87,13 +86,13 @@ export function Hero() {
           {/* School Pill Badge */}
           <motion.div
             variants={heroItem}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 mb-5 pixel-pill"
+            className="inline-flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 mb-4 sm:mb-5 pixel-pill max-w-full"
           >
             <span className="w-2 h-2 bg-[#5B46C8] dark:bg-[#FACC15] border border-[#181624] inline-block shrink-0" />
-            <span className="font-pixel text-[9px] sm:text-[10px] text-[var(--fg-primary)] uppercase tracking-wider">
+            <span className="font-pixel text-[8px] sm:text-[10px] text-[var(--fg-primary)] uppercase tracking-wider">
               {CLASS_INFO.school}
             </span>
-            <span className="font-pixel text-[9px] text-[var(--accent-indigo)] dark:text-[#FACC15] font-bold">
+            <span className="font-pixel text-[8px] sm:text-[9px] text-[var(--accent-indigo)] dark:text-[#FACC15] font-bold">
               [{CLASS_INFO.year}]
             </span>
           </motion.div>
@@ -101,21 +100,21 @@ export function Hero() {
           {/* Main Headline */}
           <motion.h1
             variants={heroItem}
-            className="font-pixel text-2xl sm:text-4xl lg:text-[2.75rem] xl:text-5xl text-[var(--fg-primary)] leading-[1.3] tracking-wide mb-4 pixel-title-shadow"
+            className="font-pixel text-[1.35rem] min-[400px]:text-2xl sm:text-4xl lg:text-[2.75rem] xl:text-5xl text-[var(--fg-primary)] leading-[1.32] tracking-wide mb-3 sm:mb-4 pixel-title-shadow"
           >
             BUKU KENANGAN
             <br />
             DIGITAL
             <span
               aria-hidden="true"
-              className="inline-block w-3 sm:w-4 h-6 sm:h-9 ml-2 align-middle bg-[#5B46C8] dark:bg-[#FACC15] animate-pixel-blink"
+              className="inline-block w-2.5 sm:w-4 h-5 sm:h-9 ml-2 align-middle bg-[#5B46C8] dark:bg-[#FACC15] animate-pixel-blink"
             />
           </motion.h1>
 
           {/* Concise Single-Line Subtitle */}
           <motion.p
             variants={heroItem}
-            className="font-silk text-xs sm:text-sm md:text-base text-[var(--accent-indigo)] dark:text-[#FACC15] font-bold tracking-wider mb-8 uppercase"
+            className="font-silk text-[11px] sm:text-sm md:text-base text-[var(--accent-indigo)] dark:text-[#FACC15] font-bold tracking-wider mb-6 sm:mb-8 uppercase"
           >
             {CLASS_INFO.major}
           </motion.p>
@@ -123,14 +122,14 @@ export function Hero() {
           {/* Action Buttons */}
           <motion.div
             variants={heroItem}
-            className="flex flex-wrap items-center justify-center lg:justify-start gap-3"
+            className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-2.5 sm:gap-3 w-full sm:w-auto max-w-xs sm:max-w-none"
           >
             <motion.a
               href="#siswa"
               whileHover={{ y: -2 }}
               whileTap={{ y: 2 }}
               transition={snappySpring}
-              className="pixel-btn pixel-btn-primary"
+              className="pixel-btn pixel-btn-primary !text-[9px] sm:!text-[10px]"
             >
               <Users className="w-3.5 h-3.5 mr-2 shrink-0" />
               <span>Lihat 31 Siswa</span>
@@ -142,7 +141,7 @@ export function Hero() {
               whileHover={{ y: -2 }}
               whileTap={{ y: 2 }}
               transition={snappySpring}
-              className="pixel-btn pixel-btn-secondary"
+              className="pixel-btn pixel-btn-secondary !text-[9px] sm:!text-[10px]"
             >
               <Network className="w-3.5 h-3.5 mr-2 shrink-0" />
               <span>Struktur Kelas</span>

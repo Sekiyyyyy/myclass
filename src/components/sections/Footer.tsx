@@ -15,9 +15,9 @@ export function Footer() {
   };
 
   return (
-    <footer className="border-t-4 border-[var(--border-hard)] bg-[var(--bg-surface)] py-10 px-4 sm:px-6 select-none">
-      <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
-        <div className="flex items-center gap-3.5">
+    <footer className="border-t-4 border-[var(--border-hard)] bg-[var(--bg-surface)] py-8 sm:py-10 px-4 sm:px-6 select-none">
+      <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+        <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-3.5">
           <div className="relative w-12 h-12 sm:w-14 sm:h-14 shrink-0">
             <Image
               src="/logo-v4.png"
@@ -27,7 +27,7 @@ export function Footer() {
             />
           </div>
           <div>
-            <span className="font-pixel text-[10px] sm:text-xs text-[var(--fg-primary)] block mb-1">
+            <span className="font-pixel text-[9px] sm:text-xs text-[var(--fg-primary)] block mb-1">
               {CLASS_INFO.name} &bull; {CLASS_INFO.school}
             </span>
             <a
@@ -42,7 +42,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="flex items-center flex-wrap justify-center gap-3 sm:gap-5 font-silk text-xs font-bold">
+        <div className="flex items-center flex-wrap justify-center gap-x-4 gap-y-2.5 sm:gap-5 font-silk text-xs font-bold">
           <a
             href="#hero"
             className="text-[var(--fg-secondary)] hover:text-[var(--accent-indigo)] dark:hover:text-[#FACC15] transition-colors"

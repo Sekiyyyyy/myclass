@@ -19,7 +19,7 @@ export function AboutClass() {
   return (
     <section
       id="tentang"
-      className="py-16 sm:py-20 px-4 sm:px-6 max-w-6xl mx-auto relative select-none"
+      className="py-12 sm:py-20 px-4 sm:px-6 max-w-6xl mx-auto relative select-none"
     >
       {/* Left-Aligned Editorial Section Header */}
       <motion.div
@@ -27,17 +27,17 @@ export function AboutClass() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={viewportOnce}
         transition={{ duration: 0.34, ease: pixelEase }}
-        className="mb-10 flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b-2 border-[var(--border-soft)] pb-5"
+        className="mb-8 sm:mb-10 flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4 border-b-2 border-[var(--border-soft)] pb-4 sm:pb-5"
       >
         <div>
           <p className="font-pixel text-[9px] sm:text-[10px] text-[var(--accent-indigo)] dark:text-[#FACC15] tracking-widest uppercase mb-2">
             01 // PROFIL KELAS
           </p>
-          <h2 className="font-pixel text-xl sm:text-2xl md:text-3xl text-[var(--fg-primary)] leading-snug pixel-title-shadow">
+          <h2 className="font-pixel text-lg sm:text-2xl md:text-3xl text-[var(--fg-primary)] leading-snug pixel-title-shadow">
             Tentang {CLASS_INFO.name}
           </h2>
         </div>
-        <p className="font-silk text-xs text-[var(--fg-muted)] font-bold uppercase">
+        <p className="font-silk text-[11px] sm:text-xs text-[var(--fg-muted)] font-bold uppercase">
           {CLASS_INFO.school} &bull; {CLASS_INFO.period}
         </p>
       </motion.div>
@@ -107,10 +107,10 @@ export function AboutClass() {
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.97 }}
                   transition={snappySpring}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[var(--bg-inset)] hover:bg-[#5B46C8] hover:text-white dark:hover:bg-[#FACC15] dark:hover:text-[#181624] border-2 border-[var(--border-hard)] font-silk text-[11px] font-bold text-[var(--fg-primary)] transition-colors"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[var(--bg-inset)] hover:bg-[#5B46C8] hover:text-white dark:hover:bg-[#FACC15] dark:hover:text-[#181624] border-2 border-[var(--border-hard)] font-silk text-[10px] sm:text-[11px] font-bold text-[var(--fg-primary)] transition-colors max-w-full"
                 >
                   <Instagram className="w-3.5 h-3.5 shrink-0" />
-                  <span>@{CLASS_INFO.instagramHandle}</span>
+                  <span className="truncate">@{CLASS_INFO.instagramHandle}</span>
                   <ArrowUpRight className="w-3.5 h-3.5 shrink-0" />
                 </motion.a>
               </div>
@@ -150,12 +150,12 @@ export function AboutClass() {
                       delay: 0.1 + idx * 0.035,
                       ease: pixelEase,
                     }}
-                    className="py-2.5 first:pt-0 last:pb-0 flex items-baseline justify-between gap-4"
+                    className="py-2.5 first:pt-0 last:pb-0 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5 sm:gap-4"
                   >
                     <dt className="font-pixel text-[8px] sm:text-[9px] text-[var(--fg-muted)] shrink-0">
                       {spec.label}
                     </dt>
-                    <dd className="font-silk text-xs font-bold text-[var(--fg-primary)] text-right">
+                    <dd className="font-silk text-xs font-bold text-[var(--fg-primary)] text-left sm:text-right">
                       {spec.value}
                     </dd>
                   </motion.div>

@@ -104,7 +104,7 @@ export function StudentProfiles() {
   return (
     <section
       id="siswa"
-      className="py-16 sm:py-20 px-4 sm:px-6 max-w-7xl mx-auto relative select-none"
+      className="py-12 sm:py-20 px-4 sm:px-6 max-w-7xl mx-auto relative select-none"
     >
       {/* Clean Responsive Section Header & Toolbar */}
       <motion.div
@@ -112,7 +112,7 @@ export function StudentProfiles() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={viewportOnce}
         transition={{ duration: 0.34, ease: pixelEase }}
-        className="mb-8 flex flex-col lg:flex-row lg:items-end justify-between gap-5 border-b-2 border-[var(--border-soft)] pb-6"
+        className="mb-7 sm:mb-8 flex flex-col lg:flex-row lg:items-end justify-between gap-4 sm:gap-5 border-b-2 border-[var(--border-soft)] pb-5 sm:pb-6"
       >
         <div className="shrink-0">
           <p className="font-pixel text-[9px] sm:text-[10px] text-[var(--accent-indigo)] dark:text-[#FACC15] tracking-widest uppercase mb-2">
@@ -193,7 +193,7 @@ export function StudentProfiles() {
       {/* 16-Bit Roster Grid with Animated Layout Reflow */}
       <motion.div
         layout
-        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5"
+        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5 sm:gap-4 lg:gap-5 px-0.5"
       >
         <AnimatePresence mode="popLayout">
           {filteredStudents.map((s) => {
@@ -325,10 +325,10 @@ export function StudentProfiles() {
               exit={{ opacity: 0, scale: 0.94, y: 12 }}
               transition={modalSpring}
               onClick={(e) => e.stopPropagation()}
-              className="pixel-box max-w-md w-full relative z-10 overflow-hidden"
+              className="pixel-box max-w-md w-full max-h-[90dvh] flex flex-col relative z-10 overflow-hidden"
             >
               {/* Retro Window Titlebar */}
-              <div className="pixel-titlebar">
+              <div className="pixel-titlebar shrink-0">
                 <span className="font-pixel text-[9px] text-[var(--fg-primary)]">
                   SISWA_#{selectedStudent.id}.DAT
                 </span>
@@ -343,7 +343,7 @@ export function StudentProfiles() {
                 </motion.button>
               </div>
 
-              <div className="p-5 sm:p-6 overflow-hidden">
+              <div className="p-4 sm:p-6 overflow-y-auto">
                 <AnimatePresence mode="wait" custom={navDirection} initial={false}>
                   <motion.div
                     key={selectedStudent.id}
@@ -352,10 +352,10 @@ export function StudentProfiles() {
                     initial="enter"
                     animate="center"
                     exit="exit"
-                    className="flex flex-col sm:flex-row items-center sm:items-start gap-5"
+                    className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-5"
                   >
                     {/* Framed Portrait */}
-                    <div className="relative w-36 h-48 sm:w-40 sm:h-52 shrink-0 pixel-frame-portrait p-[2px]">
+                    <div className="relative w-32 h-44 sm:w-40 sm:h-52 shrink-0 pixel-frame-portrait p-[2px]">
                       <div className="relative w-full h-full overflow-hidden bg-[#181624]">
                         <Image
                           src={selectedStudent.avatar}
@@ -429,18 +429,19 @@ export function StudentProfiles() {
                 </AnimatePresence>
 
                 {/* Prev / Next Yearbook Flip Controls */}
-                <div className="mt-5 pt-4 border-t-2 border-dashed border-[var(--border-soft)] flex items-center justify-between gap-2">
+                <div className="mt-4 sm:mt-5 pt-3.5 sm:pt-4 border-t-2 border-dashed border-[var(--border-soft)] flex items-center justify-between gap-2">
                   <motion.button
                     type="button"
                     whileTap={{ scale: 0.95 }}
                     onClick={() => navigateModal(-1)}
-                    className="pixel-btn pixel-btn-secondary !py-2 !px-3 !m-0 text-[8px] sm:text-[9px]"
+                    className="pixel-btn pixel-btn-secondary !py-2 !px-2.5 sm:!px-3 !m-0 !text-[8px] sm:!text-[9px]"
                   >
-                    <ChevronLeft className="w-3.5 h-3.5 mr-1" />
-                    <span>SEBELUMNYA</span>
+                    <ChevronLeft className="w-3.5 h-3.5 mr-0.5 sm:mr-1 shrink-0" />
+                    <span className="hidden min-[380px]:inline">SEBELUM</span>
+                    <span className="min-[380px]:hidden">PREV</span>
                   </motion.button>
 
-                  <span className="font-silk text-[11px] font-bold text-[var(--fg-muted)]">
+                  <span className="font-silk text-[11px] font-bold text-[var(--fg-muted)] whitespace-nowrap">
                     {selectedIndex + 1} / {filteredStudents.length}
                   </span>
 
@@ -448,10 +449,11 @@ export function StudentProfiles() {
                     type="button"
                     whileTap={{ scale: 0.95 }}
                     onClick={() => navigateModal(1)}
-                    className="pixel-btn pixel-btn-accent !py-2 !px-3 !m-0 text-[8px] sm:text-[9px]"
+                    className="pixel-btn pixel-btn-accent !py-2 !px-2.5 sm:!px-3 !m-0 !text-[8px] sm:!text-[9px]"
                   >
-                    <span>BERIKUTNYA</span>
-                    <ChevronRight className="w-3.5 h-3.5 ml-1" />
+                    <span className="hidden min-[380px]:inline">LANJUT</span>
+                    <span className="min-[380px]:hidden">NEXT</span>
+                    <ChevronRight className="w-3.5 h-3.5 ml-0.5 sm:ml-1 shrink-0" />
                   </motion.button>
                 </div>
               </div>
