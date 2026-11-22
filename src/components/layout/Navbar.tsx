@@ -90,7 +90,7 @@ export function Navbar() {
         >
           <div className="relative w-8 h-8 sm:w-9 sm:h-9 shrink-0 transition-transform duration-100 group-hover:scale-105">
             <Image
-              src="/logo-v3.png"
+              src="/logo-v4.png"
               alt="Logo XII PPLG 3"
               fill
               className="object-contain"

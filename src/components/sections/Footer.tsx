@@ -18,7 +18,7 @@ export function Footer() {
         <div className="flex items-center gap-3.5">
           <div className="relative w-12 h-12 sm:w-14 sm:h-14 shrink-0">
             <Image
-              src="/logo-v3.png"
+              src="/logo-v4.png"
               alt="Logo XII PPLG 3"
               fill
               className="object-contain"

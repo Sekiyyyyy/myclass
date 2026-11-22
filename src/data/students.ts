@@ -21,7 +21,6 @@ export const CLASS_INFO = {
   region: "Deli Serdang, Sumatera Utara",
   year: "2026",
   period: "2023 - 2026",
-  lab: "Lab RPL",
   homeroomTeacher: "Vevy Sisnia, S.Kom.",
   instagramHandle: "class.of.eterna.pplgthree",
   instagramUrl: "https://instagram.com/class.of.eterna.pplgthree",

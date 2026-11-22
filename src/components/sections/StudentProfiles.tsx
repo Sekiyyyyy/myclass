@@ -9,13 +9,11 @@ import {
   ChevronLeft,
   ChevronRight,
   Crown,
-  ArrowUpDown,
 } from "lucide-react";
 import { students, Student, CLASS_INFO } from "@/data/students";
 import { useGSAP, gsap } from "@/lib/gsap-config";
 
 type FilterMode = "all" | "officers";
-type SortMode = "absen" | "name";
 
 function getRoleShortLabel(role?: Student["role"]) {
   if (!role) return null;
@@ -27,14 +25,13 @@ function getRoleShortLabel(role?: Student["role"]) {
 export function StudentProfiles() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterMode, setFilterMode] = useState<FilterMode>("all");
-  const [sortMode, setSortMode] = useState<SortMode>("absen");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const filteredStudents = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
 
-    const list = students.filter((s) => {
+    return students.filter((s) => {
       if (filterMode === "officers" && !s.role) return false;
       if (!q) return true;
       return (
@@ -44,12 +41,7 @@ export function StudentProfiles() {
         (s.role && s.role.toLowerCase().includes(q))
       );
     });
-
-    if (sortMode === "name") {
-      return [...list].sort((a, b) => a.name.localeCompare(b.name));
-    }
-    return list;
-  }, [searchQuery, filterMode, sortMode]);
+  }, [searchQuery, filterMode]);
 
   const selectedIndex = useMemo(() => {
     if (!selectedId) return -1;
@@ -119,31 +111,31 @@ export function StudentProfiles() {
       ref={sectionRef}
       className="py-16 sm:py-20 px-4 sm:px-6 max-w-7xl mx-auto relative select-none"
     >
-      {/* Split Section Header + Inline Controls */}
-      <div className="mb-8 flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b-2 border-[var(--border-soft)] pb-6">
-        <div>
+      {/* Clean Responsive Section Header & Toolbar */}
+      <div className="mb-8 flex flex-col lg:flex-row lg:items-end justify-between gap-5 border-b-2 border-[var(--border-soft)] pb-6">
+        <div className="shrink-0">
           <p className="font-pixel text-[9px] sm:text-[10px] text-[var(--accent-indigo)] dark:text-[#FACC15] tracking-widest uppercase mb-2">
             02 // DAFTAR SISWA
           </p>
-          <h2 className="font-pixel text-xl sm:text-2xl md:text-3xl text-[var(--fg-primary)] leading-snug pixel-title-shadow mb-2">
-            31 Anggota {CLASS_INFO.name}
+          <h2 className="font-pixel text-lg sm:text-2xl md:text-3xl text-[var(--fg-primary)] leading-snug pixel-title-shadow mb-2">
+            Daftar {CLASS_INFO.totalStudents} Siswa
           </h2>
-          <p className="font-silk text-xs text-[var(--fg-muted)] font-bold">
-            Pilih kartu siswa untuk membuka profil lengkap ({filteredStudents.length}{" "}
+          <p className="font-silk text-[11px] sm:text-xs text-[var(--fg-muted)] font-bold">
+            Klik kartu untuk melihat detail siswa ({filteredStudents.length}{" "}
             ditampilkan)
           </p>
         </div>
 
-        {/* Search & Filter Toolbar */}
+        {/* Responsive Search + Filter Controls */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto">
           {/* Search Input */}
-          <div className="relative pixel-box !p-0 flex-1 sm:w-64">
+          <div className="relative pixel-box !p-0 w-full sm:flex-1 lg:w-64 xl:w-72">
             <Search className="w-4 h-4 text-[var(--fg-muted)] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Cari nama / no. absen..."
+              placeholder="Cari nama atau absen..."
               aria-label="Cari siswa"
               className="w-full pl-9 pr-8 py-2 bg-transparent text-[var(--fg-primary)] placeholder:text-[var(--fg-muted)] font-silk text-xs focus:outline-none"
             />
@@ -159,12 +151,12 @@ export function StudentProfiles() {
             )}
           </div>
 
-          {/* Filter & Sort Controls */}
-          <div className="flex items-center gap-2 font-silk text-[11px] font-bold">
+          {/* Filter Tabs */}
+          <div className="grid grid-cols-2 sm:flex items-center gap-2 font-silk text-[11px] font-bold shrink-0">
             <button
               type="button"
               onClick={() => setFilterMode("all")}
-              className={`px-3 py-2 border-2 border-[var(--border-hard)] shadow-[2px_2px_0px_var(--shadow-hard)] active:translate-y-[1px] active:shadow-none transition-all cursor-pointer ${
+              className={`px-3.5 py-2 border-2 border-[var(--border-hard)] shadow-[2px_2px_0px_var(--shadow-hard)] active:translate-y-[1px] active:shadow-none transition-all whitespace-nowrap cursor-pointer ${
                 filterMode === "all"
                   ? "bg-[#5B46C8] text-white dark:bg-[#FACC15] dark:text-[#181624]"
                   : "bg-[var(--bg-surface)] text-[var(--fg-secondary)] hover:bg-[var(--bg-inset)]"
@@ -175,7 +167,7 @@ export function StudentProfiles() {
             <button
               type="button"
               onClick={() => setFilterMode("officers")}
-              className={`px-3 py-2 border-2 border-[var(--border-hard)] shadow-[2px_2px_0px_var(--shadow-hard)] active:translate-y-[1px] active:shadow-none transition-all cursor-pointer ${
+              className={`px-3.5 py-2 border-2 border-[var(--border-hard)] shadow-[2px_2px_0px_var(--shadow-hard)] active:translate-y-[1px] active:shadow-none transition-all whitespace-nowrap cursor-pointer ${
                 filterMode === "officers"
                   ? "bg-[#5B46C8] text-white dark:bg-[#FACC15] dark:text-[#181624]"
                   : "bg-[var(--bg-surface)] text-[var(--fg-secondary)] hover:bg-[var(--bg-inset)]"
@@ -183,23 +175,12 @@ export function StudentProfiles() {
             >
               Pengurus (4)
             </button>
-            <button
-              type="button"
-              onClick={() =>
-                setSortMode((prev) => (prev === "absen" ? "name" : "absen"))
-              }
-              title="Ubah urutan"
-              className="inline-flex items-center gap-1 px-2.5 py-2 border-2 border-[var(--border-hard)] bg-[var(--bg-surface)] text-[var(--fg-primary)] hover:bg-[var(--bg-inset)] shadow-[2px_2px_0px_var(--shadow-hard)] active:translate-y-[1px] active:shadow-none transition-all cursor-pointer"
-            >
-              <ArrowUpDown className="w-3.5 h-3.5" />
-              <span>{sortMode === "absen" ? "01-31" : "A-Z"}</span>
-            </button>
           </div>
         </div>
       </div>
 
       {/* 16-Bit Roster Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5 sm:gap-5">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5">
         {filteredStudents.map((s) => {
           const shortRole = getRoleShortLabel(s.role);
           const isLeader = s.role === "Ketua Kelas";
@@ -209,17 +190,17 @@ export function StudentProfiles() {
               key={s.id}
               type="button"
               onClick={() => setSelectedId(s.id)}
-              className="student-card-item student-card-box group flex flex-col justify-between text-left h-full p-2.5 sm:p-3 cursor-pointer overflow-hidden"
+              className="student-card-item student-card-box group flex flex-col justify-between text-left h-full p-2 sm:p-2.5 md:p-3 cursor-pointer overflow-hidden"
             >
-              <div>
+              <div className="w-full">
                 {/* Studio Red Pas-Foto Framed inside Neutral Matte Pixel Bezel */}
-                <div className="relative aspect-[3/4] w-full overflow-hidden mb-3 pixel-frame-portrait p-[2px]">
+                <div className="relative aspect-[3/4] w-full overflow-hidden mb-2.5 sm:mb-3 pixel-frame-portrait p-[2px]">
                   <div className="relative w-full h-full overflow-hidden bg-[#181624]">
                     <Image
                       src={s.avatar}
                       alt={s.name}
                       fill
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                      sizes="(max-width: 640px) 46vw, (max-width: 768px) 31vw, (max-width: 1024px) 23vw, 19vw"
                       className="object-cover object-top group-hover:scale-[1.04] transition-transform duration-300 ease-out"
                     />
                   </div>
@@ -245,17 +226,17 @@ export function StudentProfiles() {
                 </div>
 
                 {/* Student Name */}
-                <h3 className="font-silk font-bold text-xs sm:text-[13px] text-[var(--fg-primary)] leading-snug line-clamp-2 min-h-[2.2rem] mb-1">
+                <h3 className="font-silk font-bold text-[11px] sm:text-xs md:text-[13px] text-[var(--fg-primary)] leading-snug line-clamp-2 min-h-[2rem] sm:min-h-[2.2rem] mb-1">
                   {s.name}
                 </h3>
               </div>
 
               {/* Card Footer Strip with Authentic 8-Bit Selector Indicator */}
-              <div className="pt-2 mt-1 border-t border-[var(--border-soft)] flex items-center justify-between gap-2 font-pixel text-[8px]">
+              <div className="w-full pt-2 mt-1 border-t border-[var(--border-soft)] flex items-center justify-between gap-2 font-pixel text-[7px] sm:text-[8px]">
                 <span className="text-[var(--fg-muted)] truncate">
                   {s.nickname}
                 </span>
-                <span className="inline-flex items-center gap-1 text-[var(--accent-indigo)] dark:text-[#FACC15] opacity-70 group-hover:opacity-100 shrink-0">
+                <span className="inline-flex items-center gap-1 text-[var(--accent-indigo)] dark:text-[#FACC15] opacity-75 group-hover:opacity-100 shrink-0">
                   <span className="inline-block transition-transform group-hover:translate-x-0.5">
                     &#9654;
                   </span>

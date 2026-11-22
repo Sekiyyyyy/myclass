@@ -12,7 +12,6 @@ const classSpecs = [
   { label: "SEKOLAH", value: CLASS_INFO.school },
   { label: "WILAYAH", value: CLASS_INFO.region },
   { label: "WALI KELAS", value: CLASS_INFO.homeroomTeacher },
-  { label: "RUANG LAB", value: CLASS_INFO.lab },
   { label: "JUMLAH SISWA", value: `${CLASS_INFO.totalStudents} Orang` },
 ];
 
@@ -90,7 +89,7 @@ export function AboutClass() {
             <div className="p-5 sm:p-7 flex flex-col justify-between flex-1 gap-6">
               <div className="space-y-4">
                 <h3 className="font-pixel text-sm sm:text-base text-[var(--fg-primary)] leading-relaxed">
-                  Tiga Tahun di Ruang {CLASS_INFO.lab}
+                  Tiga Tahun Bersama di {CLASS_INFO.name}
                 </h3>
 
                 <p className="font-sans text-sm text-[var(--fg-secondary)] leading-relaxed">
