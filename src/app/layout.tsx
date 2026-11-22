@@ -30,7 +30,8 @@ export const metadata: Metadata = {
     "Eterna PPLG Three",
     "Angkatan 2026",
   ],
-  authors: [{ name: "XII PPLG 3 SMK Negeri 1 Beringin" }],
+  authors: [{ name: "Rizky Alfianno" }],
+  creator: "Rizky Alfianno",
 };
 
 const themeInitScript = `

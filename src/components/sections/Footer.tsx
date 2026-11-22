@@ -88,6 +88,19 @@ export function Footer() {
           </motion.button>
         </div>
       </div>
+
+      {/* Understated Colophon / Author Credit */}
+      <div className="max-w-6xl mx-auto mt-7 pt-5 border-t-2 border-dashed border-[var(--border-soft)] flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] font-silk text-[var(--fg-muted)]">
+        <span>
+          &copy; {CLASS_INFO.year} {CLASS_INFO.name} &mdash; {CLASS_INFO.school}
+        </span>
+        <span>
+          Dibuat oleh{" "}
+          <strong className="text-[var(--fg-primary)] font-bold">
+            Rizky Alfianno
+          </strong>
+        </span>
+      </div>
     </footer>
   );
 }
