@@ -41,7 +41,7 @@ export function MemoriesFullGallery() {
       {/* Top Back Navigation */}
       <div className="mb-6">
         <Link
-          href="/#kenangan"
+          href="/"
           className="inline-flex items-center gap-2 px-3 py-1.5 border-2 border-[var(--border-hard)] bg-[var(--bg-surface)] hover:bg-[var(--bg-inset)] text-[var(--fg-primary)] font-silk text-xs font-bold shadow-[2px_2px_0px_var(--shadow-hard)] transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />

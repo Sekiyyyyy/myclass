@@ -7,6 +7,7 @@ import { ArrowDown, Users, Camera } from "lucide-react";
 import { HeroBackground } from "@/components/sections/HeroBackground";
 import { CLASS_INFO } from "@/data/students";
 import { snappySpring, pixelEase } from "@/lib/motion-presets";
+import { scrollToSection } from "@/lib/scroll";
 
 const heroContainer = {
   hidden: { opacity: 0 },
@@ -112,6 +113,10 @@ export function Hero() {
           >
             <motion.a
               href="#siswa"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection("siswa");
+              }}
               whileHover={{ y: -2 }}
               whileTap={{ y: 2 }}
               transition={snappySpring}
@@ -124,6 +129,10 @@ export function Hero() {
 
             <motion.a
               href="#kenangan"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection("kenangan");
+              }}
               whileHover={{ y: -2 }}
               whileTap={{ y: 2 }}
               transition={snappySpring}

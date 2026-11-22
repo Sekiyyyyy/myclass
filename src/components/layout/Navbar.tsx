@@ -14,9 +14,10 @@ import {
 } from "motion/react";
 import { useTheme } from "@/lib/theme-provider";
 import { snappySpring, pixelEase } from "@/lib/motion-presets";
+import { scrollToSection, scrollToTop } from "@/lib/scroll";
 
 const navItems = [
-  { href: "/#hero", id: "hero", label: "Beranda" },
+  { href: "/", id: "hero", label: "Beranda" },
   { href: "/#tentang", id: "tentang", label: "Tentang" },
   { href: "/#siswa", id: "siswa", label: "Siswa" },
   { href: "/#kenangan", id: "kenangan", label: "Kenangan" },
@@ -25,6 +26,7 @@ const navItems = [
 
 export function Navbar() {
   const pathname = usePathname();
+  const isHomePage = pathname === "/";
   const isGalleryPage = pathname === "/galeri";
 
   const [visible, setVisible] = useState(true);
@@ -66,6 +68,13 @@ export function Navbar() {
       return;
     }
 
+    const initialHash = window.location.hash.replace(/^#/, "");
+    if (initialHash && navItems.some((item) => item.id === initialHash)) {
+      setActiveSection(initialHash);
+    } else {
+      setActiveSection("hero");
+    }
+
     const observers: IntersectionObserver[] = [];
 
     navItems.forEach(({ id }) => {
@@ -90,6 +99,26 @@ export function Navbar() {
     };
   }, [isGalleryPage]);
 
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    id: string
+  ) => {
+    setMobileMenuOpen(false);
+    if (isHomePage) {
+      e.preventDefault();
+      if (id === "hero") {
+        scrollToTop(false);
+        if (window.location.hash) {
+          window.history.replaceState(null, "", "/");
+        }
+      } else {
+        scrollToSection(id, false);
+        window.history.replaceState(null, "", `/#${id}`);
+      }
+      setActiveSection(id);
+    }
+  };
+
   return (
     <motion.header
       initial={{ y: -24, opacity: 0 }}
@@ -101,10 +130,10 @@ export function Navbar() {
         aria-label="Navigasi utama"
         className="pointer-events-auto relative flex items-center justify-between sm:justify-start gap-2 sm:gap-4 px-3 sm:px-4 py-2 pixel-box max-w-5xl w-full sm:w-auto"
       >
-        {/* Brand (Fixed top ascender clipping by using leading-snug + py-[1px]) */}
+        {/* Brand */}
         <Link
-          href="/#hero"
-          onClick={() => setMobileMenuOpen(false)}
+          href="/"
+          onClick={(e) => handleNavClick(e, "hero")}
           className="flex items-center gap-2 sm:gap-2.5 select-none group pr-1 shrink-0"
         >
           <motion.div
@@ -144,6 +173,7 @@ export function Navbar() {
               <Link
                 key={item.id}
                 href={item.href}
+                onClick={(e) => handleNavClick(e, item.id)}
                 className={`relative inline-flex items-center gap-1.5 px-2.5 py-1 transition-colors whitespace-nowrap ${
                   item.id === "tentang" ? "hidden md:inline-flex" : ""
                 } ${
@@ -269,7 +299,7 @@ export function Navbar() {
                     <Link
                       key={item.id}
                       href={item.href}
-                      onClick={() => setMobileMenuOpen(false)}
+                      onClick={(e) => handleNavClick(e, item.id)}
                       className={`flex items-center justify-between px-3 py-2.5 border-2 transition-colors ${
                         isActive
                           ? "bg-[#5B46C8] text-white border-[#181624] dark:bg-[#FACC15] dark:text-[#181624]"

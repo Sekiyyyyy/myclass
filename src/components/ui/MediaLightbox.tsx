@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { X, ChevronLeft, ChevronRight, Film, ImageIcon } from "lucide-react";
 import type { MemoryItem } from "@/data/memories";
 import { modalSpring, pixelEase } from "@/lib/motion-presets";
+import { pauseScroll, resumeScroll } from "@/lib/scroll";
 
 interface MediaLightboxProps {
   items: MemoryItem[];
@@ -53,9 +54,11 @@ export function MediaLightbox({
     };
     window.addEventListener("keydown", handleKeyDown);
     document.body.style.overflow = "hidden";
+    pauseScroll();
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
+      resumeScroll();
     };
   }, [item, onClose, onNavigate]);
 

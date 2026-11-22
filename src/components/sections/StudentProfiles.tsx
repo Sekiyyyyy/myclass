@@ -18,6 +18,7 @@ import {
   pixelEase,
   viewportOnce,
 } from "@/lib/motion-presets";
+import { pauseScroll, resumeScroll } from "@/lib/scroll";
 
 type FilterMode = "all" | "officers";
 
@@ -95,9 +96,11 @@ export function StudentProfiles() {
     };
     window.addEventListener("keydown", handleKeyDown);
     document.body.style.overflow = "hidden";
+    pauseScroll();
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
+      resumeScroll();
     };
   }, [selectedStudent, navigateModal]);
 

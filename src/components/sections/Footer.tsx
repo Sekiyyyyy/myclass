@@ -2,17 +2,32 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion } from "motion/react";
 import { ArrowUp, Instagram } from "lucide-react";
 import { CLASS_INFO } from "@/data/students";
 import { snappySpring } from "@/lib/motion-presets";
+import { scrollToSection, scrollToTop } from "@/lib/scroll";
 
 export function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
+
+  const handleSectionLink = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    id: string
+  ) => {
+    if (!isHomePage) return;
+    e.preventDefault();
+    if (id === "hero") {
+      scrollToTop(false);
+      if (window.location.hash) {
+        window.history.replaceState(null, "", "/");
+      }
+    } else {
+      scrollToSection(id, false);
+      window.history.replaceState(null, "", `/#${id}`);
+    }
   };
 
   return (
@@ -45,19 +60,22 @@ export function Footer() {
 
         <div className="flex items-center flex-wrap justify-center gap-x-4 gap-y-2.5 sm:gap-5 font-silk text-xs font-bold">
           <Link
-            href="/#hero"
+            href="/"
+            onClick={(e) => handleSectionLink(e, "hero")}
             className="text-[var(--fg-secondary)] hover:text-[var(--accent-indigo)] dark:hover:text-[#FACC15] transition-colors"
           >
             Beranda
           </Link>
           <Link
             href="/#tentang"
+            onClick={(e) => handleSectionLink(e, "tentang")}
             className="text-[var(--fg-secondary)] hover:text-[var(--accent-indigo)] dark:hover:text-[#FACC15] transition-colors"
           >
             Tentang
           </Link>
           <Link
             href="/#siswa"
+            onClick={(e) => handleSectionLink(e, "siswa")}
             className="text-[var(--fg-secondary)] hover:text-[var(--accent-indigo)] dark:hover:text-[#FACC15] transition-colors"
           >
             Siswa
@@ -70,6 +88,7 @@ export function Footer() {
           </Link>
           <Link
             href="/#struktur"
+            onClick={(e) => handleSectionLink(e, "struktur")}
             className="text-[var(--fg-secondary)] hover:text-[var(--accent-indigo)] dark:hover:text-[#FACC15] transition-colors"
           >
             Struktur
@@ -77,7 +96,7 @@ export function Footer() {
 
           <motion.button
             type="button"
-            onClick={scrollToTop}
+            onClick={() => scrollToTop(false)}
             whileHover={{ y: -2 }}
             whileTap={{ y: 2 }}
             transition={snappySpring}
