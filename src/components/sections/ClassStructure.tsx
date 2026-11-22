@@ -68,7 +68,7 @@ export function ClassStructure() {
       >
         <div>
           <p className="font-pixel text-[9px] sm:text-[10px] text-[var(--accent-indigo)] dark:text-[#FACC15] tracking-widest uppercase mb-2">
-            03 // STRUKTUR KELAS
+            04 // STRUKTUR KELAS
           </p>
           <h2 className="font-pixel text-lg sm:text-2xl md:text-3xl text-[var(--fg-primary)] leading-snug pixel-title-shadow">
             Kepengurusan Kelas

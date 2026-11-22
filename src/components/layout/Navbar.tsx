@@ -2,7 +2,9 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { Sun, Moon, Menu, X } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Sun, Moon, Menu, X, Images } from "lucide-react";
 import {
   motion,
   AnimatePresence,
@@ -14,16 +16,22 @@ import { useTheme } from "@/lib/theme-provider";
 import { snappySpring, pixelEase } from "@/lib/motion-presets";
 
 const navItems = [
-  { href: "#hero", id: "hero", label: "Beranda" },
-  { href: "#tentang", id: "tentang", label: "Tentang" },
-  { href: "#siswa", id: "siswa", label: "Siswa" },
-  { href: "#struktur", id: "struktur", label: "Struktur" },
+  { href: "/#hero", id: "hero", label: "Beranda" },
+  { href: "/#tentang", id: "tentang", label: "Tentang" },
+  { href: "/#siswa", id: "siswa", label: "Siswa" },
+  { href: "/#kenangan", id: "kenangan", label: "Kenangan" },
+  { href: "/#struktur", id: "struktur", label: "Struktur" },
 ];
 
 export function Navbar() {
+  const pathname = usePathname();
+  const isGalleryPage = pathname === "/galeri";
+
   const [visible, setVisible] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("hero");
+  const [activeSection, setActiveSection] = useState(
+    isGalleryPage ? "kenangan" : "hero"
+  );
   const lastScrollY = useRef(0);
   const { theme, toggleTheme } = useTheme();
 
@@ -53,6 +61,11 @@ export function Navbar() {
   });
 
   useEffect(() => {
+    if (isGalleryPage) {
+      setActiveSection("kenangan");
+      return;
+    }
+
     const observers: IntersectionObserver[] = [];
 
     navItems.forEach(({ id }) => {
@@ -75,7 +88,7 @@ export function Navbar() {
     return () => {
       observers.forEach((o) => o.disconnect());
     };
-  }, []);
+  }, [isGalleryPage]);
 
   return (
     <motion.header
@@ -86,13 +99,13 @@ export function Navbar() {
     >
       <nav
         aria-label="Navigasi utama"
-        className="pointer-events-auto relative flex items-center justify-between sm:justify-start gap-2 sm:gap-4 px-3 sm:px-4 py-2 pixel-box max-w-4xl w-full sm:w-auto"
+        className="pointer-events-auto relative flex items-center justify-between sm:justify-start gap-2 sm:gap-4 px-3 sm:px-4 py-2 pixel-box max-w-5xl w-full sm:w-auto"
       >
-        {/* Brand */}
-        <a
-          href="#hero"
+        {/* Brand (Fixed top ascender clipping by using leading-snug + py-[1px]) */}
+        <Link
+          href="/#hero"
           onClick={() => setMobileMenuOpen(false)}
-          className="flex items-center gap-2 sm:gap-2.5 select-none group pr-1 min-w-0"
+          className="flex items-center gap-2 sm:gap-2.5 select-none group pr-1 shrink-0"
         >
           <motion.div
             whileHover={{ scale: 1.08, rotate: -4 }}
@@ -107,15 +120,15 @@ export function Navbar() {
               className="object-contain"
             />
           </motion.div>
-          <div className="flex flex-col min-w-0">
-            <span className="font-pixel text-[9px] sm:text-[10px] text-[var(--fg-primary)] leading-none truncate">
+          <div className="flex flex-col justify-center">
+            <span className="font-pixel text-[9px] sm:text-[10px] text-[var(--fg-primary)] leading-snug pt-[1px] whitespace-nowrap">
               XII PPLG 3
             </span>
-            <span className="font-silk text-[8px] sm:text-[9px] text-[var(--accent-indigo)] dark:text-[#FACC15] font-bold leading-tight mt-0.5 truncate">
+            <span className="font-silk text-[8px] sm:text-[9px] text-[var(--accent-indigo)] dark:text-[#FACC15] font-bold leading-tight whitespace-nowrap">
               SMKN 1 BERINGIN
             </span>
           </div>
-        </a>
+        </Link>
 
         {/* Pixel Divider (Desktop/Tablet) */}
         <div
@@ -128,10 +141,12 @@ export function Navbar() {
           {navItems.map((item) => {
             const isActive = activeSection === item.id;
             return (
-              <a
+              <Link
                 key={item.id}
                 href={item.href}
-                className={`relative inline-flex items-center gap-1.5 px-2.5 py-1 transition-colors ${
+                className={`relative inline-flex items-center gap-1.5 px-2.5 py-1 transition-colors whitespace-nowrap ${
+                  item.id === "tentang" ? "hidden md:inline-flex" : ""
+                } ${
                   isActive
                     ? "text-white dark:text-[#181624]"
                     : "text-[var(--fg-secondary)] hover:text-[var(--fg-primary)]"
@@ -154,7 +169,7 @@ export function Navbar() {
                   )}
                   <span>{item.label}</span>
                 </span>
-              </a>
+              </Link>
             );
           })}
         </div>
@@ -243,33 +258,44 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8, scale: 0.98 }}
             transition={{ duration: 0.18, ease: pixelEase }}
-            className="sm:hidden pointer-events-auto w-full mt-2 pixel-box p-2"
+            className="sm:hidden pointer-events-auto w-full mt-2 pixel-box p-2 space-y-1.5"
           >
             <div className="grid grid-cols-2 gap-1.5 font-silk font-bold text-xs">
-              {navItems.map((item) => {
-                const isActive = activeSection === item.id;
-                return (
-                  <a
-                    key={item.id}
-                    href={item.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center justify-between px-3 py-2.5 border-2 transition-colors ${
-                      isActive
-                        ? "bg-[#5B46C8] text-white border-[#181624] dark:bg-[#FACC15] dark:text-[#181624]"
-                        : "bg-[var(--bg-inset)] text-[var(--fg-primary)] border-transparent hover:border-[var(--border-hard)]"
-                    }`}
-                  >
-                    <span>{item.label}</span>
-                    {isActive && (
-                      <span
-                        aria-hidden="true"
-                        className="w-1.5 h-1.5 bg-current inline-block"
-                      />
-                    )}
-                  </a>
-                );
-              })}
+              {navItems
+                .filter((i) => i.id !== "kenangan")
+                .map((item) => {
+                  const isActive = activeSection === item.id;
+                  return (
+                    <Link
+                      key={item.id}
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={`flex items-center justify-between px-3 py-2.5 border-2 transition-colors ${
+                        isActive
+                          ? "bg-[#5B46C8] text-white border-[#181624] dark:bg-[#FACC15] dark:text-[#181624]"
+                          : "bg-[var(--bg-inset)] text-[var(--fg-primary)] border-transparent hover:border-[var(--border-hard)]"
+                      }`}
+                    >
+                      <span>{item.label}</span>
+                      {isActive && (
+                        <span
+                          aria-hidden="true"
+                          className="w-1.5 h-1.5 bg-current inline-block"
+                        />
+                      )}
+                    </Link>
+                  );
+                })}
             </div>
+
+            <Link
+              href="/galeri"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-center gap-2 w-full px-3 py-2.5 bg-[#FACC15] text-[#181624] border-2 border-[#181624] font-pixel text-[9px] font-bold"
+            >
+              <Images className="w-3.5 h-3.5" />
+              <span>ALBUM KENANGAN (19)</span>
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>

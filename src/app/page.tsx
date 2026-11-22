@@ -2,6 +2,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/sections/Hero";
 import { AboutClass } from "@/components/sections/AboutClass";
 import { StudentProfiles } from "@/components/sections/StudentProfiles";
+import { MemoriesPreview } from "@/components/sections/MemoriesPreview";
 import { ClassStructure } from "@/components/sections/ClassStructure";
 import { ArchiveBanner } from "@/components/sections/ArchiveBanner";
 import { Footer } from "@/components/sections/Footer";
@@ -62,19 +63,25 @@ export default function Home() {
         </Marquee>
       </div>
 
-      {/* 5. Daftar 31 Siswa (Motion Layout Grid & Animated Dossier Modal) */}
+      {/* 5. Daftar 31 Siswa */}
       <StudentProfiles />
 
       {/* Crisp 16-Bit Pixel Dither Divider */}
       <div className="pixel-dither-strip" aria-hidden="true" />
 
-      {/* 6. Struktur Organisasi & Kepengurusan Kelas */}
+      {/* 6. Cuplikan Galeri Kenangan (6 Highlight + Link ke /galeri) */}
+      <MemoriesPreview />
+
+      {/* Crisp 16-Bit Pixel Dither Divider */}
+      <div className="pixel-dither-strip" aria-hidden="true" />
+
+      {/* 7. Struktur Organisasi & Kepengurusan Kelas */}
       <ClassStructure />
 
-      {/* 7. Authentic Official Archive Banner */}
+      {/* 8. Official Instagram Archive Banner */}
       <ArchiveBanner />
 
-      {/* 8. Footer */}
+      {/* 9. Footer */}
       <Footer />
     </main>
   );

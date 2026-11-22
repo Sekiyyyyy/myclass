@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "motion/react";
-import { ArrowDown, Users, Network } from "lucide-react";
+import { ArrowDown, Users, Camera } from "lucide-react";
 import { HeroBackground } from "@/components/sections/HeroBackground";
 import { CLASS_INFO } from "@/data/students";
 import { snappySpring, pixelEase } from "@/lib/motion-presets";
@@ -83,20 +83,6 @@ export function Hero() {
           animate="visible"
           className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left"
         >
-          {/* School Pill Badge */}
-          <motion.div
-            variants={heroItem}
-            className="inline-flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 mb-4 sm:mb-5 pixel-pill max-w-full"
-          >
-            <span className="w-2 h-2 bg-[#5B46C8] dark:bg-[#FACC15] border border-[#181624] inline-block shrink-0" />
-            <span className="font-pixel text-[8px] sm:text-[10px] text-[var(--fg-primary)] uppercase tracking-wider">
-              {CLASS_INFO.school}
-            </span>
-            <span className="font-pixel text-[8px] sm:text-[9px] text-[var(--accent-indigo)] dark:text-[#FACC15] font-bold">
-              [{CLASS_INFO.year}]
-            </span>
-          </motion.div>
-
           {/* Main Headline */}
           <motion.h1
             variants={heroItem}
@@ -137,14 +123,14 @@ export function Hero() {
             </motion.a>
 
             <motion.a
-              href="#struktur"
+              href="#kenangan"
               whileHover={{ y: -2 }}
               whileTap={{ y: 2 }}
               transition={snappySpring}
               className="pixel-btn pixel-btn-secondary !text-[9px] sm:!text-[10px]"
             >
-              <Network className="w-3.5 h-3.5 mr-2 shrink-0" />
-              <span>Struktur Kelas</span>
+              <Camera className="w-3.5 h-3.5 mr-2 shrink-0" />
+              <span>Galeri Kenangan</span>
             </motion.a>
           </motion.div>
         </motion.div>

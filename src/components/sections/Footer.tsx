@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "motion/react";
 import { ArrowUp, Instagram } from "lucide-react";
 import { CLASS_INFO } from "@/data/students";
@@ -43,30 +44,36 @@ export function Footer() {
         </div>
 
         <div className="flex items-center flex-wrap justify-center gap-x-4 gap-y-2.5 sm:gap-5 font-silk text-xs font-bold">
-          <a
-            href="#hero"
+          <Link
+            href="/#hero"
             className="text-[var(--fg-secondary)] hover:text-[var(--accent-indigo)] dark:hover:text-[#FACC15] transition-colors"
           >
             Beranda
-          </a>
-          <a
-            href="#tentang"
+          </Link>
+          <Link
+            href="/#tentang"
             className="text-[var(--fg-secondary)] hover:text-[var(--accent-indigo)] dark:hover:text-[#FACC15] transition-colors"
           >
             Tentang
-          </a>
-          <a
-            href="#siswa"
+          </Link>
+          <Link
+            href="/#siswa"
             className="text-[var(--fg-secondary)] hover:text-[var(--accent-indigo)] dark:hover:text-[#FACC15] transition-colors"
           >
             Siswa
-          </a>
-          <a
-            href="#struktur"
+          </Link>
+          <Link
+            href="/galeri"
+            className="text-[var(--fg-secondary)] hover:text-[var(--accent-indigo)] dark:hover:text-[#FACC15] transition-colors"
+          >
+            Kenangan
+          </Link>
+          <Link
+            href="/#struktur"
             className="text-[var(--fg-secondary)] hover:text-[var(--accent-indigo)] dark:hover:text-[#FACC15] transition-colors"
           >
             Struktur
-          </a>
+          </Link>
 
           <motion.button
             type="button"

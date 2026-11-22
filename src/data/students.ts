@@ -51,7 +51,7 @@ export const students: Student[] = [
   { id: "21", name: "Mhd Fathir Aldiansyah", nickname: "Fathir", avatar: "/students/student-21.jpg" },
   { id: "22", name: "Nikita Alviyanti", nickname: "Nikita", avatar: "/students/student-22.jpg" },
   { id: "23", name: "Nur Baiti Laily Afriani", nickname: "Baiti", avatar: "/students/student-23.jpg" },
-  { id: "24", name: "Nur Wahidah", nickname: "Wahidah", avatar: "/students/student-24.jpg" },
+  { id: "24", name: "Nur Wahidah", nickname: "Wahidah", avatar: "/students/student-24-v2.jpg" },
   { id: "25", name: "Rifky Alfareza Harahap", nickname: "Rifky", avatar: "/students/student-25.jpg" },
   { id: "26", name: "Rifqii Aditya", nickname: "Rifqii", avatar: "/students/student-26.jpg" },
   { id: "27", name: "Rizky Alfianno", nickname: "Rizky", avatar: "/students/student-27.jpg", role: "Ketua Kelas" },
