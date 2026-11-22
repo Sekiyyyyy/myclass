@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build:css": "npx @tailwindcss/cli -i src/app/input.css -o src/app/globals.css",
-    "dev:css": "npx @tailwindcss/cli -i src/app/input.css -o src/app/globals.css --watch",
+    "build:css": "tailwindcss -i src/app/input.css -o src/app/globals.css",
+    "dev:css": "tailwindcss -i src/app/input.css -o src/app/globals.css --watch",
     "dev": "npm run build:css && next dev --webpack",
     "build": "npm run build:css && next build --webpack",
     "start": "next start",
@@ -24,13 +24,14 @@
     "tailwind-merge": "^3.0.2"
   },
   "devDependencies": {
+    "@tailwindcss/cli": "^4.3.5",
     "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.6",
-    "tailwindcss": "4.3.3",
+    "tailwindcss": "^4.3.5",
     "typescript": "^5"
   }
 }
